@@ -1,0 +1,17 @@
+<script>
+	$( document ).ready(function() {
+		$(".join_button").click( function(e) {
+			$("#game_id").val(this.id);
+			$("#submit").click();
+		});
+	});
+</script>
+
+<%= form_for(@user) do |f| %>
+	<%= f.hidden_field :game_id, :id => "game_id" %>
+  	<%= f.submit "Create", :id => "submit", :class => "button" %>
+<% end %>
+<% @games.each do |i|%>
+	<p>Game: <%= i.name %></p>
+	<button class="join_button" id="<%=i.id%>">Join</button>
+<% end %>

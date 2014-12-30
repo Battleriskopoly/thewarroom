@@ -8,7 +8,7 @@
 		var newDivs = []
 		for (i = 0; i < divs.length; i++) {
 			var jqobject = $(divs[i]).attr("id", $(divs[i]).attr("id").replace("legs_attributes_100000000000", "legs_attributes_" + (99999999999 + $('.leg_fields').length).toString()))
-			jqobject = $(divs[i]).attr("name", $(divs[i]).attr("name").replace("100000000000", (99999999999 + $('.leg_fields').length).toString()))
+			jqobject = $(divs[i]).attr("name", $(divs[i]).attr("name").replace("legs_attributes][100000000000", "legs_attributes]" + (99999999999 + $('.leg_fields').length).toString()))
 			newDivs.push(jqobject)
 			console.log((99999999999 + $('.leg_fields').length).toString())
 		}

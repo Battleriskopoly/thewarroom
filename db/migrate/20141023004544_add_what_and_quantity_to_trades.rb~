@@ -1,0 +1,4 @@
+class AddWhatAndQuantityToTrades < ActiveRecord::Migration
+  def change
+  end
+end

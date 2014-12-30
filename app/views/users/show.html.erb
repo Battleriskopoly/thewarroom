@@ -1,74 +1,86 @@
 <script>
-var rendered_forts = [<%= render partial: "fort", collection: @forts %>];
+
+var territoryColors = <%= render partial: "territory_colors", locals: {territoryColors: @territoryColors} %>;
+rendered_forts = [<%= render partial: "fort", collection: @forts %>];
+rendered_encampments = [<%= render partial: "encampment", collection: @encampments %>];
+
 var fort_string = rendered_forts.toString();
 fort_string = fort_string.replace(",","', '");
 fort_string = fort_string.concat("'");
 fort_string = "'".concat(fort_string);
-var rendered_encampments = [<%= render partial: "encampment", collection: @encampments %>];
+
 var encampment_string = rendered_encampments.toString();
 encampment_string = encampment_string.replace(",","', '");
 encampment_string = encampment_string.concat("'");
 encampment_string = "'".concat(encampment_string);
+var swatches = <%= render partial: "swatch_list"%>
 var clicked = ["f", 1];
 var placing = "f";
 var exception;
 var level = "globe";
 var english_level = "globe";
 var clear_create_canvas
-var itinerary = [];
-var trading = "f";
+var trading = false;
 var selected;
+var stop = false
+var zooming = true
+var alerting = "nil";
+var alertContext="nil"
+var visibleObjects = {encampment:[],fort:[]};
+seapoints = [];
+var changeLeg = [false,-1]
+itinerary = [];
 // Defining lists of territories and continents with their active color values and their starting points.
 
-	var colors = [["#central_america", [0xe5,0x42,0x42], [488,780] ,[0.311006362]],
-["#central_asia",[0xf1,0x71,0x71], [2054,526] ,[0.284473688]],
- ["#central_south_america",[0xfb,0x07,0x07], [822,1020],[0.402101331]], 
-["#china",[0xfb,0x07,0xca], [2342,542] ,[0.073106002]], 
-["#coastal_africa",[0xd0,0x2e,0xb0], [1436,959] ,[0.653478724]], 
-["#coastal_south_america",[0xc4,0x56,0xae], [908,1340] ,[1.025283875]],
- ["#congo",[0x87,0x13,0x70], [1720,1015] ,[4.093718719]], 
-["#eastern_africa",[0x96,0x0e,0xbd], [1844,887] ,[3.45647866]], 
-["#eastern_canada",[0xc1,0x52,0xe1], [394,206] ,[0.338781336]], 
-["#eastern_south_america",[0xc6,0x00,0xff], [904,1088] ,[1.078443444]], 
-["#egypt",[0x5d,0x1e,0x6f], [1724,774] ,[0.143233025]], 
-["#greenland",[0x48,0x0e,0xcb], [918,204] ,[1]],
- ["#iceland",[0x84,0x55,0xef], [1393,399] ,[0.566702988]],
- ["#india",[0x32,0x3a,0xde], [2278,786] ,[0.023725458]], 
-["#indonesia",[0x5f,0x65,0xd0], [2558,1084] ,[0.177003406]], 
-["#madagascar",[0x5f,0xa4,0xd0], [2052,1280] ,[2.751700999]],
- ["#middle_east",[0x0f,0x97,0xed], [1868,664] ,[0.218084511]], 
-["#mongolia",[0x33,0x79,0xa6], [2480,568] ,[8.573449039]], 
-["#new_zealand",[0x06,0xb5,0x6d], [3010,1163] ,[0.292389938]],
-["#non_contiguous_united_states",[0x7e,0xc2,0xed], [0,340] ,[1.555525194]],
- ["#northeastern_united_states",[0x30,0xcf,0xd5], [704,596] ,[0.02432892]], 
-["#northern_australia",[0x6b,0xf6,0xfb], [2872,1260] ,[1.060924816]], 
-["#northern_europe",[0x22,0x7f,0x82], [1647,500] ,[0.03048697]],
- ["#northwestern_united_states",[0x67,0x91,0x93], [414,598] ,[0.145380297]], 
-["#pacific_asia",[0x73,0xe1,0xb4], [2834,526] ,[0.014887273]], 
- ["#russia",[0x23,0xab,0x73], [1902,206] ,[0.484910872]],
- ["#sahara",[0x23,0xab,0x33], [1454,730] ,[1.277875253]], 
-["#southeastern_asia",[0x7b,0xe1,0x87], [2406,800] ,[0.123679885]], 
-["#southeastern_united_states",[0x00,0xff,0x1e], [718,734] ,[0.03018645]], 
-["#southern_african_territory",[0x19,0x77,0x24], [1732,1242] ,[0.986084614]],
- ["#southern_australia",[0x50,0x7E,0x55], [2714,1296] ,[0.442689699]], 
-["#southern_europe",[0x8f,0xc6,0x40], [1688,602] ,[0.035175045]], 
-["#southwestern_united_states",[0x51,0x8a,0x00], [406,660] ,[0.059710917]],
- ["#ukraine",[0x97,0xde,0x32], [1660,340] ,[0.076732312]], 
-["#united_kingdom", [0x19,0xaf,0xe0], [1522,490] ,[0.01625007]],
- ["#western_europe",[0x8a,0xa6,0x33], [1520,578] ,[0.018317252]],
- ["#western_canada", [0xff,0xea,0x3d], [250,349] ,[1.358437809]], 
-["#western_south_america",[0xea,0xdb,0x35], [834,1143] ,[2.043553816]]];
+	var colors = {central_america:[ [0xe5,0x42,0x42], [488,780] ,[0.311006362]],
+central_asia:[[0xf1,0x71,0x71], [2054,526] ,[0.284473688]],
+ central_south_america:[[0xfb,0x07,0x07], [822,1020],[0.402101331]], 
+china:[[0xfb,0x07,0xca], [2342,542] ,[0.073106002]], 
+coastal_africa:[[0xd0,0x2e,0xb0], [1436,959] ,[0.653478724]], 
+coastal_south_america:[[0xc4,0x56,0xae], [908,1340] ,[1.025283875]],
+ congo:[[0x87,0x13,0x70], [1720,1015] ,[4.093718719]], 
+eastern_africa:[[0x96,0x0e,0xbd], [1844,887] ,[3.45647866]], 
+eastern_canada:[[0xc1,0x52,0xe1], [394,206] ,[0.338781336]], 
+eastern_south_america:[[0xc6,0x00,0xff], [904,1088] ,[1.078443444]], 
+egypt:[[0x5d,0x1e,0x6f], [1724,774] ,[0.143233025]], 
+greenland:[[0x48,0x0e,0xcb], [918,204] ,[1]],
+ iceland:[[0x84,0x55,0xef], [1393,399] ,[0.566702988]],
+ india:[[0x32,0x3a,0xde], [2278,786] ,[0.023725458]], 
+indonesia:[[0x5f,0x65,0xd0], [2558,1084] ,[0.177003406]], 
+madagascar:[[0x5f,0xa4,0xd0], [2052,1280] ,[2.751700999]],
+ middle_east:[[0x0f,0x97,0xed], [1868,664] ,[0.218084511]], 
+mongolia:[[0x33,0x79,0xa6], [2480,568] ,[8.573449039]], 
+new_zealand:[[0x06,0xb5,0x6d], [3010,1163] ,[0.292389938]],
+non_contiguous_united_states:[[0x7e,0xc2,0xed], [0,340] ,[1.555525194]],
+ northeastern_united_states:[[0x30,0xcf,0xd5], [704,596] ,[0.02432892]], 
+northern_australia:[[0x6b,0xf6,0xfb], [2872,1260] ,[1.060924816]], 
+northern_europe:[[0x22,0x7f,0x82], [1647,500] ,[0.03048697]],
+ northwestern_united_states:[[0x67,0x91,0x93], [414,598] ,[0.145380297]], 
+pacific_asia:[[0x73,0xe1,0xb4], [2834,526] ,[0.014887273]], 
+ russia:[[0x23,0xab,0x73], [1902,206] ,[0.484910872]],
+ sahara:[[0x23,0xab,0x33], [1454,730] ,[1.277875253]], 
+southeastern_asia:[[0x7b,0xe1,0x87], [2406,800] ,[0.123679885]], 
+southeastern_united_states:[[0x00,0xff,0x1e], [718,734] ,[0.03018645]], 
+southern_african_territory:[[0x19,0x77,0x24], [1732,1242] ,[0.986084614]],
+ southern_australia:[[0x50,0x7E,0x55], [2714,1296] ,[0.442689699]], 
+southern_europe:[[0x8f,0xc6,0x40], [1688,602] ,[0.035175045]], 
+southwestern_united_states:[[0x51,0x8a,0x00], [406,660] ,[0.059710917]],
+ ukraine:[[0x97,0xde,0x32], [1660,340] ,[0.076732312]], 
+united_kingdom:[ [0x19,0xaf,0xe0], [1522,490] ,[0.01625007]],
+ western_europe:[[0x8a,0xa6,0x33], [1520,578] ,[0.018317252]],
+ western_canada:[ [0xff,0xea,0x3d], [250,349] ,[1.358437809]], 
+western_south_america:[[0xea,0xdb,0x35], [834,1143] ,[2.043553816]]};
 
-	var color_key = [["#asia", [0x32,0x7c,0x00], [1844,226], [1662,1018]], ["#australia", [0x00,0x7c,0x78], [2546,1080], [868,640]], ["#africa", [0x2f,0x44,0x5a], [1444,724], [722,842]], ["#europe", [0x5a,0x4c,0x2f], [1390,332], [654,442]], ["#north_america", [0x43,0x5a,0x2f], [0,178], [1532,912]], ["#south_america", [0x53,0x2f,0x5a], [798,1008], [528,786]]];
+	var color_key = {asia:[ [0x32,0x7c,0x00], [1844,226], [1662,1018]], australia:[ [0x00,0x7c,0x78], [2546,1080], [868,640]], africa:[ [0x2f,0x44,0x5a], [1444,724], [722,842]], europe:[ [0x5a,0x4c,0x2f], [1390,332], [654,442]], north_america:[ [0x43,0x5a,0x2f], [0,178], [1532,912]], south_america:[ [0x53,0x2f,0x5a], [798,1008], [528,786]]};
 
 // order asia australia africa e na sa 
 
-var continents = [[1,3,13,16,17,23,25,27],
-[14,20,24,30],
-[4,6,7,10,15,26,29],
-[12,21,31,33,34,35],
-[0,8,11,18,19,22,28,32,36],
-[2,5,9,37]];
+var continents ={ asia:["central_asia","china","southeastern_asia","russia","mongolia","pacific_asia","india","middle_east"],
+australia:["northern_australia","southern_australia","new_zealand","indonesia"],
+africa:["sahara","egypt","congo","eastern_africa","southern_african_territory","madagascar","coastal_africa"],
+europe:["northern_europe","southern_europe","western_europe","ukraine","united_kingdom","iceland"],
+north_america:["northeastern_united_states","northwestern_united_states","southeastern_united_states","southwestern_united_states","eastern_canada","western_canada","greenland","central_america","non_contiguous_united_states"],
+south_america:["coastal_south_america","eastern_south_america","western_south_america","central_south_america"]};
 
 
 
@@ -78,1690 +90,900 @@ var previous_level = [];
 
 $( document ).ready(function() {
 
-$("#submitTradeDiv").click(function(submitEvent) {
-	var submitElem = document.elementFromPoint(submitEvent.pageX, submitEvent.pageY);
-	if (submitElem.id == "submitTrade") {
-		$("#edit_user_1").submit();
+//Initial Funtions
+	function alertBox(text,tag,context) {
+		alerting = tag
+		alertContext = context
+		$("#alertBox").children("p").text(text) 
+		centerAlertBox()
+		$("#alertBox").css("display","inline")
+
+		$(".alertButton").click( function() {
+			$("#alertBox").css("display","none")
+			alerting ="nil"
+			alertContext="nil"
+		});
 	}
-});
-	function parseDates() {
-		var newRenderedForts = [];
-		var newRenderedEncampments = [];
-		date = Date.today();
+	function centerAlertBox() {
+
+		$("#alertBox").css("margin-left",($("#background").width()/2) - ($("#alertBox").width()/2) - $("#alertBox").offset().left + "px")
+		$("#alertBox").css("margin-top",($("#background").height()/2) - ($("#alertBox").height()/2) -  $("#alertBox").offset().top + "px")
+	
+	}
+	function setOriginalZoom() {
+		$("#title").css("margin-left", ($("#title").width()/$(window).width()*100)/1.5 + "%")
+		$(".territoryImage").attr("viewBox", "0 0 " + $(window).width()*0.85 + " " + $(window).height()*0.90);
+		$(".territoryImage").attr("width", $(".territoryImage").attr("viewBox").split(" ")[2]);
+		$(".territoryImage").attr("height", $(".territoryImage").attr("viewBox").split(" ")[3]);
+		$("#sidePanel").css("height", $(".territoryImage").height())
+		$("#background").css("width", $(".territoryImage").width())
+		$("#renderedSprites").css("height", $(".territoryImage").height())
+		$("#renderedSprites").css("width", $(".territoryImage").width())
+		$("#background").css("height", $(".territoryImage").height())
+		$(".filter").css("width", $(".territoryImage").width())
+		$(".filter").css("height", $(".territoryImage").height())
+		$("g").attr("transform", "scale(" + $(".territoryImage").attr("viewBox").split(" ")[2]/3508 + ")")
+		$("#globalSVG").children("g").attr("transform", $("#globalSVG").children("g").attr("transform") + " translate(0 " + (($("#background").height()/2) - ($("#globalSVG")[0].getBoundingClientRect().height/2) + ($("#globalSVG").offset().top - $("#background").offset().top))/(($(".territoryImage").attr("viewBox").split(" ")[2]/3508)*2) + ")")
+		for (i = 0; i < $(".button").length; i++) {
+			$($(".button")[i])
+		} 
+		centerAlertBox()
+	}
+
+	function colorMap() {
+		for (i = 0; i < territoryColors.length; i++) {
+			color = "L" + territoryColors[i][1][0].toString(16) + territoryColors[i][1][1].toString(16) + territoryColors[i][1][2].toString(16)
+			color = color.replace("0","00").toUpperCase()
+			color = swatches[territoryColors[i][0].replace("#","")][color];
+
+			$(territoryColors[i][0]).css("fill", "#" + color)
+		}
+	}
+
+//End of Initial Funtions
+
+//Contributing Zoom Funtions
+
+function renderObject(object,levelInfo,remove) {
+
+		if (remove == true) {
+			$("#renderedSprites").children().remove();
+		}
+		for (i = 0; i < $("#renderedSprites").length; i++) {
+			if ( "seapoint" == $("#renderedSprites")[i].id.replace(/[0-9]/g, '')) {
+				$($("#renderedSprites")[i]).remove();
+			}
+		}
+		var list;
+
+		if (object == "encampment") {
+			list = rendered_encampments; 
+		}
+		else if (object == "fort") {
+			list = rendered_forts; 
+		}
+
+		var sortedList = [];
+
+		if (levelInfo[0] == "territorial") {
+			for (i = 0; i < list.length; i++) {
+				if (list[i][0].territory == levelInfo[1]) {
+					sortedList.push(list[i]);
+				}
+			}
+		}
+
+		else if (levelInfo[0] == "continental") {
+			for (i = 0; i < continents[$("#continentalSVG").children("g").children("path").attr("class")].length; i++) {
+				for (y = 0; y < list.length; y++) {
+					if (list[y][0].territory == "#" + continents[$("#continentalSVG").children("g").children("path").attr("class")][i]) {
+						sortedList.push(list[y]);
+					}
+				}
+			}
+
+		}
+		else if (levelInfo[0] == "global") {
+			sortedList = list
+		}
+		
+		visibleObjects[object] = sortedList;
+
+		for (i = 0; i < sortedList.length; i++) {
+			if (levelInfo[0] == "territorial") {
+				
+				if (sortedList[i][1] != "sel" && sortedList[i][1] != "selpast") {
+					$("#renderedSprites").append($("#sprites").children("#".concat(object)).clone().attr("class","renderedSprite").attr("id",object + i));
+				}
+				else {
+					$("#renderedSprites").append($("#sprites").children("#".concat(object) + sortedList[i][1]).clone().attr("class","renderedSprite").attr("id",object + i));	
+				}
+
+				var xPosition = (sortedList[i][0].xco*$("#territorialSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialSVG").offset().left - $("#background").offset().left
+				var yPosition = (sortedList[i][0].yco*$("#territorialSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialSVG").offset().top - $("#background").offset().top
+
+				$("#" + object + i).css("top",yPosition + "px").css("left",xPosition + "px")
+
+			}
+			if (levelInfo[0] == "continental") {
+
+				if (sortedList[i][1] != "sel" && sortedList[i][1] != "selpast") {
+					$("#renderedSprites").append($("#sprites").children("#".concat(object + "Medium")).clone().attr("class","renderedSprite").attr("id",object + i));
+				}
+				else {
+					$("#renderedSprites").append($("#sprites").children("#".concat(object)+ sortedList[i][1] + "Medium" ).clone().attr("class","renderedSprite").attr("id",object + i));	
+				}
+
+				var xPosition = ((sortedList[i][0].xco + colors[sortedList[i][0].territory.replace("#","")][1][0] - color_key[$($("#continentalSVG").children("g").children("path")[0]).attr("class")][1][0])*$("#continentalSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalSVG").offset().left - $("#background").offset().left
+				var yPosition = ((sortedList[i][0].yco + colors[sortedList[i][0].territory.replace("#","")][1][1] - color_key[$($("#continentalSVG").children("g").children("path")[0]).attr("class")][1][1])*$("#continentalSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalSVG").offset().top - $("#background").offset().top
+				$("#" + object + i).css("top",yPosition + "px").css("left",xPosition + "px")
+
+			}
+			if (levelInfo[0] == "global") {
+				if (sortedList[i][1] != "sel" && sortedList[i][1] != "selpast") {
+					$("#renderedSprites").append($("#sprites").children("#".concat(object) + "Small").clone().attr("class","renderedSprite").attr("id",object + i));
+				}
+				else {
+					$("#renderedSprites").append($("#sprites").children("#".concat(object) + sortedList[i][1] + "Small").clone().attr("class","renderedSprite").attr("id",object + i));	
+				}
+
+
+				var xPosition = (sortedList[i][0].xco + colors[sortedList[i][0].territory.replace("#","")][1][0])*($("#globalSVG").children("g").attr("transform").split("(")[1].split(")")[0])
+				var yPosition = (sortedList[i][0].yco + colors[sortedList[i][0].territory.replace("#","")][1][1] + parseFloat($("#globalSVG").children("g").attr("transform").split("translate(")[1].split(" ")[1]))*($("#globalSVG").children("g").attr("transform").split("(")[1].split(")")[0])
+				$("#" + object + i).css("top",yPosition + "px").css("left",xPosition + "px")
+
+			}
+
+			$("#renderedSprites").css("z-index","10")
+		}
+
+		if (trading == true && object =="encampment") {
+
+			if (levelInfo[0] == "global") {
+
+				for (i = 0; i < seapoints.length; i++) {
+
+					$("#renderedSprites").append($("#sprites").children("#seapoint" + seapoints[i][1]).clone().attr("class","renderedSprite").attr("id","seapoint" + i));
+					$("#" + "seapoint" + i).css("top",seapoints[i][0].yco - $("#background").offset().top+ "px").css("left",seapoints[i][0].xco - $("#background").offset().left - 42 + "px")	
+
+				}
+			}
+
+		}
+	}
+
+	function levelChange(zoomLevel) {
+
+		renderObject("encampment",zoomLevel,true);
+		renderObject("fort",zoomLevel);
+		if (zoomLevel[0] == "global") {
+
+		}
+		else if (zoomLevel[0] == "continental") {
+			$(".newObjectButton").css("display","none")
+		}
+		else if (zoomLevel[0] == "territorial") {
+
+				$(".newObjectButton").css("display","inline")
+		}
+
+	}
+
+//End of Contributing Zoom Funtions
+
+
+//Object Funtions
+
+	function deselect() {
+
 		for (i = 0; i < rendered_forts.length; i++) {
-			createDate = Date.parse(rendered_forts[i][0]["date"].slice(0,-5));
-			if (createDate.getTime() <= date.getTime()) {
-				newRenderedForts.push(rendered_forts[i]);
+
+			if (rendered_forts[i][1] == "sel") {
+
+				rendered_forts[i][1] = "selpast"
 			}
 		}
 		for (i = 0; i < rendered_encampments.length; i++) {
-			createDate = Date.parse(rendered_encampments[i][0]["date"].slice(0,-5));
-			if (createDate.getTime() <= date.getTime()) {
-				newRenderedEncampments.push(rendered_encampments[i]);
+
+			if (rendered_encampments[i][1] == "sel") {
+
+				rendered_encampments[i][1] = "selpast"
 			}
 		}
-		rendered_forts = newRenderedForts
-		rendered_encampments = newRenderedEncampments
+		for (i = 0; i < seapoints.length; i++) {
+
+			if (seapoints[i][1] == "sel") {
+
+				seapoints[i][1] = "selpast"
+			}
+		}
+
 	}
 
-// I validate this serverside, don't get cheeky
+	function createObject(object) {
 
-	function calculateCost(StartingPoint, EndingPoint) {
+		$(".newObjectButton").css("display", "none")
+		$(".fields").css("display","inline")
 
-		var canvas = document.getElementById("color_territory_active_canvas")
-		var context = canvas.getContext("2d")
-		var activeImage = document.getElementById("color_territory_active_image");
-		context.drawImage(activeImage, 0, 0);
+		$(".fields").not("#" + object + "_fields").remove()
+		if ($(".fields").length > 1) { 
 
-		if (StartingPoint[1] > EndingPoint[1]) {
-			var temp = StartingPoint[1];
-			StartingPoint[1] = EndingPoint[1]
-			EndingPoint[1] = temp			
+			$($(".fields")[1]).remove()
 		}
-		if (StartingPoint[0] > EndingPoint[0]) {
-			var temp = StartingPoint[0];
-			StartingPoint[0] = EndingPoint[0]
-			EndingPoint[0] = temp			
+
+		$("#cancelCreation").css("display","inline")
+
+		if (object == "fort") {
+
+			placeObject(object)
 		}
-		console.log(StartingPoint,EndingPoint)
+		else if (object == "encampment") {
 
-		var total = 0;
-		var percentInTerritory = [];
-		var currentTerritory = [];
-		var midPoint = [];
-		var checkNext = "t";
+			placeObject(object)
+		}
+		else if (object == "trade") {
 
-		var mapData = context.getImageData(0,0,$("#color_territory_active_canvas").width(), $("#color_territory_active_canvas").height());
+			mapTrade(object)
+		}
 
-		if (Math.abs(StartingPoint[1] - EndingPoint[1]) >= Math.abs(StartingPoint[0] - EndingPoint[0])) {
-			var slope = (StartingPoint[1] - EndingPoint[1])/(StartingPoint[0] - EndingPoint[0]);
-			for (i = StartingPoint[0]; i <= EndingPoint[0]; i++ ) {
-				for (y = 0; y < slope - 1; y++) {
-					var imageData = [mapData["data"][3*(Math.round((3508*(StartingPoint[1] + i)) + (StartingPoint[0] + (i*slope) + y)))], mapData["data"][3*(Math.round((3508*(StartingPoint[1] + i)) + (StartingPoint[0] + (i*slope) + y))) + 1], mapData["data"][3*(Math.round((3508*(StartingPoint[1] + i)) + (StartingPoint[0] + (i*slope) + y))) + 2]];
-					if (0x00 == imageData[0] && 0x00 == imageData[1] && 0x00 == imageData[2]) {
-						checkNext = "t";
-						midPoint[1] = StartingPoint[1] + (Math.round(slope*(i - 1))+y);
-						currentTerritory.push(Math.abs(midPoint[0] - midPoint[1])/2); 
-						percentInTerritory.push(currentTerritory);
-					}
-					else if (checkNext == "t") {
-						currentTerritory = [];
-						midPoint = [];
-						var bellowTerritory
-						for (var l = 0; l < colors.length; l++) {
-							if (colors[l][1][0] == imageData[0] && colors[l][1][1] == imageData[1] && colors[l][1][2] == imageData[2]) {
-								bellowTerritory = colors[l];
-							}
-						}
-						currentTerritory.push(bellowTerritory);
-						currentTerritory.push(1);
-						midPoint[0] = StartingPoint[1] + (Math.round(slope*(i))+y); 
-						checkNext = "f"
-					}
-					else {
-						currentTerritory[1]++;
-					}
+	}
+	
+	function changeSel(object,indexInList) {
+
+		deselect()
+			if (object == "seapoint") {
+				seapoints[indexInList][1] = "sel"
+			}
+			else if (object.id.replace(/[0-9]/g, '') == "fort") {
+
+				rendered_forts[indexInList][1] = "sel"
+
+			}
+			else if (object.id.replace(/[0-9]/g, '') == "encampment") {
+
+				rendered_encampments[indexInList][1] = "sel"
+
+			}
+
+			renderObject("encampment",zoomLevel,true);
+			renderObject("fort",zoomLevel);
+	}
+
+	function selectFirst() {
+
+		deselect()
+			for (var i = 0; i < rendered_forts.length; i++) {
+
+				if (typeof itinerary[itinerary.length - 1][rendered_forts[i][0].date.toString()] !== 'undefined') {
+
+					rendered_forts[i][1] = "sel"
+
+					return	
 				}
 			}
-			midPoint[1] = StartingPoint[1] + (Math.round(slope*(EndingPoint[0] - 1))+slope)
-			currentTerritory.push(Math.abs(midPoint[0] - midPoint[1])/2); 
-			percentInTerritory.push(currentTerritory);
-			currentTerritory = [];
-			midPoint = [];
-		}
-		else {
-			var slope = (StartingPoint[0] - EndingPoint[0])/(StartingPoint[1] - EndingPoint[1]);
-			for (i = StartingPoint[1]; i <= EndingPoint[1]; i++ ) {
-				for (y = 0; y < slope - 1; y++) {
-					var offsetFactor = -1;
-					if (StartingPoint[1] + i == 0) {
-						offsetFactor = 0;
-					}
-					//console.log(i - StartingPoint[1])
-					//console.log(4*((3508*(StartingPoint[1] + (i - StartingPoint[1]) + offsetFactor)) + (StartingPoint[0] + ((i - StartingPoint[1]) * Math.round(slope)) + y)) )
-					console.log(mapData)
-					var imageData = [mapData["data"][4*((3508*(StartingPoint[1] + (i - StartingPoint[1]) + offsetFactor)) + (StartingPoint[0] + ((i - StartingPoint[1]) * Math.round(slope)) + y))], mapData["data"][4*((3508*(StartingPoint[1] + (i - StartingPoint[1]) + offsetFactor)) + (StartingPoint[0] + ((i - StartingPoint[1]) * Math.round(slope)) + y)) + 1], mapData["data"][4*((3508*(StartingPoint[1] + (i - StartingPoint[1]) + offsetFactor)) + (StartingPoint[0] + ((i - StartingPoint[1]) * Math.round(slope)) + y)) + 2]];
-					if (0x00 == imageData[0] && 0x00 == imageData[1] && 0x00 == imageData[2]) {
-						checkNext = "t";
-						midPoint[1] = StartingPoint[1] + i; 
-						currentTerritory.push(Math.abs(midPoint[0] - midPoint[1])/2);
-						percentInTerritory.push(currentTerritory);
-					}
-					else if (checkNext == "t") {
-						currentTerritory = [];
-						midPoint = [];
-						var bellowTerritory
-						for (var l = 0; l < colors.length; l++) {
-							if (colors[l][1][0] == imageData[0] && colors[l][1][1] == imageData[1] && colors[l][1][2] == imageData[2]) {
-								bellowTerritory = colors[l];
-							}
-						}
-						console.log(bellowTerritory)
-						currentTerritory.push(bellowTerritory);
-						currentTerritory.push(1);
-						midPoint[0] = StartingPoint[1] + i; 
-						checkNext = "f"
-					}
-					else {
-						currentTerritory[1]++;
-					}
+			for (i = 0; i < seapoints.length; i++) {
+
+				if (seapoints[i][0]["xco"] == itinerary[itinerary.length - 1][0]["xco"]) {
+
+					seapoints[seapoints.length - 1][1] = "sel"
+					return	
 				}
 			}
-			midPoint[1] = StartingPoint[1] + Math.abs(StartingPoint[1] - EndingPoint[1])
-			currentTerritory.push(Math.abs(midPoint[0] - midPoint[1])/2); 
-			percentInTerritory.push(currentTerritory);
-			currentTerritory = [];
-			midPoint = [];
+			for (var i = 0; i < rendered_encampments.length; i++) {
+
+				if (typeof itinerary[itinerary.length - 1][rendered_encampments[i][0].date.toString()] !== 'undefined') {
+
+					rendered_encampments[i][1] = "sel"
+					return	
+				}
+			}
+
+			changeLeg[0] = false
+	}
+
+	function mapTrade(object) {
+		trading = true
+		
+		$("#alertConfirm").click( function() {
+
+			if (alerting == "seapoint") {
+
+				deselect()
+				if (changeLeg[0] == false) {
+					itinerary.push([{xco:alertContext.pageX,yco:alertContext.pageY,territory:"global"},"seapoint"])
+					seapoints.push([{xco:alertContext.pageX,yco:alertContext.pageY,territory:"global"},"sel"])
+				}
+				else if (changeLeg[0] == true) {
+
+					itinerary[changeLeg[1]] = [{xco:alertContext.pageX,yco:alertContext.pageY},"seapoint"]
+					seapoints[changeLeg[2]] = [{xco:alertContext.pageX,yco:alertContext.pageY},"sel"]
+
+					if (changeLeg[3] == "encampment") {
+						rendered_encampments[changeLeg[2]].splice(1,1)
+					}
+					else if (changeLeg[3] == "fort") {
+						rendered_forts[changeLeg[2]].splice(1,1)
+					}
+
+				}
+				renderObject("encampment",zoomLevel,true);
+				renderObject("fort",zoomLevel);
+			}
+	
+		});
+
+		if (zoomLevel[0] == "territorial") {
+
+			$("svg").click( function(e) {
+
+				$("#renderedSprites").css("pointer-events","auto")
+
+				if ($(document.elementFromPoint(e.pageX, e.pageY)).attr("class") == "renderedSprite" && zoomLevel[0] != "global") {
+
+					var checkpoint = document.elementFromPoint(e.pageX, e.pageY)
+
+					var objectInCompleteList
+					var completeList
+
+					if (checkpoint.id.replace(/[0-9]/g, '') == "fort") {
+
+						completeList = rendered_forts
+
+						for (var i = 0; i < rendered_forts.length; i++) {
+
+							if (rendered_forts[i][0].date == visibleObjects[checkpoint.id.replace(/[0-9]/g, '')][parseInt(checkpoint.id.replace(/\D/g,''))][0].date) {
+
+								objectInCompleteList = i;
+
+								if (rendered_forts[i][1] == 'selpast' || rendered_forts[i][1] == 'sel') {
+
+									for (y = 0; y < itinerary.length; y++) {
+
+										if ((typeof itinerary[y][rendered_forts[i][0].date.toString()] !== "undefined" &&  rendered_forts[i][1] == 'selpast') || (itinerary[y][rendered_forts[i][0].date.toString()] !== "undefined" &&  rendered_forts[i][1] == 'sel' && y - 1 == itinerary.length)) {
+
+											changeSel(checkpoint,i)
+											changeLeg = [true,y,i,"fort"]
+										}
+										else if (typeof itinerary[y][rendered_forts[i][0].date.toString()] !== "undefined" && rendered_forts[i][1] == 'sel') {
+
+											selectFirst()
+											changeLeg[0] = false
+										}
+										
+									}
+								}
+							}
+						}
+					}
+
+					else if (checkpoint.id.replace(/[0-9]/g, '') == "encampment") {
+
+						completeList = rendered_encampments
+
+						for (var i = 0; i < rendered_encampments.length; i++) {
+
+							if (rendered_encampments[i][0].date == visibleObjects[checkpoint.id.replace(/[0-9]/g, '')][parseInt(checkpoint.id.replace(/\D/g,''))][0].date) {
+
+								objectInCompleteList = i;
+
+								if (rendered_encampments[i][1] == 'selpast' || rendered_encampments[i][1] == 'sel') {
+
+									for (y = 0; y < itinerary.length; y++) {
+
+										if ((typeof itinerary[y][rendered_encampments[i][0].date.toString()] !== "undefined" &&  rendered_encampments[i][1] == 'selpast') || (itinerary[y][rendered_encampments[i][0].date.toString()] !== "undefined" &&  rendered_encampments[i][1] == 'sel' && y - 1 == itinerary.length)) {
+
+											changeSel(checkpoint,i)
+											changeLeg = [true,y,i,"encampment"]
+										}
+										else if (typeof itinerary[y][rendered_encampments[i][0].date.toString()] !== "undefined" && rendered_encampments[i][1] == 'sel') {
+											selectFirst()
+											changeLeg[0] = false
+										}
+							
+									}
+								}
+							}
+						}
+					}
+
+					if (typeof completeList[objectInCompleteList][1] === 'undefined'){
+						$("#create_leg").click();
+
+
+						//Put the thing in itinerary under its date - Fucked up shit if you ask me
+
+						var idDate = visibleObjects[checkpoint.id.replace(/[0-9]/g, '')][parseInt(checkpoint.id.replace(/\D/g,''))][0].date.toString()
+						var objectInfo = visibleObjects[checkpoint.id.replace(/[0-9]/g, '')][parseInt(checkpoint.id.replace(/\D/g,''))][0]
+						var tempObject =  {}
+						tempObject[idDate] = objectInfo
+						if (changeLeg[0] == false) {
+
+							itinerary.push(tempObject)
+
+						}
+						else {
+
+							itinerary[changeLeg[1]] = tempObject
+
+
+							if (changeLeg[3] == "encampment") {
+								rendered_encampments[changeLeg[2]].splice(1,1)
+							}
+							else if (changeLeg[3] == "fort") {
+								rendered_forts[changeLeg[2]].splice(1,1)
+							}
+							else if (changeLeg[3] == "seapoint") {
+							        seapoints.splice(changeLeg[2], 1);
+							}
+						}
+
+						deselect()
+
+						for (i = 0; i < rendered_forts.length; i++) {
+							if (rendered_forts[i][0].date == visibleObjects[checkpoint.id.replace(/[0-9]/g, '')][parseInt(checkpoint.id.replace(/\D/g,''))][0].date) {
+								rendered_forts[i].push("sel")
+								if (changeLeg[0] == true) {
+									changeLeg[3] = "fort"
+									changeLeg[2] = i
+								}
+
+
+							}
+						}
+						for (i = 0; i < rendered_encampments.length; i++) {
+							if (rendered_encampments[i][0].date == visibleObjects[checkpoint.id.replace(/[0-9]/g, '')][parseInt(checkpoint.id.replace(/\D/g,''))][0].date) {
+								rendered_encampments[i].push("sel")
+								if (changeLeg[0] == true) {
+									changeLeg[3] = "encampment"
+									changeLeg[2] = i
+								}	
+
+							}
+						}
+					}
+
+				}
+				renderObject("encampment",zoomLevel,true);
+				renderObject("fort",zoomLevel);
+
+				renderTrade(itinerary)
+
+				$("#renderedSprites").css("pointer-events","none")
+			})
+
 		}
-		for (i = 0; i < percentInTerritory.length; i++) {
-			var distortionFactor = 0.0025*(Math.abs(1754 - percentInTerritory[i][2])) + .9722;
-			if (percentInTerritory[i][0] !== undefined) {
-				var infaFactor = colors[percentInTerritory[i][0]][3];
-				total = total + (0.035*8.8642857143*distortionFactor*infaFactor*percentInTerritory[i][1]);
+	}
+
+	function renderTrade(itinerary) {
+
+		var oldxco
+		var oldyco
+		var oldObject
+
+		for (var i = 0; i < itinerary.length; i++) {
+			
+
+			var currentObject
+			var xco
+			var yco
+
+ 			if (typeof itinerary[i][1] === "undefined") {
+
+				for (var key in itinerary[i]) {
+
+					xco = itinerary[i][key]["xco"] + colors[itinerary[i][key]["territory"].replace("#","")][1][0]
+					yco = itinerary[i][key]["yco"] + colors[itinerary[i][key]["territory"].replace("#","")][1][1]
+				}
+				currentObject = itinerary[i][key]
 			}
 			else {
-				total = total + (0.0035*8.8642857143*distortionFactor*percentInTerritory[i][1]);
+
+				xco = itinerary[i][0]["xco"]
+				yco = itinerary[i][0]["yco"]
+
+				currentObject = itinerary[i][0]
 			}
+			if (i != 0) {
+
+				if (zoomLevel[0] == "global") {
+
+					if (typeof currentObject["territory"] !== "undefined") {
+
+					xco = xco + colors[currentObject["territory"].replace("#","")][1][0] 
+					yco = yco + colors[currentObject["territory"].replace("#","")][1][1]  
+
+					}
+
+					var transform = parseFloat($("#globalSVG").children("g").attr("transform").split(" ")[2].replace(")",""))
+					var scaleFactor =  parseFloat($("#globalSVG").children("g").attr("transform").split(") ")[0].replace("scale(",""))
+					var topLine = $("#globalSVG").children("g").attr("transform").split(", -")[0] + ", " + transform + 1/scaleFactor + ")" 
+					var bottomLine = $("#globalSVG").children("g").attr("transform").split(", -")[0] + ", " + transform - 1/scaleFactor + ")"
+
+					$("#globalSVG").append($("#globalSVG").children("g").clone().attr("id","traderoute").html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + (oldxco + xco)/4 + ' ' + (oldyco + yco)/4 +', ' +(oldxco + xco)/0.75 + ' ' + (oldyco + yco)/0.75+ ', ' + xco+ ' ' +yco + '" stroke="white"/>'))
+
+					$("#globalSVG").append($("#globalSVG").children("g").clone().attr("id","traderoute").attr("transform",bottomLine).html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + (oldxco + xco)/4 + ' ' + (oldyco + yco)/4 +', ' +(oldxco + xco)/0.75 + ' ' + (oldyco + yco)/0.75+ ', ' + xco+ ' ' +yco + '" stroke="black"/>'))
+
+					$("#globalSVG").append($("#globalSVG").children("g").clone().attr("id","traderoute").attr("transform",topLine).html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + (oldxco + xco)/4 + ' ' + (oldyco + yco)/4 +', ' +(oldxco + xco)/0.75 + ' ' + (oldyco + yco)/0.75+ ', ' + xco+ ' ' +yco + '" stroke="black"/>')) 
+
+				}
+				if (zoomLevel[0] == "continental") {
+					console.log(zoomLevel)
+					if (typeof itinerary[i][1] === "undefined") {
+
+						for (var y = 0; y < continents[zoomLevel[1]].length; y++) {
+
+							if (continents[zoomLevel[1]][y] == currentObject["territory"].replace("#","") || continents[zoomLevel[1]][y] == oldObject["territory"].replace("#","")) {
+
+								xco = xco + colors[currentObject["territory"].replace("#","")][1][0] - color_key[zoomLevel[1]][1][0]
+								yco = yco + colors[currentObject["territory"].replace("#","")][1][1] - color_key[zoomLevel[1]][1][1]
+								var transform = parseFloat($("#continentalSVG").children("g").attr("transform").split(" ")[2].replace(")",""))
+								var scaleFactor = parseFloat($("#continentalSVG").children("g").attr("transform").split(") ")[0].replace("scale(",""))
+								var topLine = $("#continentalSVG").children("g").attr("transform").split(", -")[0] + ", " + transform + 1/scaleFactor + ")" 
+								var bottomLine = $("#continentalSVG").children("g").attr("transform").split(", -")[0] + ", " + transform - 1/scaleFactor + ")"
+								$("#continentalSVG").append($("#continentalSVG").children("g").clone().attr("id","traderoute").html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + (oldxco + xco)/4 + ' ' + (oldyco + yco)/4 +', ' +(oldxco + xco)/0.75 + ' ' + (oldyco + yco)/0.75+ ', ' + xco+ ' ' +yco + '" stroke="white"/>'))
+
+								$("#continentalSVG").append($("#continentalSVG").children("g").clone().attr("id","traderoute").attr("transform",bottomLine).html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + (oldxco + xco)/4 + ' ' + (oldyco + yco)/4 +', ' +(oldxco + xco)/0.75 + ' ' + (oldyco + yco)/0.75+ ', ' + xco+ ' ' +yco + '" stroke="black"/>'))
+
+								$("#continentalSVG").append($("#continentalSVG").children("g").clone().attr("id","traderoute").attr("transform",topLine).html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + (oldxco + xco)/4 + ' ' + (oldyco + yco)/4 +', ' +(oldxco + xco)/0.75 + ' ' + (oldyco + yco)/0.75+ ', ' + xco+ ' ' +yco + '" stroke="black"/>')) 
+							}
+						}
+					}
+
+				}
+				if (zoomLevel[0] == "territorial") {
+					if (typeof itinerary[i][1] === "undefined") {
+						if (zoomLevel[1] == currentObject["territory"] || zoomLevel[1] == oldObject["territory"]) {
+
+							var transform = parseFloat($("#territorialSVG").children("g").attr("transform").split(" ")[2].replace(")",""))
+							var scaleFactor = parseFloat($("#territorialSVG").children("g").attr("transform").split(") ")[0].replace("scale(",""))
+							var topLine = $("#territorialSVG").children("g").attr("transform").split(", -")[0] + ", " + (transform + (1/scaleFactor)) + ")" 
+							var bottomLine = $("#territorialSVG").children("g").attr("transform").split(", -")[0] + ", " + (transform - (1/scaleFactor)) + ")"
+
+							console.log(oldxco,oldyco )
+
+							$("#territorialSVG").append($("#territorialSVG").children("g").clone().attr("id","traderoute").html('<line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(255,0,0);stroke-width:2" />'))
+
+							$("#territorialSVG").append($("#territorialSVG").children("g").clone().attr("id","traderoute").attr("transform",bottomLine).html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + ((oldxco + xco)/4) + ' ' + ((oldyco + yco)/4) +', ' +((oldxco + xco)/0.75) + ' ' + ((oldyco + yco)/0.75)+ ', ' + xco+ ' ' +yco + '" stroke="black"/>'))
+
+							$("#territorialSVG").append($("#territorialSVG").children("g").clone().attr("id","traderoute").attr("transform",topLine).html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + ((oldxco + xco)/4) + ' ' + ((oldyco + yco)/4) +', ' +((oldxco + xco)/0.75) + ' ' + ((oldyco + yco)/0.75)+ ', ' + xco+ ' ' +yco + '" stroke="black"/>')) 
+
+						}
+					}
+				}
+
+			}
+			oldxco = xco
+			oldyco = yco
+			oldObject = currentObject
+
 		}
-		return total;
-	}
-	console.log(calculateCost([100,100],[300,301]))
-	function calculate_lines(itinerary, i,switchback,level,gsf) {
-				var sxco;
-				var syco;
-				var exco;
-				var eyco;
-				var fixco;
-				var fiyco;
-				var fiixco;
-				var fiiyco;
-				var gradient;
-				var map_offset = $("#map").offset();
-				if (itinerary[i] != "nil" && (itinerary[i - 1] != "nil" && itinerary[i - 1] != "nil" != itinerary[itinerary.length - 1])) {
-					if (i != 0) {
-						var fortTerritory
-						var lastFortTerritory; 	
-						for (g = 0; g < colors.length; g++) {
-							if (colors[g][0] == itinerary[i][0]["territory"]) {
-								fortTerritory = g; 	
-							}
-							if (colors[g][0] == itinerary[i - 1][0]["territory"]) {
-								lastFortTerritory = g; 	
-							}
-						}
-						//var cost = calculateCost([itinerary[i-1][0]["xco"] + colors[lastFortTerritory][2][0],itinerary[i-1][0]["yco"] + colors[lastFortTerritory][2][1]], [itinerary[i][0]["xco"] + colors[fortTerritory][2][0],itinerary[i][0]["yco"] + colors[fortTerritory][2][1]])
-						itinerary[i] = itinerary[i].slice(0,2);
-						itinerary[i - 1] = itinerary[i - 1].slice(0,2);
-						if (level == "globe") {
-							if (switchback != "f") {
-								level = switchback;
-								switchback = "f";
-							}
-							for (g = 0; g < continents.length; g++) {
-								for (m = 0; m < continents[g].length; m++) {
-									if (colors[continents[g][m]][0] == itinerary[i][0]["territory"]) {
-										itinerary[i].push(continents[g][m], g);
-									}
-									if (colors[continents[g][m]][0] == itinerary[i - 1][0]["territory"]) {
-										itinerary[i - 1].push(continents[g][m], g);
-									}
-								}
-							}
-							fixco = (itinerary[i - 1][0]["xco"]*gsf) + (colors[itinerary[i - 1][2]][2][0] - color_key[itinerary[i - 1][3]][2][0])* gsf + (color_key[itinerary[i - 1][3]][2][0] *gsf);
-							fiyco = (itinerary[i - 1][0]["yco"]*gsf) + (colors[itinerary[i - 1][2]][2][1] - color_key[itinerary[i - 1][3]][2][1]) * gsf + (color_key[itinerary[i - 1][3]][2][1] *gsf);
-							fiixco = (itinerary[i][0]["xco"]*gsf) + (colors[itinerary[i][2]][2][0] - color_key[itinerary[i][3]][2][0]) * gsf + (color_key[itinerary[i][3]][2][0] *gsf);
-							fiiyco = (itinerary[i][0]["yco"]*gsf) + (colors[itinerary[i][2]][2][1] - color_key[itinerary[i][3]][2][1]) * gsf + (color_key[itinerary[i][3]][2][1] *gsf);
-						}
-						if (level == "continent") {
-							if (switchback != "f") {
-								level = switchback;
-								switchback = "f";
-							}
-							current_continent = color_key[clicked[1]][0];
-							continent_index = clicked[1];
-							var continent_offset = $(current_continent).offset();
-							var sf = $(current_continent).width()/color_key[clicked[1]][3][0];
-							for (m = 0; m < continents[clicked[1]].length; m++) {
-								if (colors[continents[clicked[1]][m]][0] == itinerary[i][0]["territory"]) {
-									itinerary[i].push(continents[clicked[1]][m]);
-								}
-								if (colors[continents[clicked[1]][m]][0] == itinerary[i - 1][0]["territory"]) {
-									itinerary[i - 1].push(continents[clicked[1]][m]);
-								}
-							}
-							if (itinerary[i][2] !== undefined && itinerary[i - 1][2] !== undefined) {
-
-								fiixco = (itinerary[i][0]["xco"] * sf) + (continent_offset.left - map_offset.left) + ((colors[itinerary[i][2]][2][0] - color_key[clicked[1]][2][0])*sf);
-								fiiyco = (itinerary[i][0]["yco"] * sf) + ((colors[itinerary[i][2]][2][1] - color_key[clicked[1]][2][1])*sf) + (continent_offset.top - map_offset.top);
-								fixco = (itinerary[i - 1][0]["xco"] * sf) + (continent_offset.left - map_offset.left) + ((colors[itinerary[i - 1][2]][2][0] - color_key[clicked[1]][2][0])*sf);
-								fiyco = (itinerary[i - 1][0]["yco"] * sf) + ((colors[itinerary[i - 1][2]][2][1] - color_key[clicked[1]][2][1])*sf) + (continent_offset.top - map_offset.top);
-							}
-							else if (itinerary[i][2] !== undefined && itinerary[i - 1][2] === undefined) {
-								for (g = 0; g < continents.length; g++) {
-									for (m = 0; m < continents[g].length; m++) {
-										if (colors[continents[g][m]][0] == itinerary[i][0]["territory"]) {
-											itinerary[i][2] = continents[g][m]
-											itinerary[i][3] = g;
-										}
-										if (colors[continents[g][m]][0] == itinerary[i - 1][0]["territory"]) {
-											itinerary[i - 1][2] = continents[g][m]
-											itinerary[i - 1][3] = g;
-										}
-									}
-								}
-								fixco = (itinerary[i][0]["xco"] * sf) + (continent_offset.left - map_offset.left) + ((colors[itinerary[i][2]][2][0] - color_key[itinerary[i][3]][2][0])*sf) + (color_key[itinerary[i][3]][2][0] - color_key[continent_index][2][0])*sf;
-								fiyco = (itinerary[i][0]["yco"] * sf) + ((colors[itinerary[i][2]][2][1] - color_key[itinerary[i][3]][2][1])*sf) + (continent_offset.top - map_offset.top) + (color_key[itinerary[i][3]][2][1] - color_key[continent_index][2][1])*sf;
-								fiixco = (itinerary[i - 1][0]["xco"] * sf) + (continent_offset.left - map_offset.left) + ((colors[itinerary[i - 1][2]][2][0] - color_key[clicked[1]][2][0])*sf);
-								fiiyco = (itinerary[i - 1][0]["yco"] * sf) + ((colors[itinerary[i - 1][2]][2][1] - color_key[clicked[1]][2][1])*sf) + (continent_offset.top - map_offset.top);	
-							gradient = [true,"exco"];
-							}
-							else if (itinerary[i][2] === undefined && itinerary[i - 1][2] !== undefined) {
-								for (g = 0; g < continents.length; g++) {
-									for (m = 0; m < continents[g].length; m++) {
-										if (colors[continents[g][m]][0] == itinerary[i][0]["territory"]) {
-											itinerary[i][2] = continents[g][m]
-											itinerary[i][3] = g;
-										}
-										if (colors[continents[g][m]][0] == itinerary[i - 1][0]["territory"]) {
-											itinerary[i - 1][2] = continents[g][m]
-											itinerary[i - 1][3] = g;
-										}
-									}
-								}
-								fixco = (itinerary[i][0]["xco"] * sf) + (continent_offset.left - map_offset.left) + ((colors[itinerary[i][2]][2][0] - color_key[clicked[1]][2][0])*sf);
-								fiyco = (itinerary[i][0]["yco"] * sf) + ((colors[itinerary[i][2]][2][1] - color_key[clicked[1]][2][1])*sf) + (continent_offset.top - map_offset.top);
-								fiixco = (itinerary[i - 1][0]["xco"] * sf) + (continent_offset.left - map_offset.left) + ((colors[itinerary[i - 1][2]][2][0] - color_key[itinerary[i][3]][2][0])*sf) + (color_key[itinerary[i][3]][2][0] - color_key[continent_index][2][0])*sf;
-								fiiyco = (itinerary[i - 1][0]["yco"] * sf) + ((colors[itinerary[i - 1][2]][2][1] - color_key[itinerary[i][3]][2][1])*sf) + (continent_offset.top - map_offset.top) + (color_key[itinerary[i][3]][2][1] - color_key[continent_index][2][1])*sf;
-							gradient = [true,"sxco"];
-							}
-							else if (itinerary[i][2] === undefined && itinerary[i - 1][2] === undefined) {
-								for (g = 0; g < continents.length; g++) {
-									for (m = 0; m < continents[g].length; m++) {
-										if (colors[continents[g][m]][0] == itinerary[i][0]["territory"]) {
-											itinerary[i][2] = continents[g][m]
-											itinerary[i][3] = g;
-										}
-										if (colors[continents[g][m]][0] == itinerary[i - 1][0]["territory"]) {
-											itinerary[i - 1][2] = continents[g][m]
-											itinerary[i - 1][3] = g;
-										}
-									}
-								}
-								fiixco = (itinerary[i][0]["xco"] * sf) + (continent_offset.left - map_offset.left) + ((colors[itinerary[i][2]][2][0] - color_key[itinerary[i][3]][2][0])*sf) + (color_key[itinerary[i][3]][2][0] - color_key[continent_index][2][0])*sf;
-								fiiyco = (itinerary[i][0]["yco"] * sf) + ((colors[itinerary[i][2]][2][1] - color_key[itinerary[i][3]][2][1])*sf) + (continent_offset.top - map_offset.top) + (color_key[itinerary[i][3]][2][1] - color_key[continent_index][2][1])*sf;
-								fixco = (itinerary[i - 1][0]["xco"] * sf) + (continent_offset.left - map_offset.left) + ((colors[itinerary[i - 1][2]][2][0] - color_key[itinerary[i][3]][2][0])*sf) + (color_key[itinerary[i][3]][2][0] - color_key[continent_index][2][0])*sf;
-								fiyco = (itinerary[i - 1][0]["yco"] * sf) + ((colors[itinerary[i - 1][2]][2][1] - color_key[itinerary[i][3]][2][1])*sf) + (continent_offset.top - map_offset.top) + (color_key[itinerary[i][3]][2][1] - color_key[continent_index][2][1])*sf;
-							}
-						}
-						if (level == "territory") {
-							if (switchback != "f") {
-								level = switchback;
-								switchback = "f";
-							}
-							fixco = itinerary[i - 1][1][0];
-							fiyco = itinerary[i - 1][1][1];
-							fiixco = itinerary[i][1][0];
-							fiiyco = itinerary[i][1][1];
-							var current_continent;
-							var continent_index;
-							var territory_index;
-							for (o = 0; o < continents.length; o++) {
-								for (u = 0; u < continents[o].length; u++) {
-									if (continents[o][u] == clicked[1]) {
-										current_continent = color_key[o][0];
-										continent_index = o;
-										territory_index = continents[o][u];
-									}
-								}
-							}
-							var tsf = $(colors[territory_index][0]).width()/parseInt($(colors[territory_index][0]).css("max-width"));
-							var continent_offset = $(current_continent).offset();
-							var sf = $(current_continent).width()/color_key[continent_index][3][0];
-							if (colors[territory_index][0] == itinerary[i][0]["territory"]) {
-								itinerary[i].push(territory_index);
-							}
-							if (colors[territory_index][0] == itinerary[i - 1][0]["territory"]) {
-								itinerary[i - 1].push(territory_index);
-							}
-							if (itinerary[i][2] !== undefined && itinerary[i - 1][2] !== undefined) {
-
-								fixco = itinerary[i - 1][1][0];
-								fiyco = itinerary[i - 1][1][1];
-								fiixco = itinerary[i][1][0];
-								fiiyco = itinerary[i][1][1];
-							}
-							else if (itinerary[i][2] !== undefined && itinerary[i - 1][2] === undefined) {
-								for (g = 0; g < continents.length; g++) {
-									for (m = 0; m < continents[g].length; m++) {
-										if (colors[continents[g][m]][0] == itinerary[i][0]["territory"]) {
-											itinerary[i][2] = continents[g][m]
-											itinerary[i][3] = g;
-										}
-										if (colors[continents[g][m]][0] == itinerary[i - 1][0]["territory"]) {
-											itinerary[i - 1][2] = continents[g][m]
-											itinerary[i - 1][3] = g;
-										}
-									}
-								}
-								fixco = ((itinerary[i - 1][0]["xco"]) + (continent_offset.left - map_offset.left) + ((colors[itinerary[i - 1][2]][2][0] - color_key[itinerary[i - 1][3]][2][0])) + (color_key[itinerary[i - 1][3]][2][0] - color_key[continent_index][2][0]))*tsf;
-								fiyco = ((itinerary[i - 1][0]["yco"]) + ((colors[itinerary[i - 1][2]][2][1] - color_key[itinerary[i - 1][3]][2][1])) + (continent_offset.top - map_offset.top) + (color_key[itinerary[i - 1][3]][2][1] - color_key[continent_index][2][1]))*tsf;
-								fiixco = itinerary[i][1][0];
-								fiiyco = itinerary[i][1][1];
-								gradient = [true,"sxco"];
-								
-							}
-							else if (itinerary[i][2] === undefined && itinerary[i - 1][2] !== undefined) {
-								for (g = 0; g < continents.length; g++) {
-									for (m = 0; m < continents[g].length; m++) {
-										if (colors[continents[g][m]][0] == itinerary[i][0]["territory"]) {
-											itinerary[i][2] = continents[g][m]
-											itinerary[i][3] = g;
-										}
-										if (colors[continents[g][m]][0] == itinerary[i - 1][0]["territory"]) {
-											itinerary[i - 1][2] = continents[g][m]
-											itinerary[i - 1][3] = g;
-										}
-									}
-								}
-								fixco = itinerary[i - 1][1][0];
-								fiyco = itinerary[i - 1][1][1];
-								fiixco = ((itinerary[i][0]["xco"]) + (continent_offset.left - map_offset.left) + ((colors[itinerary[i][2]][2][0] - color_key[itinerary[i][3]][2][0])) + (color_key[itinerary[i][3]][2][0] - color_key[continent_index][2][0]))*tsf;
-								fiiyco = ((itinerary[i][0]["yco"]) + ((colors[itinerary[i][2]][2][1] - color_key[itinerary[i][3]][2][1])) + (continent_offset.top - map_offset.top) + (color_key[itinerary[i][3]][2][1] - color_key[continent_index][2][1]))*tsf;
-								gradient = [true,"exco"];
-							}
-							else if (itinerary[i][2] === undefined && itinerary[i - 1][2] === undefined) {
-								for (g = 0; g < continents.length; g++) {
-									for (m = 0; m < continents[g].length; m++) {
-										if (colors[continents[g][m]][0] == itinerary[i][0]["territory"]) {
-											itinerary[i][2] = continents[g][m]
-											itinerary[i][3] = g;
-										}
-										if (colors[continents[g][m]][0] == itinerary[i - 1][0]["territory"]) {
-											itinerary[i - 1][2] = continents[g][m]
-											itinerary[i - 1][3] = g;
-										}
-									}
-								}
-								fixco = ((itinerary[i - 1][0]["xco"]) + (continent_offset.left - map_offset.left) + ((colors[itinerary[i - 1][2]][2][0] - color_key[itinerary[i - 1][3]][2][0])) + (color_key[itinerary[i - 1][3]][2][0] - color_key[continent_index][2][0]))*tsf;
-								fiyco = ((itinerary[i - 1][0]["yco"]) + ((colors[itinerary[i - 1][2]][2][1] - color_key[itinerary[i - 1][3]][2][1])) + (continent_offset.top - map_offset.top) + (color_key[itinerary[i - 1][3]][2][1] - color_key[continent_index][2][1]))*tsf;
-								fiixco = ((itinerary[i][0]["xco"]) + (continent_offset.left - map_offset.left) + ((colors[itinerary[i][2]][2][0] - color_key[itinerary[i][3]][2][0])) + (color_key[itinerary[i][3]][2][0] - color_key[continent_index][2][0]))*tsf;
-								fiiyco = ((itinerary[i][0]["yco"]) + ((colors[itinerary[i][2]][2][1] - color_key[itinerary[i][3]][2][1])) + (continent_offset.top - map_offset.top) + (color_key[itinerary[i][3]][2][1] - color_key[continent_index][2][1]))*tsf;
-							}
-						}
-					}
-				}
-						var a = 32;
-						if (level == "globe") {
-							a = a * gsf;
-						}
-						else if (level == "continent") {
-							var sf = $(current_continent).width()/color_key[clicked[1]][3][0];
-							a = a*sf
-						}
-						if (fixco > fiixco) {
-							sxco = fixco;
-							exco = (fiixco + a);
-							if (fiyco > fiiyco) {
-								syco = fiyco
-								eyco = (fiiyco + a);
-							}
-							else {
-								syco = (fiyco + a)
-								eyco = fiiyco;
-							}
-						}
-						else {
-							sxco = (fixco + a);
-							exco = fiixco;
-
-							if (fiyco > fiiyco) {
-								syco = fiyco
-								eyco = (fiiyco + a);
-							}
-							else {
-								syco = (fiyco + a)
-								eyco = fiiyco;
-							}
-						}
-		return [sxco,syco,exco,eyco,switchback,level,fiixco,fiiyco,fixco,fiyco,gradient];
-	}
-	function render_trade_route(level) {
-	
-		var gsf = $("#map").width()/3508;
-		var map_offset = $("#map").offset();
-		clear_canvas("create_sprite_canvas");
-		var csc = document.getElementById("create_sprite_canvas");
-		var cstx = csc.getContext("2d");
-		var continent_index;
-		var current_continent;
-		var switchback = "f";
-		var co = [];
-			for (i = 0; i < itinerary.length; i++) {
-				var line = calculate_lines(itinerary,i,switchback,level,gsf);
-				var sxco = line[0];
-				var syco = line[1];
-				var exco = line[2];
-				var eyco = line[3];
-				var fiixco = line[6];
-				var fiiyco = line[7];
-				switchback = line[4];
-				level = line[5];
-				var fixco = line[8]
-				var fiyco = line[9];
-				var gradient = line[10];
-						if (sxco !== undefined && isNaN(sxco) != "true" && switchback == "f") {
-							if (i == selected - 2) {
-								var cimg;
-								var using_forts
-								if (itinerary[i] == "nil") {
-									if (itinerary[i - 1] != itinerary[itinerary.length - 1]) {
-										using_forts = calculate_lines(itinerary,(i - 1),switchback,level,gsf);
-									}
-									else {
-										using_forts = calculate_lines(itinerary,(i + 1),switchback,level,gsf);
-									}
-								}
-								else {
-									using_forts = calculate_lines(itinerary,i,switchback,level,gsf);
-								}
-									using_forts = using_forts.slice(6,8);
-								if (level == "territory" || switchback == "territory") {
-									if (switchback == "f" || switchback == "territory") {
-										cimg = document.getElementById("selection_circle");
-									}
-								}
-								else if (level == "continent" || switchback == "continent") {
-									if (switchback == "f" || switchback == "continent") {
-										cimg = document.getElementById("selection_circle");
-									}
-								}
-								else if (level == "globe" || switchback == "globe") {
-									if (switchback == "f" || switchback == "globe") {
-										cimg = document.getElementById("small_selection_circle");
-									}
-								}
-								cstx.drawImage(cimg,using_forts[0],using_forts[1]);
-							}
-							var m = (syco - eyco)/(sxco - exco);
-							var b = -1*((m*sxco) - syco);
-							var contextcox;
-							var contextcoy;
-							var curr_continent = clicked[1];
-							if (level == "territory") {
-								for (r = 0; r < continents.length; r++) {
-									for (s = 0; s < continents[r].length; s++) {
-										if (clicked[1] == continents[r][s]) {
-											curr_continent = r;
-										}
-									}
-								}
-							}
-							var incperct = $(".map").height()
-							var incperct = incperct*0.05;
-							if (eyco >= syco) {
-								contextcoy = syco;
-							}
-							else if (syco > eyco) {
-								contextcoy = eyco;
-							}
-							if (exco >= sxco) {
-								contextcox = sxco + (exco - sxco)/2;
-							}
-							else if (sxco > exco) {
-								contextcox = exco + (sxco - exco)/2;
-							}
-							var gradone;
-							var gradetwo;
-							if (isNaN(sxco) != true && gradient !== undefined) { 	
-								if (gradient[1] == "exco") {
-									if (exco >= sxco) { 
-										exco = $(color_key[curr_continent][0]).width() + $(color_key[curr_continent][0]).position().left;
-									}
-									else if (exco < sxco) {
-										exco = $(color_key[curr_continent][0]).position().left;
-									}
-									eyco = m*exco + b;
-									gradone = cstx.createLinearGradient(sxco, syco, exco, eyco);
-									gradone.addColorStop(0, "black");
-									gradone.addColorStop(1, "transparent");
-								}
-								else if (gradient[1] == "sxco") {
-									if (sxco >= exco) { 
-										sxco = $(color_key[curr_continent][0]).width() + $(color_key[curr_continent][0]).position().left;
-									}
-									else if (sxco < exco) {
-										sxco = $(color_key[curr_continent][0]).position().left;
-									}
-									syco = m*sxco + b;
-									gradone = cstx.createLinearGradient(sxco, syco, exco, eyco);
-									gradone.addColorStop(0, "transparent");
-									gradone.addColorStop(1, "black");
-								}	
-								gradetwo = cstx.createLinearGradient(sxco, syco, exco, eyco);
-								if (gradient[1] == "exco") {
-								gradetwo.addColorStop(0, "white");
-								gradetwo.addColorStop(1, "transparent");
-								}
-								else if (gradient[1] == "sxco") {
-								gradetwo.addColorStop(0, "transparent");
-								gradetwo.addColorStop(1, "white");
-								}
-							}
-							else 
-							if (gradone === undefined) {
-								gradone = "#000000"
-								gradetwo = "#ffffff"
-							}
-      						cstx.beginPath();
-							cstx.moveTo(sxco, syco);
-							cstx.quadraticCurveTo((contextcox), (contextcoy - incperct), exco, eyco);
-							cstx.lineWidth = 2;
-							cstx.strokeStyle = gradone;
-							cstx.stroke();
-      						cstx.beginPath();
-							cstx.moveTo(sxco, syco - 3);
-							cstx.quadraticCurveTo((contextcox), (contextcoy - incperct) - 3, exco, eyco - 3);
-							cstx.lineWidth = 3;
-							cstx.strokeStyle = gradetwo;
-							cstx.stroke();
-      						cstx.beginPath();
-							cstx.moveTo(sxco, syco - 5);
-							cstx.quadraticCurveTo((contextcox), (contextcoy - incperct) - 5, exco, eyco - 5);
-							cstx.lineWidth = 2;
-							cstx.strokeStyle = gradone;
-							cstx.stroke();
-							for (j = 0; j < co.length; j++) {
-								if (co[j] === undefined) {
-									co.push([i,exco,eyco]);
-								}
-								else {
-									co[j] = [i,exco,eyco];
-								}
-							}
-						}
-					}
 	}
 
-function render_trade() {
-	$('.test1').append('<canvas id="create_sprite_canvas" class="canvas" style="z-index:300;" width=' + $(".map").width() + ' height=' +  $(".map").height() + '>');
-	placing = "t";
-	var list = [<%= render partial: "fort", collection: @forts %>];
-	var forts = [];
-	itinerary = [];
-	selected = 0;
+	function placeObject(object) {
+		
+		var canceled = false
+		zooming = false
+		var followMouse = true
+		var x
+		var y
+			if (object == "fort") {
 
-		$(document).click( function(e) {
-				clear_create_canvas = "t";
-				var csc = document.getElementById("create_sprite_canvas");
-				var csctx = csc.getContext("2d");
-				var cimg = document.getElementById("selection_circle");
+				newObject = {name:"",
+				 ownership:"",
+				 territory: "#" + $("#territorialSVG").children("g").children("path").attr("id"),
+				 xco:"",
+				 yco:"",
+				 owner:<%= @user.id %>,
+				 date:""}
 
-				var n = document.elementFromPoint(e.pageX, e.pageY);
-				var num = n.id.slice(-1);
-				n = n.id;
-				n = n.replace(num,"");
-				if (n == "cancel") {
-					n = num;
-					n = parseInt(n);
-					clear_canvas("create_sprite_canvas");
-					selected = n;
-					itinerary[n] = "nil";
+			}
+			else if (object == "encampment") {
 
-					for (y = 0; y < itinerary.length; y++) {
-						if (itinerary[y] != "nil") {
-							var location = itinerary[y][0]["territory"];
-							location = location.replace("#","");
-							var location = location.slice(0,1).replace(location.slice(0,1), location.slice(0,1).toUpperCase()).concat(location.slice(1, location.length));
-							for (j = 0; j < continents.length; j++) {
-								for (l = 0; l < continents[j].length; l++) {
-									if (colors[continents[j][l]][0] == itinerary[y][0]["territory"]) {
-										var continent = color_key[j][0];
-										continent = continent.replace("#","");
-										continent = continent.slice(0,1).replace(continent.slice(0,1), continent.slice(0,1).toUpperCase()).concat(continent.slice(1, continent.length));
-										location = location.concat(", ".concat(continent));		
-										while (location.indexOf("_") != -1) {
-											var l = location.indexOf("_");
-											l = "_".concat(location.charAt(1 + l));
-											location = location.replace(l," ".concat(l.charAt(1).toUpperCase()));
-										}						
-									}
-								}
-							}
-						}
-							if (itinerary.length > 1) {
-							$("#submitTrade").remove();
-							$("div#submitTradeDiv").html("<button id='submitTrade'>Submit Shipping Proposal</button>");
-							}
-							else {
-							$("#submitTrade").remove();
-							}
+				newObject = {name:"",
+				 territory: "#" + $("#territorialSVG").children("g").children("path").attr("id"),
+				 xco:"",
+				 yco:"",
+				 owner:<%= @user.id %>,
+				 date:""}
 
-							var index = y + 1;
-						if (y == 0) {
-							var what = $(".commodity_sprite");
-							if (itinerary[y] == "nil") {
-								$("div#create_trade").html("<p id='fort" + index + "'>Leg " + index + ": " + "</p><br>");
-							}
-							else {
-								$("div#create_trade").html("<p id='fort" + index + "'>Leg " + index + ": " + itinerary[y][0]["name"] +  " " + location +"</p><button  class='trade_leg_cancel' id='cancel" + y  + "'>Change Fort</button><br>");
-							}
-						}
-						else if (y > 0 && y < (itinerary.length - 1)) {
-							if (itinerary[y] == "nil") {
-								$("div#create_trade").append("<p id='fort" + index + "'>Leg " + index + ": " + "</p><br>");
-							}
-							else {
-								$("div#create_trade").append("<p id='fort" + index + "'>Leg " + index + ": " + itinerary[y][0]["name"] +  " " + location +"</p><button  class='trade_leg_cancel' id='cancel" + y  + "'>Change Fort</button><br>");
-							}
-						}
-						else if (y == (itinerary.length - 1)) {
-							if (itinerary[y] == "nil") {
-								$("div#create_trade").append("<p id='fort" + index + "'>Leg " + index + ": " + "</p>");
-							}
-							else {
-								$("div#create_trade").append("<p id='fort" + index + "'>Leg " + index + ": " + itinerary[y][0]["name"] +  " " + location +"</p><button  class='trade_leg_cancel' id='cancel" + y  + "'>Change Fort</button>");
-							}
-						}
-					$("div#create_trade").prepend(what);
-					}
-					if (itinerary[(n - 1)] === undefined) {
-						clear_canvas("create_sprite_canvas");
-						render_trade_route("territory");
-					}
-					else {
-						clear_canvas("create_sprite_canvas");
-						render_trade_route("territory");
-					}
-					exception = "t";
+
+			}
+
+		$("#renderedSprites").append($("#" + object).clone().attr("id","curser" + object))
+		$("#curser" + object).css("display","inline")
+		$("#submitObject").css("display","inline")
+
+		$("#territorialSVG").mousemove( function(e) {
+
+			if (followMouse == true) {
+
+				$("#curser" + object).css("top", e.pageY - $("#background").offset().top - 32)
+				$("#curser" + object).css("left", e.pageX - $("#background").offset().left - 32)
+			}
+
+		});
+		
+		$("path").click(function(e){
+			if (zooming == false && newObject != rendered_forts[rendered_forts.length - 1] && newObject != rendered_encampments[rendered_encampments.length - 1]) {
+
+				x = ((parseInt($("#curser" + object).css("left")) -  ($("#territorialSVG").children("g").children("path").position().left))/parseFloat($("#territorialSVG").children("g").attr("transform").split("(")[1].split(")")[0]))
+
+				y =  ((parseInt($("#curser" + object).css("top")) - ($("#territorialSVG").children("g").children("path").offset().top - $("#background").offset().top))/parseFloat($("#territorialSVG").children("g").attr("transform").split("(")[1].split(")")[0]))
+
+				followMouse = false
+				$("#curser" + object).css("pointer-events","auto");
+			}
+
+		});
+		
+		$("#curser" + object).click( function() {
+			followMouse = true
+			$("#curser" + object).css("pointer-events","none");
+		})
+
+
+		$("#submitObject").click( function() { 
+			if (canceled == false) {
+				if (object == "fort") {
+
+					newObject = {name:$("#user_forts_attributes_100000000000_name").val(),
+					 ownership:$("#user_forts_attributes_100000000000_ownership").val(),
+					 territory: "#" + $("#territorialSVG").children("g").children("path").attr("id"),
+					 xco:x,
+					 yco:y,
+					 owner:<%= @user.id %>,
+					 date:new Date().getTime()}
+
+					$("#user_forts_attributes_100000000000_date_created").val(newObject.date)
+					$("#user_forts_attributes_100000000000_xco").val(newObject.xco)
+					$("#user_forts_attributes_100000000000_yco").val(newObject.yco)
+					$("#user_forts_attributes_100000000000_territory").val(newObject.territory)
+
+					rendered_forts.push([newObject])
+
 				}
-			});
+				else if (object == "encampment") {
 
-		$(".test1").click( function(e) {
-			clear_create_canvas = "t";
-			clear_canvas("create_sprite_canvas");
-			var csc = document.getElementById("create_sprite_canvas");
-			var csctx = csc.getContext("2d");
-			var cimg = document.getElementById("selection_circle");
+					newObject = {name:$("#user_encampments_attributes_100000000000_name").val(),
+					 territory: "#" + $("#territorialSVG").children("g").children("path").attr("id"),
+					 xco:x,
+					 yco:y,
+					 owner:<%= @user.id %>,
+					 date:new Date().getTime()}
 
-			forts = [];
-			var map_offset = $(".test1").offset();
-			var cxco = e.pageX - map_offset.left;
-			var cyco = e.pageY - map_offset.top;
+					$("#user_encampments_attributes_100000000000_date_created").val(newObject.date)
+					$("#user_encampments_attributes_100000000000_xco").val(newObject.xco)
+					$("#user_encampments_attributes_100000000000_yco").val(newObject.yco)
+					$("#user_encampments_attributes_100000000000_territory").val(newObject.territory)
 
-			if (level == "territory") {
-				var territory = colors[clicked[1]][0];
-				territory_offset = $(territory).offset();
-				var sf = parseInt($(territory).css("max-width")) /$(territory).width();
-				var index = 0;
-
-				for (i = 0; i < list.length; i++) {
-					if (list[i][0]["owner"] == '<%= @user.id %>') {
-						if (list[i][0]["territory"] == colors[clicked[1]][0])	{
-							forts.push([list[i][0]]);
-							forts[index].push([((list[i][0]["xco"])*sf) + (territory_offset.left - map_offset.left), ((list[i][0]["yco"])*sf) + (territory_offset.top - map_offset.top)]);
-							index++;
-						}
-					}
+					rendered_encampments.push([newObject])
 				}
 
-				for (y = 0; y < forts.length; y++) {
-					if (((cxco >= forts[y][1][0])  &&  ((forts[y][1][0] + 32) >= cxco)) && ((cyco >= forts[y][1][1])  &&  ((forts[y][1][1] + 32) >= cyco)))	{
-						if (itinerary.length > selected) {
-							itinerary[selected] = forts[y];
-							clear_canvas("create_sprite_canvas");
-							selected = (itinerary.length + 1);
-							exception = "t";
-						}
-						else {
+				renderObject("encampment",zoomLevel,true);
+				renderObject("fort",zoomLevel);
 
-							itinerary.push(forts[y]);
-							exception = "t";
-							clear_canvas("create_sprite_canvas");
-							selected = (itinerary.length + 1);
-							if (itinerary.length % 2 == 1) {
-						    clickButton("create_leg");	
-							var n = itinerary.length + 1;
-							}
-							if (itinerary.length > 1) {
-							$("#submitTrade").remove();
-							$("div#submitTradeDiv").html("<button id='submitTrade'>Submit Shipping Proposal</button>");
-							}
-							else {
-							$("#submitTrade").remove();
-							}
-						}
-					}
-				}
-							for (n = 0; n < itinerary.length; n++) {
-								var location = itinerary[n][0]["territory"];
-								location = location.replace("#","");
-								var location = location.slice(0,1).replace(location.slice(0,1), location.slice(0,1).toUpperCase()).concat(location.slice(1, location.length));
-								for (j = 0; j < continents.length; j++) {
-									for (l = 0; l < continents[j].length; l++) {
-										if (colors[continents[j][l]][0] == itinerary[n][0]["territory"]) {
-											var continent = color_key[j][0];
-											continent = continent.replace("#","");
-											continent = continent.slice(0,1).replace(continent.slice(0,1), continent.slice(0,1).toUpperCase()).concat(continent.slice(1, continent.length));
-											location = location.concat(", ".concat(continent));	
-											while (location.indexOf("_") != -1) {
-												var l = location.indexOf("_");
-												l = "_".concat(location.charAt(1 + l));
-												location = location.replace(l," ".concat(l.charAt(1).toUpperCase()));
-											}
-										}
-									}
-								}
-								var index = n + 1;
-
-								if (n == 0) {
-								var what = $(".commodity_sprite");
-									if (itinerary[n] == "nil") {
-										$("div#create_trade").html("<p id='fort" + n + "'>Leg " + index + ": " + "</p><br>");
-									}
-									else {
-										$("div#create_trade").html("<p id='fort" + n + "'>Leg " + index + ": " + itinerary[n][0]["name"] + " " + location +"</p><button class='trade_leg_cancel' id='cancel" + n  + "'>Change Fort</button><br>");
-									}
-								}
-								else if (n > 0 && n < (itinerary.length - 1)) {
-									if (itinerary[n] == "nil") {
-										$("div#create_trade").append("<p id='fort" + n + "'>Leg " + index + ": " + "</p><br>");
-									}
-									else {
-										$("div#create_trade").append("<p id='fort" + n + "'>Leg " + index + ": " + itinerary[n][0]["name"] +  " " + location + "</p><button class='trade_leg_cancel' id='cancel" + n  + "'>Change Fort</button><br>");
-									}
-								}
-								else if (n == (itinerary.length - 1)) {
-									if (itinerary[n] == "nil") {
-										$("div#create_trade").append("<p id='fort" + n + "'>Leg " + index + ": " + "</p>");
-									}
-									else {
-										$("div#create_trade").append("<p id='fort" + n + "'>Leg " + index + ": " + itinerary[n][0]["name"] +  " " + location +"</p><button class='trade_leg_cancel' id='cancel" + n  + "'>Change Fort</button>");
-									}
-								}
-								$("div#create_trade").prepend(what);
-							}
-						placing = "f";
-						render_trade_route("territory");
+				$(".fields").css("display","none")
+				$("#curser" + object).remove()
+				$("#submitObject").css("display","none")
+				$("#cancelCreation").css("display","none")
+				$("#curser" + object).css("pointer-events","none");
+				$(".newObjectButton").css("display", "inline")
+				zooming = true
 			}
 		});
-	}
-
-function terminate_form(object_id) {
-	$('#create_sprite_canvas').remove();
-	$("#submit").css("display","none");
-	$(".fields").css("display","none");
-	$("#cancel_form").css("display","none");
-	if (english_level == "territory") {
-		$("#create_fort").css("display","inline");
-		$("#create_camp").css("display","inline");
-		$("#create_trade").css("display","inline");
-	}
-	else {
-		$("#create_fort").css("display","none");
-		$("#create_camp").css("display","none");
-		$("#create_trade").css("display","none");
-	}
-	exception = "t";
-}
-
-function place_object(object_id) {
-	placing = "t";
-	var functional_placing = "t";
-	$("#cancel_form").click( function(event) {
-		placing = "f";
-		functional_placing = "f";
-		terminate_form(object_id);
-
-	});
-	$('.test1').append('<canvas id="create_sprite_canvas" style="z-index:101;" width=' + $(".map").width() + ' height=' +  $(".map").height() + '>');
-	var sc = document.getElementById("create_sprite_canvas");
-	var sctx = sc.getContext("2d");
-	var img = document.getElementById(object_id);
-	var ui_offset = $(".test1").offset();
-	var continent_offset = $(colors[clicked[1]][0]).offset();
-	$("#create_sprite_canvas").css("z-index","32");
-
-	$('body').append('<canvas id="territory_canvas" class="temp_canvas" width=' + 3508 + ' height=' +  1956 + '>');
-	var tc = document.getElementById("territory_canvas");
-	var tctx = tc.getContext("2d");
-	var img2 = document.getElementById(colors[clicked[1]][0].replace("#",""));
-	tctx.drawImage(img2,0,0);
-
-	$(".test1").mousemove( function(event) {
-		if (functional_placing == "t") {
-	
-			clear_canvas("create_sprite_canvas");
-			sctx.drawImage(img,(event.pageX - ui_offset.left) ,(event.pageY - ui_offset.top));
-
-		}
-
-	});
-	
-	$(".test1").click( function(event) {
-		if (functional_placing == "t") {
-			
-			clear_for_clicks("move");
-			$("#create_sprite_canvas").css("z-index","-80");
-			var elem = document.elementFromPoint(event.pageX, event.pageY);
-			
-			$("#territory_sprites").css("z-index","50");
-			$("#create_sprite_canvas").css("z-index","51");
-			var last_click = colors[clicked[1]][0];
-			last_click = last_click.replace("#","");
-			if (elem.id == last_click) {
-
-				var sf = parseInt($(colors[clicked[1]][0]).css("max-width"))/$(colors[clicked[1]][0]).width();
-				var pixelData = tc.getContext('2d').getImageData(((event.pageX - continent_offset.left)*sf), ((event.pageY - continent_offset.top)*sf), 1, 1).data;
-				if (pixelData[3] != 0x00) {
-					$("#territory_canvas").remove();
-					var territory_offset = $(colors[clicked[1]][0]);
-					functional_placing = "f";
-					$("#user_encampments_attributes_100000000000_xco").val((event.pageX - continent_offset.left)/sf);
-					$("#user_encampments_attributes_100000000000_yco").val((event.pageY - continent_offset.top)/sf);
-					$("#user_encampments_attributes_100000000000_territory").val(colors[clicked[1]][0]);
-					$("#user_encampments_attributes_100000000000_date_created").val(Date.today().add(1).days());
-					return 1;
-
-					
-				}
-			}
-			
-		} 
-
-	});
-
-}
-
-function clear_for_clicks(action, canvas) {
-	
-	previous_level[0] = $(".territory_sprites").css("z-index");
-	previous_level[1] = $(".continent_sprites").css("z-index");
-
-	if (action == "move") {
-		$(".canvas").css("z-index","-30");
-	}
-	else if (action == "put back") {
-		$("#create_sprite_canvas").css("z-index", previous_level[2]);
-	}
-}
-
-function clear_canvas(id) {
-	var canvas = document.getElementById(id);
-	var canvastx = canvas.getContext("2d");
-	var with_hash = "#".concat(id);
-	canvastx.clearRect ( 0 , 0 , $(with_hash).width(), $(with_hash).height() );
-}
-
-
-
-function render_object(level, clear, object, list) {
-list = eval(list);
-	map_offset = $(".test1").offset();
-	if (level == 4) {
-		var current_territory = colors[clicked[1]][0];
-		var forts_to_be_rendered = [];
-		for (i = 0; i < list.length; i++) {
-			var temp_terr = list[i];
-			if (temp_terr[0]["territory"] == current_territory) {
-				forts_to_be_rendered.push(list[i][0]);
-			}
-		}
 		
-		var tsc = document.getElementById("territory_sprites");
-		var tsctx = tsc.getContext("2d");
-		if (clear == "t") {
-			tsc.width = tsc.width;
-		}
-		var territory_offset = $(current_territory).offset();
-		var div_offset = $(".map").offset();
-		var sf = parseInt($(current_territory).css("max-width")) /$(current_territory).width();
-		
-		for (i = 0; i < forts_to_be_rendered.length; i++) {
-		
-			var xco = ((forts_to_be_rendered[i]["xco"])*sf) + (territory_offset.left - div_offset.left);
-			var yco = ((forts_to_be_rendered[i]["yco"])*sf) + (territory_offset.top - div_offset.top);
-			var img = document.getElementById(object);
-			tsctx.drawImage(img,xco,yco);
-		}
+		$("#cancelCreation").click( function() { 
 
-	}
+			$(".fields").remove()	
+			$("#curser" + object).remove()	
+			$("#curser" + object).css("pointer-events","none");
+			$("#curser" + object).css("display","none")
+			$("#submitObject").css("display","none")
+			$("#cancelCreation").css("display","none")
+			$(".newObjectButton").css("display", "inline")
+			zooming = true
+			canceled = true
+		});
 
-	else if (level == 2) {
-		var current_continent = color_key[clicked[1]][0];
-		var forts_to_be_rendered = [];
-		var territory_list = continents[clicked[1]];
-		
-		for (i = 0; i < list.length; i++) {
-			for (y = 0; y < territory_list.length; y++) {
-					if (list[i][0]["territory"] == colors[territory_list[y]][0]) {
-						forts_to_be_rendered.push([list[i][0], clicked[1], territory_list[y]]);
-					}
-			}
-		}
-		var csc = document.getElementById("continent_sprites");
-		var csctx = csc.getContext("2d");
-		if (clear == "t") {
-			csc.width = csc.width;
-		}
-		var continent_offset = $(current_continent).offset();
-		var sf = $(current_continent).width()/color_key[clicked[1]][3][0];
-		previous_level[2] = $(".canvas").css("z-index");
-		$(".canvas").css("z-index","0");
-		$("#continent_sprites").css("z-index","34");
-		for (i = 0; i < forts_to_be_rendered.length; i++) {
-			var xco = (forts_to_be_rendered[i][0]["xco"] * sf) + (continent_offset.left - map_offset.left) + ((colors[forts_to_be_rendered[i][2]][2][0] - color_key[forts_to_be_rendered[i][1]][2][0])*sf);
-			var yco = (forts_to_be_rendered[i][0]["yco"] * sf) + ((colors[forts_to_be_rendered[i][2]][2][1] - color_key[forts_to_be_rendered[i][1]][2][1])*sf) + (continent_offset.top - map_offset.top);
-			var img = document.getElementById(object);
-			csctx.drawImage(img,xco,yco);
-		}
-	}
-}
-
-
-function push_object(data, object, list, g_list) {
-	g_list = eval(g_list)
-	g_list.push(data);
-	list.push(data);
-	setTimeout(render_object(4,"f",object, list), 0);
-	last_submited_name = name;
-}
-
-
-var nwidth = $(".map").width();
-var nheight = $(".map").height();
-
-$('.test1').append('<canvas id="territory_sprites" class="canvas" style="z-index:-3;" width=' + nwidth + ' height=' +  nheight + '>');
-$('.test1').append('<canvas id="continent_sprites" class="canvas" style="z-index:-3;" width=' + nwidth + ' height=' +  nheight + '>');
-
-var level;
-clicked = ["f", 1];
-var last_submited_name;
-
-var creating = "f";
-var submited = "f";
-var sudoajaxstring = "nil";
-
-var c=document.getElementById("myCanvas");
-var ctx=c.getContext("2d");
-
-	$('#create_fort').click( function(e) {
-
-			var field_num = $(".fields").length
-
-			if (field_num != 1) {
-
-			$(".fields").css("display","inline");
-			$(".fields:not(#fort_fields)").remove();
-				if ($(".fields").length != 1) {
-					$(".fields:first").remove();
-				}
-			}
-			$("#cancel_form").css("display","inline");
-			$("#create_camp").css("display","none");
-			$("#create_trade").css("display","none");
-			submited = "f";
-			creating = "t";
-			$("#create_fort").css("display","none");
-			$("#submit").css("display","inline");
-			var functional_placing = "t";
-			placing = "t";
-			var nw = $('.map').width();
-			var nh = $('.map').height();
-			var sxco;
-			var syco;
-
-			var aoffset = $(".test1").offset();
-
-			$('.test1').append('<canvas id="create_sprite_canvas" class="canvas" style="z-index:32;" width=' + nw + ' height=' +  nh + '>');
-			var sc = document.getElementById("create_sprite_canvas");
-			var sctx = sc.getContext("2d");
-			$("#create_sprite_canvas").css("z-index","32");
-
-			$("#cancel_form").click( function(event) {
-				placing = "f";
-				functional_placing = "f";
-				terminate_form("fort");
-
-			});
-			$(".test1").mousemove( function(event) {
-
-				if (functional_placing == "t") {
-
-					sctx.clearRect(0, 0, sc.width, sc.height);
-
-					var fort = document.getElementById('fort');
 				
 
-					sctx.drawImage(fort,((event.pageX - aoffset.left) - 32), ((event.pageY - aoffset.top) - 32));
-			
-					sxco = event.pageX;
-					syco = event.pageY;
-				}
-
-
-
-				$('.test1').click( function(etoo) {
-					clear_for_clicks("move");
-					$(colors[clicked[1]][0]).css("z-index","31");
-					var telem = document.elementFromPoint(etoo.pageX, etoo.pageY);
-					clear_for_clicks("put back", ["territory"]);
-					$("#create_sprite_canvas").css("z-index","51");
-					$("#territory_sprites").css("z-index","50");
-					var name_w_hash = colors[clicked[1]][0];
-					name_w_hash = name_w_hash.replace(/#/g, '');
-
-					if (telem.id == name_w_hash) {
-
-						var tempw = $(colors[clicked[1]][0]).width();
-						var temph = $(colors[clicked[1]][0]).height();
-						$('body').append('<canvas id="new_canvas" style="z-index:5; display:none;" width=' + tempw + ' height=' +  temph + '</canvas>');
-
-						var nc=document.getElementById("new_canvas");
-						var nctx=nc.getContext("2d");
-						var territ = document.getElementById(name_w_hash);
-						nctx.drawImage(territ,0,0);
-
-						var ctoffset = $(colors[clicked[1]][0]).offset();
-
-						var tpixelData = nc.getContext('2d').getImageData((etoo.pageX - ctoffset.left), (etoo.pageY - ctoffset.top), 1, 1).data;
-						
-						var sxco = etoo.pageX - ctoffset.left;
-						var syco = etoo.pageY - ctoffset.top;
-
-						if (tpixelData[3] != 0x00) {
-
-							var dw = $(colors[clicked[1]][0]).width();
-							var ow = parseInt($(colors[clicked[1]][0]).css("max-width"));
-
-							if (dw != ow) {
-								var wsf = dw/ow;
-								sxco = sxco/wsf;
-								syco = syco/wsf;
-							}
-
-							$("#user_forts_attributes_100000000000_xco").val(sxco);
-							$("#user_forts_attributes_100000000000_yco").val(syco);
-							$("#user_forts_attributes_100000000000_territory").val(colors[clicked[1]][0]);
-							$("#user_forts_attributes_100000000000_date_created").val(Date.today().add(60).days());
-
-							functional_placing = "f";
-						}
-
-					}
-					$("#create_sprite_canvas").css("z-index","39");
-					$(colors[clicked[1]][0]).css("z-index","4");
-					$('#new_canvas').remove();
-
-				});
-
-			});
-			var submissions = 0;
-
-				$("#submit").click( function(e) {
-					placing = "f";
-					submissions++;
-					push_object([{name:$("#user_forts_attributes_100000000000_name").val(), ownership:$("#user_forts_attributes_100000000000_ownership").val(), territory:$("#user_forts_attributes_100000000000_territory").val(), xco:$("#user_forts_attributes_100000000000_xco").val(), yco:$("#user_forts_attributes_100000000000_yco").val()}],"fort",[<%= render partial: "fort", collection: @forts %>],"rendered_forts");
-					parseDates();
-					$('#create_sprite_canvas').remove();
-					$("#submit").css("display","none");
-					$(".fields").css("display","none");
-					$("#cancel_form").css("display","none");
-					if (trading != "t") {
-						$("#create_fort").css("display","inline");
-						$("#create_camp").css("display","inline");
-					}
-					$("#create_trade").css("display","inline");
-					creating = "f"
-				});
-	});
-
-
-	$('#create_camp').click( function(e) {
-
-		$(".fields:not(#encampment_fields)").remove();
-			if ($(".fields").length != 1) {
-				$(".fields:first").remove();
-			}
-		
-		$("#cancel_form").css("display","inline");
-		$("#submit").css("display","inline");
-		$("#create_camp").css("display","none");
-		$("#create_fort").css("display","none");
-		$("#create_trade").css("display","none");
-		place_object("encampment");
-		$("#submit").click( function(e) {
-			push_object([{name:$("#user_encampments_attributes_100000000000_name").val(), territory:$("#user_encampments_attributes_100000000000_territory").val(), xco:$("#user_encampments_attributes_100000000000_xco").val(),yco:$("#user_encampments_attributes_100000000000_yco").val()}],"encampment",[<%= render partial: "encampment", collection: @encampments %>],"rendered_encampments");
-				parseDates();
-				$("#cancel_form").css("display","none");
-				$('#create_sprite_canvas').remove();
-				$("#submit").css("display","none");
-				$(".fields").css("display","none");
-				if (trading != "t") {
-					$("#create_fort").css("display","inline");
-					$("#create_camp").css("display","inline");
-				}
-				$("#create_trade").css("display","inline");
-				$(".fields").css("display","none");
-				exception = "t";
-				placing = "f";
-		});
-		
-	});
-
-	$("#create_trade").click( function(e) {
-		trading = "t";
-		var field_num = $(".fields").length
-		if (field_num != 1) {
-			$(".fields").css("display","inline");
-			$(".fields:first").remove();
-		}
-		exception = "t";
-		$("#cancel_form").css("display","inline");
-		$("#create_camp").css("display","none");
-		$("#create_fort").css("display","none");
-		$("#create_trade").css("display","none");
-		<%= render partial: "commodity_images" %>
-		$("#cancel_form").click( function(event) {
-			trading = "f";
-			itinerary = []
-			$("div#create_trade").text("");
-			$(".trade_button").css("display","none");
-			placing = "f";
-			terminate_form("nil");
-			$("#submitTrade").remove();
-		});
-		render_trade();
-		$("#submitTrade").click( function(e) {
-			trading = "f";
-			$("#submit").click();
-			$("#cancel_form").css("display","none");
-			$('#create_sprite_canvas').remove();
-			$("#submit").css("display","none");
-			$(".fields").css("display","none");
-			if (trading != "t") {
-				$("#create_fort").css("display","inline");
-				$("#create_camp").css("display","inline");
-			}
-			$("#create_trade").css("display","inline");
-			placing = "f";
-		});
-	});
-	$("div#create_trade").click(function(e) {
-		var commodity = document.elementFromPoint(e.pageX,e.pageY)
-		if ($(commodity).attr("class") == "commodity_sprite" && commodity.id != "chooseNewWhat") {
-			var itineraryId = commodity.id;
-			$("#user_trades_attributes_100000000000_what").val(itineraryId);
-			var image = $("#".concat(itineraryId));
-			$("div.sprite_div").remove();
-			$(".commodity_sprite").remove();
-			var pathHTML = $("div#create_trade").children();
-			$("div#create_trade").html(image);
-			$("div#create_trade").append("<button id='chooseNewWhat' class='commodity_sprite' >Choose Other</button>");
-			$("div#create_trade").append(pathHTML);
-		}
-		else if ($(commodity).attr("id") == "chooseNewWhat") {
-			$("#user_trades_attributes_100000000000_what").val("");
-			$("div.sprite_div").remove();
-			$(".commodity_sprite").remove();
-			var pathHTML = $("div#create_trade").children();
-			<%= render partial: "commodity_images" %>
-			$("div#create_trade").append(pathHTML);
-		}
-	});
-
-
-
-var last_continent;
-
-
-
-
-
-// Drawing original canvas to hold the global active map.
-
-	var img=document.getElementById("active");
-	ctx.drawImage(img,0,0);
-
-// Setting the default clicked value.
-	var gcx;
-	var gcy;
-	var twidth;
-	var ccontinent;
-	var width = $('.map').width();
-	var height = $('.map').height();
-
-// Listening for clicks to zoom map.
-
-	$(document).click(function(e) {
-		if (placing != "t") {
-			var melem;
-			previous_level[2] = $("#create_sprite_canvas").css("z-index");
-			clear_for_clicks("move");
-			$(".map").css("z-index","100");
-			melem = document.elementFromPoint(e.pageX, e.pageY);
-			$(".map").css("z-index","-2");
-			clear_for_clicks("put back",["territory","continent","create"]);
-			if (melem.id == "map" && exception != "t") {
-		 		if (placing == "f") {
-						$('#filter2').remove();
-						$('#filter').remove();
-
-			// Checking wether or not the map is currently zoomed to a continent.
-
-					if (clicked[0] == "t" && clicked[2] != "t") {
-
-			// Defining and formatting the element of the current click, and the recorded element of the last click.
-						clear_for_clicks("move");
-						var elem = document.elementFromPoint(e.pageX, e.pageY);
-						var continent_name = color_key[clicked[1]][0];
-						continent_name = continent_name.replace(/#/g, '');
-
-
-
-			// Finding the position of the click relative to the centered continental map.
-
-							var coffset = $(color_key[clicked[1]][0]).offset();
-							var cx = (e.pageX - coffset.left );
-							var cy = (e.pageY - coffset.top );
-			
-
-
-			// Finding the scale of the displayed continent to its full size and applying that to the click coordinates.
-
-							var sf = $(color_key[clicked[1]][0]).width()/color_key[clicked[1]][3][0];
-							cx = cx/sf;
-							cy = cy/sf;
-
-
-
-			// Clearing the canvas and painting on it the appropriate continental active map.
-
-							ctx.clearRect(0, 0, c.width, c.height);
-							var active_img_name = continent_name.concat('_active')
-							var img = document.getElementById(active_img_name);
-							ctx.drawImage(img,0,0);
-
-
-
-			// Finding the color of the pixel at the specified location on the active map.
-
-						var pixelData = c.getContext('2d').getImageData(cx, cy, 1, 1).data;
-
-
-
-			// Checking if the current click is on the same continent as the last click.
-						if ((elem.id == continent_name) && (pixelData[0] != 0x49 && pixelData[1] != 0x49 && pixelData[2] != 0x49)) {
-
-
-			// Checking the found pixels color against the list of territorial colors.
-
-							for (var i = 0; i < 38 ; i++) {
-
-								if (colors[i][1][0] == pixelData[0] && colors[i][1][1] == pixelData[1] && colors[i][1][2] == pixelData[2]) {
-
-
-			// Finding the clicked territorys id and setting its display value to inline.
-									var clicked_continent = colors[i][0];
-									level = "territory";
-									$(clicked_continent).css('max-height', $(clicked_continent).height());
-									$(clicked_continent).css('max-width', $(clicked_continent).width());
-									$(clicked_continent).css('display','inline');
-									if (trading != "t") {
-										$("#create_fort").css("display","inline");
-										$("#create_camp").css("display","inline");
-									}
-									$("#create_trade").css("display","inline");
-									twidth = $(clicked_continent).width();
-
-									$('.test1').append($('<canvas id="filter2" style="z-index:3;" width=' + width + ' height=' +  height + '>'));
-									$('.test1').append($('<canvas id="filter" style="z-index:1;" width=' + width + ' height=' +  height + '>'));
-
-									var filterHeight = $(".map").height()
-									var filterWidth = $(".map").width()
-
-									var f=document.getElementById("filter2");
-									var ftx=f.getContext("2d");
-									ftx.fillStyle = "#000000";
-									ftx.fillRect(0,0,filterWidth,filterHeight);
-
-									var f2=document.getElementById("filter");
-									var ftx2=f2.getContext("2d");
-									ftx2.fillStyle = "#000000";
-									ftx2.fillRect(0,0,filterWidth,filterHeight);
-									$('#filter').css('opacity','0.5625');
-
-			// Finding the width and height values of the global map and the clicked territory to find whether the territory width or height is a greater percentage of the global value.
-
-									var imgw = $(clicked_continent).width();
-									var imgh = $(clicked_continent).height();
-									var mapw = $('.map').width();
-									var maph = $('.map').height();
-									var asf = mapw/3508
-
-									var toffset = $(color_key[clicked[1]][0]).offset();
-									var offset = $('.map').offset();
-									var startingx = colors[i][2][0];
-									var startingy = colors[i][2][1];
-					
-									var continentx = color_key[clicked[1]][2][0];
-									var continenty = color_key[clicked[1]][2][1];
-
-									var continentw = color_key[clicked[1]][3][0];
-									var rcontinentw = $(color_key[clicked[1]][0]).width();
-
-									var csf = rcontinentw/continentw;
-						
-									var placex = (startingx - continentx)*csf;
-									var placey = (startingy - continenty)*csf;
-						
-									var ox = (startingx - continentx);
-									var oy = (startingy - continenty);
-
-									placex = placex + (toffset.left - offset.left);
-									placey = placey + (toffset.top - offset.top);
-
-									var wper = imgw/(mapw - placex);
-									var hper = imgh/(maph - placey);
-			// Finding the dimensions of the territorial picture to be diplayed.
-
-									if (wper > hper) {
-						
-										if (imgw > (mapw - placex) ) {
-											$(clicked_continent).attr('width', (mapw - placex) );
-										}
-									}
-
-									else {
-
-										if (imgh > (maph - placey) ) {
-											$(clicked_continent).attr('height', (maph - placey) );
-										}
-									}
-			
-		
-
-			// Finding the position to place the territorial picture.
-
-									$(clicked_continent).css("left", placex );
-									$(clicked_continent).css("top", placey );
-						
-									clicked = ["t", i, "t"];
-									render_object(4,"t","fort",rendered_forts);
-									render_object(4,"f","encampment", rendered_encampments);
-									$("#territory_sprites").css("z-index","34");
-									if (trading == "t") {
-										clear_canvas("create_sprite_canvas");
-										render_trade_route("territory");
-								$("#create_sprite_canvas").css("z-index","51");
-									}
-									english_level = "territory";
-								}
-							}
-						}
-
-
-
-			//Continent when click away
-			 
-						else {
-							english_level = "globe";
-							level = "global";
-							$('.continent').css("display", "none" );
-							clear_canvas("continent_sprites");
-							clicked = ["f", 0];
-							if (trading == "t") {
-								clear_canvas("create_sprite_canvas");
-								$("#create_sprite_canvas").css("z-index","300");
-								render_trade_route("globe");
-								
-							}
-	
-						}
-					}
-
-					else if (clicked[0] == "t" && clicked[2] == "t") {
-
-			// Defining and formatting the element of the current click, and the recorded element of the last click.
-						clear_for_clicks("move",false);
-						var elem = document.elementFromPoint(e.pageX, e.pageY);
-						clear_for_clicks("put back",["territory","create"]);
-						$("#territory_sprites").css("z-index","50");
-						var continent_name = colors[clicked[1]][0];
-						continent_name = continent_name.replace(/#/g, '');
-
-
-			// Finding the position of the click relative to the centered continental map.
-
-						var toffset = $(colors[clicked[1]][0]).offset();
-						var tx = (e.pageX - toffset.left );
-						var ty = (e.pageY - toffset.top );
-			
-
-
-			// Finding the scale of the displayed continent to its full size and applying that to the click coordinates.
-
-						var tsf = $(colors[clicked[1]][0]).width()/twidth;
-						tx = tx/tsf;
-						ty = ty/tsf;
-
-
-
-			// Clearing the canvas and painting on it the appropriate continental active map.
-
-						ctx.clearRect(0, 0, c.width, c.height);
-						var img = document.getElementById(continent_name);
-						ctx.drawImage(img,0,0);
-
-
-
-			// Finding the color of the pixel at the specified location on the active map.
-
-						var pixelData = c.getContext('2d').getImageData(tx, ty, 1, 1).data;
-
-
-
-			// Second click on a territory
-
-						if ((elem.id == continent_name) && (pixelData[3] != 0x00)) {
-							$('.test1').append($('<canvas id="filter2" style="z-index:3;" width=' + width + ' height=' +  height + '>'));
-							$('.test1').append($('<canvas id="filter" style="z-index:1;" width=' + width + ' height=' +  height + '>'));
-							var f=document.getElementById("filter2");
-							var ftx=f.getContext("2d");
-							ftx.fillStyle = "#000000";
-							var filterHeight = $(".map").height()
-							var filterWidth = $(".map").width()
-							ftx.fillRect(0,0,filterWidth,filterHeight);
-							var f2=document.getElementById("filter");
-							var ftx2=f2.getContext("2d");
-							ftx2.fillStyle = "#000000";
-							ftx2.fillRect(0,0,filterWidth,filterHeight);
-							ftx.fillRect(0,0,filterWidth,filterHeight);
-							$('#filter').css('opacity','0.5625');
-							render_object(2,"f","encampment", rendered_encampments);
-							render_object(2,"f","fort", rendered_forts);
-							$("#territory_sprites").css("z-index","34");
-
-						}
-
-			// Territory when click away
-						else {
-							level = "globe";
-							clicked = last_continent;
-							render_object(2,"t","encampment",rendered_encampments);
-							render_object(2,"f","fort",rendered_forts);
-							$('#create_fort').css("display","none");
-							$('#create_camp').css("display","none");
-							$("#create_trade").css("display","none");
-							$('.territory').css("display", "none" );
-							$('.test1').append('<canvas id="filter" style="z-index:1;" width=' + $(".map").width() + ' height=' +  $(".map").height() + '>');
-							var f=document.getElementById("filter");
-							var ftx=f.getContext("2d");
-							ftx.fillStyle = "#000000";
-							ftx.fillRect(0,0,$(".map").width(),$(".map").height());
-							$('#filter').css('opacity','0.75');
-							clicked = ["t", ccontinent];
-							if (trading == "t") {
-								clear_canvas("create_sprite_canvas");
-								render_trade_route("continent");
-								$("#create_sprite_canvas").css("z-index","51");
-							}
-							english_level = "continent";
-						}
-					}
-
-					else {
-
-
-
-			// Drawing the global active map on the canvas
-
-						img=document.getElementById("active");
-						ctx.drawImage(img,0,0);	
-
-
-
-			// Finding the location of the click relative to the map.
-
-						var offset = $(".map").offset();
-						var x = (e.pageX - offset.left );
-						var y = (e.pageY - offset.top );
-
-
-
-			// Finding the width and height of the diplayed global map and the scale factor of the displayed map to the full one, then appling the scale factor to the click coordinates.
-			 
-						var sf = 3508/width;
-						x = x * sf;
-						y = y * sf;
-
-
-
-			// Finding the color of the specified pixel on the active map.
-
-						var pixelData = c.getContext('2d').getImageData(x, y, 1, 1).data;
-	
-
-
-			// Checking every continent active color to see if it matches the found pixel color.
-
-						for (var i = 0; i < 6 ; i++) {
-
-							if (color_key[i][1][0] == pixelData[0] && color_key[i][1][1] == pixelData[1] && color_key[i][1][2] == pixelData[2]) {
-
-
-
-			// Finding the clicked continents id and setting its display value to inline.
-								level = "continent";
-								var clicked_territory = color_key[i][0];
-								$(clicked_territory).css("display", "inline" );
-
-			// Creating and drawing on a canvas at seventy-five percent opacity.
-								ccontinent = i;
-								$('.test1').append($('<canvas id="filter" style="z-index:1;" width=' + width + ' height=' +  height + '</canvas>'));
-								var f=document.getElementById("filter");
-								var ftx=f.getContext("2d");
-								ftx.fillStyle = "#000000";
-								ftx.fillRect(0,0,width,height);
-	
-
-
-			// Finding the continent and global map images width and height values, then seeing which continental dimension is a larger percentage of the global one.
-
-								var imgw = $(clicked_territory).width();
-								var imgh = $(clicked_territory).height();
-								var mapw = $('.map').width();
-								var maph = $('.map').height();
-								var wper = imgw/(mapw);
-								var hper = imgh/(maph);
-
-
-
-			// Finding the dimensions of the continent image to be displayed.
-
-								if (wper > hper) {
-	
-									if (imgw > mapw) {
-
-										$(clicked_territory).attr("width", mapw );
-									}
-
-								}
-
-								else {
-
-									if (imgh > maph ) {
-
-										$(clicked_territory).attr("height", maph );
-
-									}
-								}
-
-
-
-			// Finding the position of the diplayed continental image.
-
-								imgw = $(clicked_territory).width();
-								imgh = $(clicked_territory).height();
-								var midh = (maph/2) - (imgh/2);
-								var midw = (mapw/2) - (imgw/2);
-								gcx = midw;
-								gcy = midh;
-								$(clicked_territory).css("left", midw );
-								$(clicked_territory).css("top",midh );
-								clicked = ["t",i];
-								last_continent = clicked;
-								render_object(2,"t","fort", rendered_forts);
-								render_object(2,"f","encampment", rendered_encampments);
-								english_level = "continent";
-								if (trading == "t") {
-									clear_canvas("create_sprite_canvas");
-									render_trade_route("continent");
-									$("#create_sprite_canvas").css("z-index","51");
-								}
-							}
-						}
-					}
-				}
-			}
-			else
-			{
-				$("#create_sprite_canvas").css("z-index","51");
-				if (english_level == "territory") {
-				$("#territory_sprites").css("z-index","50");
-				}
-				exception = "f";
-				if (level == "territory") {
-					render_object(4,"t","fort", rendered_forts);
-					render_object(4,"f","encampment", rendered_encampments);
-				}
-				else if (level == "continent") {
-					render_object(2,"t","fort", rendered_forts);
-					render_object(2,"f","encampment", rendered_encampments);
-				}
-			}
-		}
-	});
-	parseDates();
-
-	var territoryColors = <%= render partial: "territory_colors", locals: {territoryColors: @territoryColors} %>;
-	var overlayCanvas = document.getElementById("color_map_overlay");
-	var overlayContext = overlayCanvas.getContext("2d");
-	var overlayImage = document.getElementById("color_territory_active_image");
-	overlayContext.drawImage(overlayImage, 0, 0);
-	var overlayPixels = overlayContext.getImageData(0,0,3508,1956);
-	for (i = 0; i < colors.length; i++) {
-		for (y = 0;  y < territoryColors.length; y++) {
-			if (colors[i][0] == territoryColors[y][0]) {
-				territoryColors[y].push(colors[i][1]);
-				break
-			}
-		}
 	}
-	//for (i = 0; i < overlayPixels.data.length; i+=4) {
-		//if ((overlayPixels.data[i] != 0x00 && overlayPixels.data[i + 1] != 0x00 && overlayPixels.data[i + 2] != 0x00) || (overlayPixels.data[i] != 0x49 && overlayPixels.data[i + 1] != 0x49 && overlayPixels.data[i + 2] != 0x49)) {
-			//for (y = 0; y < territoryColors; y++) {
-				//if (overlayPixels.data[i] == territoryColors[y][2][0] && overlayPixels.data[i + 1] == territoryColors[y][2][1] && overlayPixels.data[i + 2] == territoryColors[y][2][2]) {
-					//overlayPixels.data[i] = territoryColors[y][1][0]
-					//overlayPixels.data[i + 1] = territoryColors[y][1][1]
-					//overlayPixels.data[i + 2] = territoryColors[y][1][2]
-					//break
-				//}
-			//}
-		//}
-	//}
-	//overlayContext.putImageData(overlayPixels,0,0);
+//End of Object Funtions
 
 
+//Calls of Initial Functions
+	colorMap();
+	setOriginalZoom();
+
+	var pathClicked;
+	var zoomLevel = ["global","globe"];
+	levelChange(zoomLevel)
+//End of Initial Function Calls
+
+
+//Object Creation
+
+$(".newObjectButton").click( function() {
+
+	createObject($(this).attr("id").replace("create_",""))
+
+}); 
+
+//End of Object Creation
+
+
+//Zooming
+
+
+		$("svg").on('click','path',function(e){
+
+			if (zooming == true) {
+
+				if (zoomLevel[0] == "global") {
+					var continent = $("." + $(this).attr("class"))
+					for (i = 0; i < continent.length; i++) {
+						$("#continentalSVG").append($(continent[i]).parent().clone())
+					}
+
+					var box = $("#continentalSVG")[0].getBoundingClientRect()
+					var newScaleFactor
+					if (box.width/$(window).width() > box.height/$(window).height()) {
+						newScaleFactor = ($("#background").width()*parseFloat($("#continentalSVG").children("g").attr("transform").split(")")[0].replace("scale(","")))/box.width*0.95;
+					}
+					else {
+						newScaleFactor = ($("#background").height()*parseFloat($("#continentalSVG").children("g").attr("transform").split(")")[0].replace("scale(","")))/box.height*0.95;
+					}
+
+					$("#continentalSVG").children("g").attr("transform","scale(" + newScaleFactor + ")");
+					var scaledBox = $("#continentalSVG").offset();
+					scaledBox.top = ((scaledBox.top - $("#background").offset().top)/newScaleFactor) - (($("#background").height()/2) - ($("#continentalSVG")[0].getBoundingClientRect().height/2))
+					scaledBox.left = ((scaledBox.left - $("#background").offset().left)/newScaleFactor) - (($("#background").width()/2) - ($("#continentalSVG")[0].getBoundingClientRect().width/2))
+					$("#continentalSVG").children("g").attr("transform", $("#continentalSVG").children("g").attr("transform") + " translate(" + -1*scaledBox.left + ", " + -1*scaledBox.top + ")")
+					$("#continentalSVG").css("z-index","2");
+					$("#continentFilter").css("display","inline");
+					zoomLevel = ["continental",$(continent).attr("class")];
+					console.log(zoomLevel)
+					levelChange(zoomLevel)
+				}
+				else if (zoomLevel[0] == "continental") {
+					var territory = "#" + document.elementFromPoint(e.pageX,e.pageY).id;
+					$("#territorialSVG").append($(territory).parent().clone())
+					var box = $("#territorialSVG")[0].getBoundingClientRect();
+					var newScaleFactor
+					if (box.width/$(window).width() > box.height/$(window).height()) {
+						newScaleFactor = ($("#background").width()*parseFloat($("#territorialSVG").children("g").attr("transform").split(")")[0].replace("scale(","")))/box.width*0.95;
+					}
+					else {
+						newScaleFactor = ($("#background").height()*parseFloat($("#territorialSVG").children("g").attr("transform").split(")")[0].replace("scale(","")))/box.height*0.95;
+					}
+					$("#territorialSVG").children("g").attr("transform","scale(" + newScaleFactor + ")");
+					var scaledBox = $("#territorialSVG").offset()
+					scaledBox.top = ((scaledBox.top - $("#background").offset().top)/newScaleFactor) - ($("#background").height() - ($("#territorialSVG")[0].getBoundingClientRect().height))/(newScaleFactor*2)
+					scaledBox.left = ((scaledBox.left - $("#background").offset().left)/newScaleFactor) - ($("#background").width() - ($("#territorialSVG")[0].getBoundingClientRect().width))/(newScaleFactor*2)
+			
+					$("#territorialSVG").children("g").attr("transform", $("#territorialSVG").children("g").attr("transform") + " translate(" + -1*scaledBox.left + ", " + -1*scaledBox.top + ")")
+					$("#territorialSVG").css("z-index","4");
+					$("#territoryFilter").css("display","inline");
+					zoomLevel = ["territorial",territory, zoomLevel[1]];
+					console.log(zoomLevel)
+					levelChange(zoomLevel)
+				}
+				pathClicked = true
+			}
+			else if (zooming = false) {
+				
+			}
+		});
+		
+			$("svg").click( function(e) {
+
+				if (pathClicked != true && zooming == true) {
+					if (zoomLevel[0] == "continental") {
+						$("#continentalSVG").children().remove();
+						$("#continentFilter").css("display","none");
+						$("#continentalSVG").css("z-index","-1");
+						zoomLevel = ["global","globe"];
+					}
+					else if (zoomLevel[0] == "territorial") {
+						$("#territorialSVG").children().remove();
+						$("#territoryFilter").css("display","none");
+						$("#territorialSVG").css("z-index","-1");
+						$("#continentalSVG").css("z-index","2");
+					console.log(zoomLevel)
+						zoomLevel = ["continental", zoomLevel[2]];
+					}
+					else if (zoomLevel[0] == "global") {
+				
+						if (trading == true) {
+							$("#renderedSprites").css("pointer-events","auto");
+
+							if (document.elementFromPoint(e.pageX,e.pageY).id.replace(/[0-9]/g, '') == "seapoint") {
+
+								if (seapoints[document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,'')][1] == "selpast" || seapoints[document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,'')][1] == "sel") {
+									for (i = 0; i < itinerary.length; i++) {
+
+										if (typeof itinerary[i][1] !== "undefined" && itinerary[i][0]["xco"] == seapoints[document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,'')][0]["xco"] && (seapoints[document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,'')][1] == "selpast" || (seapoints[document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,'')][1] == "sel" && i - 1 == itinerary.length))) {
+
+											changeLeg = [true,i,document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,''),"seapoint"]
+
+											changeSel("seapoint",document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,''))
+
+										}
+										else if (typeof itinerary[i][1] !== "undefined" && seapoints[document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,'')][1] == "sel") {
+
+										selectFirst("seapoint",itinerary)
+										}
+									}
+								}
+							}
+							else if ($("#alertBox").css("display") == "none") {
+
+								$("#renderedSprites").css("pointer-events","none");
+								alertBox("Would you like to place a sea point?","seapoint",e)
+							}
+
+							$("#renderedSprites").css("pointer-events","none");
+						}
+					}
+					levelChange(zoomLevel)
+				}
+				else if (pathClicked == true && zooming == true) {
+
+					pathClicked = false;
+
+				}
+		});
 });
+
+//End of Zooming
+
+
 </script>
-<div id="forms">
-    <%= render partial: "form" %>
-</div>
-<div id="create_trade">
-</div>
-<div id="submitTradeDiv">
-</div>
-<button id="cancel_form" class="button">Cancel</button>
-<div class="filter"></div>
-<canvas id="myCanvas" width="3508" height="1956">
-    Oops, Your Browser Doesn't Support HTML5 Elements Try Again In Up to Date Version of IE Firefox Chrome Safari or Opera
-</canvas>
-<canvas id="color_territory_active_canvas" width="3508" height="1956">
-    Oops, Your Browser Doesn't Support HTML5 Elements Try Again In Up to Date Version of IE Firefox Chrome Safari or Opera
-</canvas>
-<%= image_tag("territory_color_active_map.png", :class => "territory_color_active_image", :id => "color_territory_active_image") %>
-<canvas id="color_map_overlay" width="3508" height="1956">
-    Oops, Your Browser Doesn't Support HTML5 Elements Try Again In Up to Date Version of IE Firefox Chrome Safari or Opera
-</canvas>
+
+
+
+
 <div id="sprites">
     <%= render partial: "sprites" %>
 </div>
-<div id="titlediv">
-    <%= image_tag("title.png", :id => "title") %>
-</div><br>
-<%= image_tag("active_map.png", :class => "active", :id => "active") %>
-<div class="test1" style="margin-left:5%;">
-    <%= render partial: "images" %>
-</div>
 
+<%= image_tag("active_map.png", :class => "active", :id => "active") %>
+
+
+<div class="test1"  width="100%" height="100%">
+	<div id="renderedSprites"></div>
+	<div id="background"></div>
+	<div id="continentFilter" class="filter"></div>
+	<div id="territoryFilter" class="filter"></div>
+	<svg
+    preserveAspectRatio="xMinYMin meet"
+	class="territoryImage" 
+	id="continentalSVG"></svg>
+	<svg
+    preserveAspectRatio="xMinYMin meet"
+	class="territoryImage" 
+	id="territorialSVG"></svg>
+    <%= render partial: "images" %>
+	
+</div>
+	<div id="sidePanel" class="box">
+ 	<div class="corner top right"></div>
+	<div class="corner top left"></div>
+	<div id="forms">
+	    <%= render partial: "form" %>
+	</div>
+	<div class="corner bottom left"></div>
+	<div class="corner bottom right"></div>
+	</div>
+<div id="alertBox" class="box">
+ 	<div class="corner top right"></div>
+	<div class="corner top left"></div>
+		<p></p>
+		<div id="alertButtons">
+			<button class="alertButton" id="alertConfirm">Confirm</button>
+			<button class="alertButton" id="alertCancel">Cancel</button>
+		</div>
+	<div class="corner bottom left"></div>
+	<div class="corner bottom right"></div>
+</div>
 <div class="test" style="color:red;"></div>

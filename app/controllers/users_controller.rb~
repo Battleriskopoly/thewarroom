@@ -38,12 +38,14 @@ class UsersController < ApplicationController
 				if User.find(attr_value).color.instance_of?(NilClass) != true
 					@territoryColors << Array.new
 					colorUser = User.find(attr_value)
-					@territoryColors[@territoryColors.length - 1] << colorUser.color[0,2].insert(0, "0x")
-					@territoryColors[@territoryColors.length - 1] << colorUser.color[2,4].insert(0, "0x")
-					@territoryColors[@territoryColors.length - 1] << colorUser.color[4,6].insert(0, "0x")
+					logger.info colorUser.id
+					@territoryColors[@territoryColors.length - 1] << colorUser.color[0,2].insert(0, "0x").hex
+					@territoryColors[@territoryColors.length - 1] << colorUser.color[2,2].insert(0, "0x").hex
+					@territoryColors[@territoryColors.length - 1] << colorUser.color[4,6].insert(0, "0x").hex
 				end
 			end
 		end
+		logger.info @territoryColors
 
 	end
 	
@@ -71,24 +73,17 @@ class UsersController < ApplicationController
 	@encampment.game_id = @user.game_id
 	end
 
-	if user_params[:trades_attributes][:"100000000000"] != nil
-		@trade = Trade.new(user_params[:trades_attributes][:"100000000000"])
-		@legs = @trade.legs.build()
-		@legs = @legs.shift
-		
-	end
-
 			respond_to do |format|
-			if user_params[:game_id] != nil
-				if @user.update_attribute(:game_id, user_params[:game_id])
-					format.html { redirect_to @user }
-					format.js   { redirect_to @user }
-					format.json { redirect_to @user}
+				if user_params[:game_id] != nil
+					if @user.update_attribute(:game_id, user_params[:game_id])
+						format.html { redirect_to @user }
+						format.js   { redirect_to @user }
+						format.json { redirect_to @user}
+					end
 				end
-			end
 
 				if @fort != nil 
-					if @fort.save
+					if true
 					  format.html { redirect_to @user, notice: 'Fort was successfully created.' }
 					  format.js   {}
 					  format.json { render json: @fort, status: :updated, location: @user }
@@ -98,7 +93,7 @@ class UsersController < ApplicationController
 					end
 				end
 				if @encampment != nil
-					if @encampment.save
+					if true
 					  format.html { redirect_to @user, notice: 'Camp was successfully created.' }
 					  format.js   {}
 					  format.json { render json: @fort, status: :updated, location: @user }

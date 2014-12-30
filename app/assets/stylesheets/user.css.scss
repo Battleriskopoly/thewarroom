@@ -1,88 +1,251 @@
-// Place all the styles related to the User controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-body {background-color:#949494;}
+// STYLE FOR TAGS
 
-#myCanvas {display:none;}
+body {
+    background-color:#494949;
+}
 
-.active_continent {display:none;}
-
-.active {display:none;}
-
-#map    {width:100%;
-        position:absolute;
-        z-index: -2;}
-
-.continent {display:none;
-	       z-index: 2;
-	       position:absolute;}
-    
-.territory {display:none;
-	       z-index: 4;
-	       position:absolute;}
-
-.test1  {position:relative;
-        margin-right:5%;}
-
-#filter {position:absolute;
-        opacity:0.75;}
-
-#filter2 {
+svg {
 	position:absolute;
-	opacity:0.5;
-	
-	}
-#create_fort {
-	display:none;
-	}
-#create_camp {
-	display:none;
-	}
-#submit {
-	display:none;
-	}
-.button {
-	margin-left:5%;
-	z-index:5;
-	display:none;
+	fill:white;
+}
 
-	}
+input[type=submit] {
+	z-index:5;
+    padding: 10px 15px;
+    background: #494949;
+    color: #FFF;
+    border-color: #494949;
+    border-style: solid;
+}
+input[type=button] {
+	z-index:5;
+    padding: 10px 15px;
+    background: #494949;
+    color: #FFF;
+    border-color: #494949;
+    border-style: solid;
+}
+button {
+	z-index:5;
+    padding: 10px 15px;
+    background: #494949;
+    color: #FFF;
+    border-color: #494949;
+    border-style: solid;
+}
+
+
+//STYLE FOR CLASSES
+
+.active {
+    display:none;
+}
+
+.active_continent {
+    display:none;
+}
+
+.bottom {
+    bottom: 0px;
+    border-bottom-style: solid;
+}
+
+.newObjectButton {
+	display:none;
+    margin-left:5%;
+}
+.submitButton {
+	display:none;
+    margin-left:5%;
+}
+
+.canvas {
+	position:absolute;
+}
+.cancelButton {
+	display:none;
+}
+.content {
+    font-family:courier; 
+    font-size:3em;
+    text-align:center;
+}
+
+.continent {
+    display:none;
+    z-index: 2;
+    position:absolute;
+}
+
+.filter {
+	display:none;
+	background-color:black;
+	opacity:0.75;
+	position:absolute;
+}
+
+.left {
+    left: 0px;
+    border-left-style: solid;
+}
+
+.renderedSprite {
+    position:absolute;
+}
+
+.right {
+    right: 0px;
+    border-right-style: solid;
+}
+
 .sprite {
 	display:none;
 	position:absolute;
-	}
-#create_sprite_canvas {
-	position:absolute;
-	}
-.test {
-	position:relative;
-	z-index:700;
-	}
-.canvas {
+}
+
+.territory {
+    display:none;
+    z-index: 4;
+    position:absolute;
+}
+.territoryImage {
 	position:absolute;
 }
 .temp_canvas {
 	display:none;
 }
-#create_trade {
 
+.test {
+	position:relative;
+	z-index:700;
 }
-.trade_button {
-	display:none;
+
+.territoryPath {
+	z-index:1;
 }
-#color_territory_active_canvas {
-	display:none;
-	}
-#color_territory_active_image {
-	display:none;
-	}
+
+.test1 {
+    position:relative;
+}
+
+.top {
+    top: 0px;
+    border-top-style: solid;
+}
+
+
+
+
+//STYLE FOR IDS
+
+#background {
+	position:absolute;
+	z-index:-3000;
+	background-color:#494949;
+}
+
+#create_sprite_canvas {
+	position:absolute;
+}
+
 #color_map_overlay {
 	display:none;
 }
 
-#titlediv  {width:750px;
-            height:100px;
-            margin-left:auto;
-            margin-right:auto;}
+#color_territory_active_canvas {
+	display:none;
+}
 
-#title  {z-index:-1;}
+#color_territory_active_image {
+	display:none;
+}
+
+#continentFilter {
+	z-index:2;
+}
+
+#filter1 {
+    position:absolute;
+    opacity:0.75;
+}
+
+#filter2 {
+	position:absolute;
+	opacity:0.5;
+}
+
+#map {
+    margin-left:auto;
+    margin-right:auto;
+    width:80%;
+    position:absolute;
+    z-index: -2;
+}
+
+#myCanvas {
+    display:none;
+}
+
+#renderedSprites {
+	position:absolute;
+  	pointer-events: none;
+}
+
+#sidePanel {
+    position:fixed;
+    background-color:#bf6060;
+    width:14%;
+    margin-left:85%
+}
+
+#sidePanel > div.corner {
+    display: block;
+    position: absolute;
+    width: 25%;
+    height: 5%;
+}
+
+#submit {
+	display:none;
+}
+
+#title {
+    position: absolute;                                                         
+    background-color:#bf6060;//                                                           
+    padding-left:5%;//                                                                    (  .  )(  .  )
+    padding-right:5%;                                                   
+    margin-top:-2%;//                                                                        ^      ^
+    padding-left:5%;//                                                                       |      |
+    padding-right:5%;//                                                                   these are tits
+}
+
+#title > div.corner {
+    display: block;
+    position: absolute;
+    width: 3%;
+    height: 25%;
+}
+
+#titlediv {
+    width:750px;
+    height:100px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#territoryFilter {
+	z-index:3;
+}
+#alertBox {
+	position:absolute;
+	z-index:10000;
+	padding:3%;
+	background-color:#bf6060;
+	display:none;
+}
+#alertBox > div.corner {
+    display: block;
+    position: absolute;
+    width: 10%;
+    height: 15%;
+}

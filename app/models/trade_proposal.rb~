@@ -1,0 +1,5 @@
+class TradeProposal < ActiveRecord::Base
+	belongs_to :fort
+	belongs_to :user
+	belongs_to :trade
+end

@@ -1,0 +1,11 @@
+<%= form_for(@game, remote: true) do |f| %>
+    <%= f.label :name, "Name" %>
+	<%= f.text_field :name %>
+	<%= f.label :private, "Private" %>
+	<%= f.radio_button :private, "T" %>
+	<%= f.label :private, "Public" %>
+	<%= f.radio_button :private, "F" %>
+<br>
+<br>
+	<%= f.submit "Create"%>
+<% end %>

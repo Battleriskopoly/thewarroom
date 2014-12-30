@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fort_id: 1
+  user_id: 1
+  recipient_user_id: 1
+  recipient_fort_id: 1
+  what: MyString
+  quantity: 1
+  trade_id: 1
+
+two:
+  fort_id: 1
+  user_id: 1
+  recipient_user_id: 1
+  recipient_fort_id: 1
+  what: MyString
+  quantity: 1
+  trade_id: 1

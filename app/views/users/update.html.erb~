@@ -1,0 +1,4 @@
+<%= render partial: "game", collection: @games %>
+<%= form_for(@user, remote: true) do |f| %>
+	<%= f.hidden_field :game_id %>
+<% end %>
