@@ -35,9 +35,9 @@ class UsersController < ApplicationController
 
 		@game.attributes.each do |attr_name, attr_value|
 			if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "private" && attr_value.instance_of?(NilClass) != true
-				if UserGameAttributes.find(attr_value).color.instance_of?(NilClass) != true
+				if UserGameAttribute.find(attr_value).color.instance_of?(NilClass) != true
 					@territoryColors << Array.new
-					colorUser = UserGameAttributes.find(attr_value)
+					colorUser = UserGameAttribute.find(attr_value)
 					logger.info colorUser.id
 					@territoryColors[@territoryColors.length - 1] << colorUser.color[0,2].insert(0, "0x").hex
 					@territoryColors[@territoryColors.length - 1] << colorUser.color[2,2].insert(0, "0x").hex
@@ -73,6 +73,7 @@ class UsersController < ApplicationController
 
 		@game.attributes.each do |attr_name, attr_value|
 			if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "private" && attr_value.instance_of?(NilClass) != true
+				logger.info "called"
 				gameThings = {params[:user][:game_id]  => { attr_name => @gameAttribute.id }}
 				Game.update(gameThings.keys, gameThings.values)
 			end

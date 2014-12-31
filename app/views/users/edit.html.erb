@@ -22,6 +22,8 @@
 
 </script>
 
+<%= button_to("Create a Game",new_game_path, :method => "get") %>
+
 <%= form_for(@user) do |f| %>
 	<%= f.hidden_field :game_id, :id => "game_id" %>
   <%= f.fields_for :game_attributes do |builder| %>

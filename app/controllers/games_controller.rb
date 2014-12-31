@@ -9,7 +9,7 @@ class GamesController < ApplicationController
 		@game = Game.new(game_params)
 		if @game.save
 		
-		  redirect_to user_url(Person.find_by(remember_tolken: cookies[:remember_tolken]).id)
+		  redirect_to edit_user_url(current_user.id)
 		else
 			render 'new'
 		end

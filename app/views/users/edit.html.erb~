@@ -7,6 +7,7 @@
 			$("#colorPicker").css("display","inline")
 			$("#finalJoin").css("display","inline")
 			$("#game_id").val(this.id);
+			$("#other_game_id").val(this.id);
 		});
 		$(".swatchButton").click( function() {
 			$("#placement").children().remove()
@@ -20,6 +21,8 @@
 	});
 
 </script>
+
+<%= button_to("Create a Game",new_game_path, :method => get) %>
 
 <%= form_for(@user) do |f| %>
 	<%= f.hidden_field :game_id, :id => "game_id" %>
