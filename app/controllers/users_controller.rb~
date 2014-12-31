@@ -72,7 +72,7 @@ class UsersController < ApplicationController
 		@game = Game.find(params[:user][:game_id])
 
 		@game.attributes.each do |attr_name, attr_value|
-			if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "private" && attr_value.instance_of?(NilClass) != true
+			if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "private"
 				logger.info "called"
 				gameThings = {params[:user][:game_id]  => { attr_name => @gameAttribute.id }}
 				Game.update(gameThings.keys, gameThings.values)

@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 	def create
 
 		@user = User.new(user_params)
+		@user.game_id = 1
 		if @user.save
 			redirect_to edit_user_url(@user.id)
 
