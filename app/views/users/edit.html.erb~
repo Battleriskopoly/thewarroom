@@ -1,17 +1,41 @@
 <script>
 	$( document ).ready(function() {
 		$(".join_button").click( function(e) {
+			$(".game").css("display","none")
+			$(this).css("display","none")
+			$(this).parent().css("display","inline")
+			$("#colorPicker").css("display","inline")
+			$("#finalJoin").css("display","inline")
 			$("#game_id").val(this.id);
-			$("#submit").click();
 		});
+		$(".swatchButton").click( function() {
+			$("#placement").children().remove()
+			console.log(".swatchImage#" + this.id)
+			$("#placement").html($(".swatchImage#" + this.id).clone().css("display","inline"))
+			$("#color").val(this.id.replace("L",""))
+		}) 
+		$("#finalJoin").click( function() {
+			$("#submit").click();	
+		})
 	});
+
 </script>
 
 <%= form_for(@user) do |f| %>
 	<%= f.hidden_field :game_id, :id => "game_id" %>
+  <%= f.fields_for :game_attributes do |builder| %>
+	<%= builder.hidden_field :color, :id => "color" %>
+	<%= builder.hidden_field :game_id, :id => "other_game_id" %>
+  <% end %>
   	<%= f.submit "Create", :id => "submit", :class => "button" %>
 <% end %>
-	<% @games.each do |i|%>
-		<p>Game: <%= i.name %></p>
-		<button class="join_button" id="<%=i.id%>">Join</button>
-	<% end %>
+<% @games.each_with_index do |i,index|%>
+	<div id="<%=index%>" class="game">
+	<p class="gameName">Game: <%= i.name %></p>
+	<button class="join_button" id="<%=i.id%>">Join</button>
+	</div>
+<% end %>
+<div id="colorPicker">
+<%= render partial: "color_picker" %>
+</div>
+<button id="finalJoin" style="diplay:none">Join Game</button>

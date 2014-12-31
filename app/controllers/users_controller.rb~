@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
 		@user = User.new(user_params)
 		if @user.save
-			redirect_to @user
+			redirect_to edit_user_url(@user.id)
 
 		else
 
@@ -35,9 +35,9 @@ class UsersController < ApplicationController
 
 		@game.attributes.each do |attr_name, attr_value|
 			if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "private" && attr_value.instance_of?(NilClass) != true
-				if User.find(attr_value).color.instance_of?(NilClass) != true
+				if UserGameAttributes.find(attr_value).color.instance_of?(NilClass) != true
 					@territoryColors << Array.new
-					colorUser = User.find(attr_value)
+					colorUser = UserGameAttributes.find(attr_value)
 					logger.info colorUser.id
 					@territoryColors[@territoryColors.length - 1] << colorUser.color[0,2].insert(0, "0x").hex
 					@territoryColors[@territoryColors.length - 1] << colorUser.color[2,2].insert(0, "0x").hex
@@ -45,7 +45,6 @@ class UsersController < ApplicationController
 				end
 			end
 		end
-		logger.info @territoryColors
 
 	end
 	
@@ -63,14 +62,33 @@ class UsersController < ApplicationController
   def update
 
     @user = User.find(params[:id])
-	if user_params[:forts_attributes][:"100000000000"] != nil
+	if params[:user][:game_id] != nil 
+
+		User.update(@user.id, :game_id => params[:user][:game_id])
+		@gameAttribute = @user.user_game_attributes.build(user_params[:game_attributes])
+
+		@gameAttribute.save
+
+		@game = Game.find(params[:user][:game_id])
+
+		@game.attributes.each do |attr_name, attr_value|
+			if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "private" && attr_value.instance_of?(NilClass) != true
+				gameThings = {params[:user][:game_id]  => { attr_name => @gameAttribute.id }}
+				Game.update(gameThings.keys, gameThings.values)
+			end
+		end
+
+	end
+
+	if user_params[:forts_attributes] != nil || user_params[:encampments_attributes]
+	if params[:forts_attributes][:"100000000000"] != nil
 	@fort = @user.forts.build(user_params[:forts_attributes][:"100000000000"])
 	@fort.game_id = @user.game_id
 	end
-
-	if user_params[:encampments_attributes][:"100000000000"] != nil
+	if params[:encampments_attributes][:"100000000000"] != nil
 	@encampment = @user.encampments.build(user_params[:encampments_attributes][:"100000000000"])
 	@encampment.game_id = @user.game_id
+	end
 	end
 
 			respond_to do |format|
@@ -83,7 +101,7 @@ class UsersController < ApplicationController
 				end
 
 				if @fort != nil 
-					if true
+					if @fort.save
 					  format.html { redirect_to @user, notice: 'Fort was successfully created.' }
 					  format.js   {}
 					  format.json { render json: @fort, status: :updated, location: @user }
@@ -93,7 +111,7 @@ class UsersController < ApplicationController
 					end
 				end
 				if @encampment != nil
-					if true
+					if @encampment.save
 					  format.html { redirect_to @user, notice: 'Camp was successfully created.' }
 					  format.js   {}
 					  format.json { render json: @fort, status: :updated, location: @user }
@@ -119,7 +137,7 @@ class UsersController < ApplicationController
 
     	def user_params
 
-        params.require(:user).permit(:name, :email, :username, :password, :password_confirmation, :game_id, forts_attributes: [ :name, :xco, :yco, :territory, :ownership, :id, :date_created, :game_id], encampments_attributes: [ :name, :xco, :yco, :territory, :id, :date_created, :game_id], trades_attributes: [:cost, :sending_user_id, :recipient_user_i, :game_id, :sending_fort_id, :what, :quantity, :recipient_fort_id, legs_attributes: [:sending_user_id, :recipient_user_id, :sending_fort_id, :recipient_fort_id, :durration], trade_proposal: [:what, :quantity, :user_id, :recipient_user_id, :fort_id, :recipient_fort_id, :durration] ])
+        params.require(:user).permit(:name, :email, :username, :password, :password_confirmation, :game_id, forts_attributes: [ :name, :xco, :yco, :territory, :ownership, :id, :date_created, :game_id], encampments_attributes: [ :name, :xco, :yco, :territory, :id, :date_created, :game_id],game_attributes: [:color, :game_id],trades_attributes: [:cost, :sending_user_id, :recipient_user_i, :game_id, :sending_fort_id, :what, :quantity, :recipient_fort_id, legs_attributes: [:sending_user_id, :recipient_user_id, :sending_fort_id, :recipient_fort_id, :durration], trade_proposal: [:what, :quantity, :user_id, :recipient_user_id, :fort_id, :recipient_fort_id, :durration] ])
 
    		end
 

@@ -8,7 +8,8 @@ class GamesController < ApplicationController
 	def create
 		@game = Game.new(game_params)
 		if @game.save
-		  redirect_to edit_user_path(current_user)
+		
+		  redirect_to user_url(Person.find_by(remember_tolken: cookies[:remember_tolken]).id)
 		else
 			render 'new'
 		end

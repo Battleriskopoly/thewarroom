@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141102220318) do
+ActiveRecord::Schema.define(version: 20141231195035) do
 
   create_table "encampments", force: true do |t|
     t.string   "name"
@@ -52,12 +52,6 @@ ActiveRecord::Schema.define(version: 20141102220318) do
     t.integer  "user_id"
     t.string   "territory"
     t.integer  "game_id"
-  end
-
-  create_table "game_attributes", force: true do |t|
-    t.integer "color"
-    t.integer "user_id"
-    t.integer "game_id"
   end
 
   create_table "games", force: true do |t|
@@ -142,9 +136,11 @@ ActiveRecord::Schema.define(version: 20141102220318) do
   end
 
   create_table "user_game_attributes", force: true do |t|
-    t.integer  "color"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
+    t.integer  "game_id"
+    t.string   "color"
   end
 
   create_table "users", force: true do |t|

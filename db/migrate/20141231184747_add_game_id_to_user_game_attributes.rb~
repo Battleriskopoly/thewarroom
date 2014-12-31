@@ -1,0 +1,4 @@
+class AddGameIdToUserGameAttributes < ActiveRecord::Migration
+  def change
+  end
+end

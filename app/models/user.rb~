@@ -9,11 +9,11 @@ class User < ActiveRecord::Base
   has_many :trades
   accepts_nested_attributes_for :trades
 
-  has_many :legs
-  accepts_nested_attributes_for :legs
-
   has_many :trade_proposals
   accepts_nested_attributes_for :trade_proposals
+
+  has_many :game_attributes
+  accepts_nested_attributes_for :game_attributes
 
   belongs_to :game
 

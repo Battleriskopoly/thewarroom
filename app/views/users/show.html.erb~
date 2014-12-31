@@ -124,6 +124,8 @@ $( document ).ready(function() {
 		$(".filter").css("height", $(".territoryImage").height())
 		$("g").attr("transform", "scale(" + $(".territoryImage").attr("viewBox").split(" ")[2]/3508 + ")")
 		$("#globalSVG").children("g").attr("transform", $("#globalSVG").children("g").attr("transform") + " translate(0 " + (($("#background").height()/2) - ($("#globalSVG")[0].getBoundingClientRect().height/2) + ($("#globalSVG").offset().top - $("#background").offset().top))/(($(".territoryImage").attr("viewBox").split(" ")[2]/3508)*2) + ")")
+		$("#traderoutes").attr("width",$("#background").width())
+		$("#traderoutes").attr("height",$("#background").height())
 		for (i = 0; i < $(".button").length; i++) {
 			$($(".button")[i])
 		} 
@@ -256,6 +258,7 @@ function renderObject(object,levelInfo,remove) {
 
 		renderObject("encampment",zoomLevel,true);
 		renderObject("fort",zoomLevel);
+		renderTrade(itinerary)
 		if (zoomLevel[0] == "global") {
 
 		}
@@ -583,27 +586,22 @@ function renderObject(object,levelInfo,remove) {
 
 				currentObject = itinerary[i][0]
 			}
-			if (i != 0) {
 
 				if (zoomLevel[0] == "global") {
-
+					console.log("called")
 					if (typeof currentObject["territory"] !== "undefined") {
 
-					xco = xco + colors[currentObject["territory"].replace("#","")][1][0] 
-					yco = yco + colors[currentObject["territory"].replace("#","")][1][1]  
+					var scaleFactor = parseFloat($("#globalSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
+
+					xco = (xco + colors[currentObject["territory"].replace("#","")][1][0])*scaleFactor
+					yco = (yco + colors[currentObject["territory"].replace("#","")][1][1])*scaleFactor
 
 					}
-
-					var transform = parseFloat($("#globalSVG").children("g").attr("transform").split(" ")[2].replace(")",""))
-					var scaleFactor =  parseFloat($("#globalSVG").children("g").attr("transform").split(") ")[0].replace("scale(",""))
-					var topLine = $("#globalSVG").children("g").attr("transform").split(", -")[0] + ", " + transform + 1/scaleFactor + ")" 
-					var bottomLine = $("#globalSVG").children("g").attr("transform").split(", -")[0] + ", " + transform - 1/scaleFactor + ")"
-
-					$("#globalSVG").append($("#globalSVG").children("g").clone().attr("id","traderoute").html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + (oldxco + xco)/4 + ' ' + (oldyco + yco)/4 +', ' +(oldxco + xco)/0.75 + ' ' + (oldyco + yco)/0.75+ ', ' + xco+ ' ' +yco + '" stroke="white"/>'))
-
-					$("#globalSVG").append($("#globalSVG").children("g").clone().attr("id","traderoute").attr("transform",bottomLine).html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + (oldxco + xco)/4 + ' ' + (oldyco + yco)/4 +', ' +(oldxco + xco)/0.75 + ' ' + (oldyco + yco)/0.75+ ', ' + xco+ ' ' +yco + '" stroke="black"/>'))
-
-					$("#globalSVG").append($("#globalSVG").children("g").clone().attr("id","traderoute").attr("transform",topLine).html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + (oldxco + xco)/4 + ' ' + (oldyco + yco)/4 +', ' +(oldxco + xco)/0.75 + ' ' + (oldyco + yco)/0.75+ ', ' + xco+ ' ' +yco + '" stroke="black"/>')) 
+					console.log(xco,yco,oldxco,oldyco)
+					if (i != 0) {
+					var string = "M".concat(oldxco).concat(" ").concat(oldyco).concat(" L").concat(xco).concat(" ").concat(yco)
+					$("#traderoutes").children("path").attr('d',string)
+					}
 
 				}
 				if (zoomLevel[0] == "continental") {
@@ -616,15 +614,7 @@ function renderObject(object,levelInfo,remove) {
 
 								xco = xco + colors[currentObject["territory"].replace("#","")][1][0] - color_key[zoomLevel[1]][1][0]
 								yco = yco + colors[currentObject["territory"].replace("#","")][1][1] - color_key[zoomLevel[1]][1][1]
-								var transform = parseFloat($("#continentalSVG").children("g").attr("transform").split(" ")[2].replace(")",""))
-								var scaleFactor = parseFloat($("#continentalSVG").children("g").attr("transform").split(") ")[0].replace("scale(",""))
-								var topLine = $("#continentalSVG").children("g").attr("transform").split(", -")[0] + ", " + transform + 1/scaleFactor + ")" 
-								var bottomLine = $("#continentalSVG").children("g").attr("transform").split(", -")[0] + ", " + transform - 1/scaleFactor + ")"
-								$("#continentalSVG").append($("#continentalSVG").children("g").clone().attr("id","traderoute").html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + (oldxco + xco)/4 + ' ' + (oldyco + yco)/4 +', ' +(oldxco + xco)/0.75 + ' ' + (oldyco + yco)/0.75+ ', ' + xco+ ' ' +yco + '" stroke="white"/>'))
-
-								$("#continentalSVG").append($("#continentalSVG").children("g").clone().attr("id","traderoute").attr("transform",bottomLine).html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + (oldxco + xco)/4 + ' ' + (oldyco + yco)/4 +', ' +(oldxco + xco)/0.75 + ' ' + (oldyco + yco)/0.75+ ', ' + xco+ ' ' +yco + '" stroke="black"/>'))
-
-								$("#continentalSVG").append($("#continentalSVG").children("g").clone().attr("id","traderoute").attr("transform",topLine).html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + (oldxco + xco)/4 + ' ' + (oldyco + yco)/4 +', ' +(oldxco + xco)/0.75 + ' ' + (oldyco + yco)/0.75+ ', ' + xco+ ' ' +yco + '" stroke="black"/>')) 
+								
 							}
 						}
 					}
@@ -634,24 +624,21 @@ function renderObject(object,levelInfo,remove) {
 					if (typeof itinerary[i][1] === "undefined") {
 						if (zoomLevel[1] == currentObject["territory"] || zoomLevel[1] == oldObject["territory"]) {
 
-							var transform = parseFloat($("#territorialSVG").children("g").attr("transform").split(" ")[2].replace(")",""))
-							var scaleFactor = parseFloat($("#territorialSVG").children("g").attr("transform").split(") ")[0].replace("scale(",""))
-							var topLine = $("#territorialSVG").children("g").attr("transform").split(", -")[0] + ", " + (transform + (1/scaleFactor)) + ")" 
-							var bottomLine = $("#territorialSVG").children("g").attr("transform").split(", -")[0] + ", " + (transform - (1/scaleFactor)) + ")"
+							var scaleFactor = parseFloat($("#territorialSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
 
-							console.log(oldxco,oldyco )
+							if (zoomLevel[1] == currentObject["territory"]) {
+								xco = xco + $("#territorialSVG").offset().left - $("#background").offset().left	
+								yco = yco + $("#territorialSVG").offset().top - $("#background").offset().top	 
+							}
+							else if (zoomLevel[1] != currentObject["territory"] && zoomLevel[1] == oldObject["territory"]) {
+								xco = oldxco + ((xco + colors[currentObject["territory"].replace("#","")][1][0] - oldObject["xco"] + colors[oldObject["territory"].replace("#","")][1][0])*scaleFactor)
+								yco = oldyco + ((yco + colors[currentObject["territory"].replace("#","")][1][1] - oldObject["yco"] + colors[oldObject["territory"].replace("#","")][1][1])*scaleFactor)
 
-							$("#territorialSVG").append($("#territorialSVG").children("g").clone().attr("id","traderoute").html('<line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(255,0,0);stroke-width:2" />'))
-
-							$("#territorialSVG").append($("#territorialSVG").children("g").clone().attr("id","traderoute").attr("transform",bottomLine).html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + ((oldxco + xco)/4) + ' ' + ((oldyco + yco)/4) +', ' +((oldxco + xco)/0.75) + ' ' + ((oldyco + yco)/0.75)+ ', ' + xco+ ' ' +yco + '" stroke="black"/>'))
-
-							$("#territorialSVG").append($("#territorialSVG").children("g").clone().attr("id","traderoute").attr("transform",topLine).html('<path d="M' + oldxco + ' ' +oldyco + ' C ' + ((oldxco + xco)/4) + ' ' + ((oldyco + yco)/4) +', ' +((oldxco + xco)/0.75) + ' ' + ((oldyco + yco)/0.75)+ ', ' + xco+ ' ' +yco + '" stroke="black"/>')) 
-
+							}
 						}
 					}
 				}
 
-			}
 			oldxco = xco
 			oldyco = yco
 			oldObject = currentObject
@@ -841,7 +828,7 @@ $(".newObjectButton").click( function() {
 					$("#continentalSVG").children("g").attr("transform", $("#continentalSVG").children("g").attr("transform") + " translate(" + -1*scaledBox.left + ", " + -1*scaledBox.top + ")")
 					$("#continentalSVG").css("z-index","2");
 					$("#continentFilter").css("display","inline");
-					zoomLevel = ["continental",continent];
+					zoomLevel = ["continental",$(continent).attr("class")];
 					console.log(zoomLevel)
 					levelChange(zoomLevel)
 				}
@@ -964,7 +951,10 @@ $(".newObjectButton").click( function() {
 	class="territoryImage" 
 	id="territorialSVG"></svg>
     <%= render partial: "images" %>
-	
+	<svg 
+	id="traderoutes">
+<path style="stroke:black"></path>
+	</svg>
 </div>
 	<div id="sidePanel" class="box">
  	<div class="corner top right"></div>

@@ -1,0 +1,4 @@
+class AddAttributesToGame < ActiveRecord::Migration
+  def change
+  end
+end
