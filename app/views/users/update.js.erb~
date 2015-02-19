@@ -1,1 +1,9 @@
-$("<%= escape_javascript(render partial: "users/fort", collection: @fort) %>").appendTo("body");
+<% if @piece != nil%>
+	for (var i = 0; i < rendered_battles.length; i++) {
+		if (rendered_battles[i]["id"] == <%= @piece.battle_id%>) {
+			rendered_battles[i]["board"]["B<%= @piece.coordinates.split("")[0].to_i + 1 %>" + "A" + "<%= @piece.coordinates.split("")[1].to_i + 1 %>C"] = "empty"
+			rendered_battles[i]["board"]["B<%= @move[0] %>" + "A" + "<%=  @move[1] %>C"] = {id:<%= @piece.id%>, piece_type:"<%= @piece.piece_type%>", owner_id:<%= @piece.user_id%>, coordinates:<%= @piece.coordinates%>}
+		paintChessBoard(rendered_battles[i])
+		}
+	}
+<%end%>

@@ -1,0 +1,11 @@
+
+    	<div id="battleAtSeaBoard">
+            <div class="feild" id="offense">
+		<%= image_tag("board.png", :id => "seaBoard") %>
+		<%= image_tag("radar.png", :id => "seaRadar") %>
+            </div>
+        <div id="pieces">
+
+        </div>
+        </div>
+

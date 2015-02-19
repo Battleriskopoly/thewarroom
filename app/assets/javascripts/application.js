@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require faye
+//= require comments
 //= require_tree .
 function add_fields(link, association, content) {
         var new_id = 100000000000;
@@ -22,3 +24,13 @@ function add_fields(link, association, content) {
 function clickButton(button_id) {
   document.getElementById(button_id).click();
   }
+
+$(function() {
+
+  var faye = new Faye.Client('http://localhost:9292/faye');
+  faye.subscribe('/game/' + gameId , function (data) {
+   eval(data)
+  });
+
+});
+

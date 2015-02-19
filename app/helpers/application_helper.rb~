@@ -1,11 +1,22 @@
 module ApplicationHelper
 
-	def link_to_add_fields(name, f, association, id)
+	def link_to_add_fields(name, f, association, id, assignedClass)
 	  new_object = f.object.class.reflect_on_association(association).klass.new
 	  fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
 		render(association.to_s.singularize + "_fields", :f => builder)
 	  end
-	  button_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", class: "creationButton", id: id)
+	if assignedClass != -1
+	  button_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", class: assignedClass, id: id)
+	else
+	  button_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", class: "newObjectButton", id: id)
 	end
+	end
+  def broadcast(channel, &block)
+	logger.info capture(&block)
+    message = {:channel => channel, :data => capture(&block)}
+    uri = URI.parse("http://localhost:9292/faye")
+	logger.info  Net::HTTP.post_form(uri, :message => message.to_json)
+   
+  end
 
 end

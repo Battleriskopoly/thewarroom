@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141231195035) do
+ActiveRecord::Schema.define(version: 20150207142605) do
+
+# Could not dump table "battles" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
+
+  create_table "conversations", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "encampments", force: true do |t|
     t.string   "name"
@@ -102,37 +110,36 @@ ActiveRecord::Schema.define(version: 20141231195035) do
   create_table "legs", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "recipient_fort_id"
-    t.integer  "sending_fort_id"
     t.integer  "trade_id"
-    t.integer  "sending_user_id"
-    t.integer  "recipient_user_id"
+    t.string   "location_type"
+    t.integer  "location_id"
+    t.integer  "trade_index"
   end
 
-  create_table "trade_proposals", force: true do |t|
-    t.integer  "fort_id"
+  create_table "messages", force: true do |t|
     t.integer  "user_id"
-    t.integer  "recipient_user_id"
-    t.integer  "recipient_fort_id"
-    t.string   "what"
-    t.integer  "quantity"
-    t.integer  "trade_id"
+    t.integer  "conversation_id"
+    t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "durration"
   end
+
+# Could not dump table "pieces" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "trades", force: true do |t|
-    t.integer  "cost"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "sending_fort_id"
-    t.integer  "recipient_fort_id"
     t.integer  "sending_user_id"
     t.integer  "recipient_user_id"
     t.integer  "game_id"
     t.string   "what"
     t.integer  "quantity"
+    t.integer  "sending_location_id"
+    t.integer  "recipient_location_id"
+    t.string   "sending_location_type"
+    t.string   "recipient_location_type"
+    t.float    "cost"
   end
 
   create_table "user_game_attributes", force: true do |t|

@@ -1,0 +1,8 @@
+class CreatePieces < ActiveRecord::Migration
+  def change
+    create_table :chesses do |t|
+	t.integer :user_one_id
+	t.integer :game_two_id
+    end
+  end
+end

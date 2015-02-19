@@ -17,6 +17,18 @@ class User < ActiveRecord::Base
 
   belongs_to :game
 
+  has_many :legs
+  accepts_nested_attributes_for :legs
+
+  has_many :chesses
+  accepts_nested_attributes_for :chesses
+
+  has_many :pieces
+  accepts_nested_attributes_for :pieces
+
+  has_many :battles
+  accepts_nested_attributes_for :battles
+
   before_save { self.email = email.downcase }
   before_create :create_remember_token
   validates :username, presence: true, length: { maximum: 50 }

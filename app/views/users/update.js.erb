@@ -1,1 +1,11 @@
-$("<%= escape_javascript(render partial: "users/fort", collection: @fort) %>").appendTo("body");
+<% if @piece != nil%>
+
+<% broadcast "/game/" << @game.id.to_s do %>
+var empty = []
+<% @empty.each do |coordinates|%>
+empty.push(<%=coordinates%>)
+<%end%>
+		appendMove({id:<%= @piece.id%>, piece_type:"<%= @piece.piece_type%>", owner_id:<%= @piece.user_id%>, battle_id:<%= @piece.battle_id%>, coordinates:"<%= @oldmove%>"}, <%= @move%>,empty,<%=@battle.turn%>)
+
+<% end %>
+<%end%>

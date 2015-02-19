@@ -1,0 +1,4 @@
+class AddFirstMoveToPiece < ActiveRecord::Migration
+  def change
+  end
+end

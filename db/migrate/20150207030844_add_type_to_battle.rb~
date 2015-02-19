@@ -1,0 +1,4 @@
+class AddTypeToBattle < ActiveRecord::Migration
+  def change
+  end
+end

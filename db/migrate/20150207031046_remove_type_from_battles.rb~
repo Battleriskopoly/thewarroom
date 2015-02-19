@@ -1,0 +1,5 @@
+class RemoveTypeFromBattles < ActiveRecord::Migration
+  def change
+	remove_column :battles, :type
+  end
+end

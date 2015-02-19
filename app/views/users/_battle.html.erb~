@@ -1,0 +1,85 @@
+<%if battle[0].battle_type == "chess"%>
+var board = {
+B1A1C:"empty",
+B1A2C:"empty",
+B1A3C:"empty",
+B1A4C:"empty",
+B1A5C:"empty",
+B1A6C:"empty",
+B1A7C:"empty",
+B1A8C:"empty",
+B2A1C:"empty",
+B2A2C:"empty",
+B2A3C:"empty",
+B2A4C:"empty",
+B2A5C:"empty",
+B2A6C:"empty",
+B2A7C:"empty",
+B2A8C:"empty",
+B3A1C:"empty",
+B3A2C:"empty",
+B3A3C:"empty",
+B3A4C:"empty",
+B3A5C:"empty",
+B3A6C:"empty",
+B3A7C:"empty",
+B3A8C:"empty",
+B4A1C:"empty",
+B4A2C:"empty",
+B4A3C:"empty",
+B4A4C:"empty",
+B4A5C:"empty",
+B4A6C:"empty",
+B4A7C:"empty",
+B4A8C:"empty",
+B5A1C:"empty",
+B5A2C:"empty",
+B5A3C:"empty",
+B5A4C:"empty",
+B5A5C:"empty",
+B5A6C:"empty",
+B5A7C:"empty",
+B5A8C:"empty",
+B6A1C:"empty",
+B6A2C:"empty",
+B6A3C:"empty",
+B6A4C:"empty",
+B6A5C:"empty",
+B6A6C:"empty",
+B6A7C:"empty",
+B6A8C:"empty",
+B7A1C:"empty",
+B7A2C:"empty",
+B7A3C:"empty",
+B7A4C:"empty",
+B7A5C:"empty",
+B7A6C:"empty",
+B7A7C:"empty",
+B7A8C:"empty",
+B8A1C:"empty",
+B8A2C:"empty",
+B8A3C:"empty",
+B8A4C:"empty",
+B8A5C:"empty",
+B8A6C:"empty",
+B8A7C:"empty",
+B8A8C:"empty"}
+
+	<%battle[1].each do |piece|%>
+
+		<%if piece[1] != -1%>
+		board["B<%= piece[0].split("_")[0]%>" + "A<%= piece[0].split("_")[1]%>C"] = {id:<%= piece[1].id%>, piece_type:"<%= piece[1].piece_type%>", owner_id:<%= piece[1].user_id%>,first_move:"<%= piece[1].first_move%>"}
+		<%end%>
+
+	<%end%>
+rendered_battles.push({id:<%=battle[0].id%>,turn:<%=battle[0].turn%>,location_one_id:<%=battle[0].location_one_id%>,location_two_id:<%=battle[0].location_two_id%>,user_one_id:<%=battle[0].user_one_id%>,user_two_id:<%=battle[0].user_two_id%>,location_one_type:"<%=battle[0].location_one_type%>",location_two_type:"<%=battle[0].location_two_type%>",battle_type:"<%=battle[0].battle_type%>",board:board})
+<%else%>
+var board = []
+
+<%battle[0].pieces.each do |piece|%>
+board.push({id:<%= piece.id%>, piece_type:"<%= piece.piece_type%>", owner_id:<%= piece.user_id%>,coordinates:"<%=piece.coordinates%>"})
+<%end%>
+	rendered_battles.push({id:<%=battle[0].id%>,turn:<%=battle[0].turn%>,location_one_id:<%=battle[0].location_one_id%>,location_two_id:<%=battle[0].location_two_id%>,user_one_id:<%=battle[0].user_one_id%>,user_two_id:<%=battle[0].user_two_id%>,location_one_type:"<%=battle[0].location_one_type%>",location_two_type:"<%=battle[0].location_two_type%>",battle_type:"<%=battle[0].battle_type%>",pending:"<%=battle[0].pending%>"board:board})
+<%end%>
+
+

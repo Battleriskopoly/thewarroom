@@ -1,0 +1,3 @@
+<% i[2].each do |y| %>
+{id:<%=y[0]%>,location_type:<%=y[1]%>},
+<%end%>

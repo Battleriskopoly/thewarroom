@@ -1,38 +1,38 @@
 // STYLE FOR TAGS
 
 body {
-    background-color:#494949;
+    background-color:#262626;
 }
 
 svg {
 	position:absolute;
-	fill:white;
+	fill:black;
 }
 
-input[type=submit] {
+input[type=submit], input[type=button], button {
 	z-index:5;
-    padding: 10px 15px;
-    background: #494949;
-    color: #FFF;
-    border-color: #494949;
-    border-style: solid;
+    text-align:center;
+    line-height:30px;
+    height:50px;
+    padding-right:20px;
+    padding-left:20px;
+    font-family:couriercode;
+    font-size:15px;
+    background-color:#4d4d4d;
+    border:2px solid #000000;
+    color:#000;
+    border-radius:5px;
+    margin-left:12px;
+    font-color:black;
 }
-input[type=button] {
-	z-index:5;
-    padding: 10px 15px;
-    background: #494949;
-    color: #FFF;
-    border-color: #494949;
-    border-style: solid;
+
+input[type=submit]:hover, input[type=button]:hover, button:hover {
+    background-color:#000;
+    color:#4d4d4d;
+
 }
-button {
-	z-index:5;
-    padding: 10px 15px;
-    background: #494949;
-    color: #FFF;
-    border-color: #494949;
-    border-style: solid;
-}
+
+
 
 
 //STYLE FOR CLASSES
@@ -52,7 +52,6 @@ button {
 
 .newObjectButton {
 	display:none;
-    margin-left:5%;
 }
 .submitButton {
 	display:none;
@@ -70,7 +69,11 @@ button {
     font-size:3em;
     text-align:center;
 }
-
+.corner {
+	border-width:10px;
+	pointer-events:none;
+	border-color:#1cbcbb;
+}
 .continent {
     display:none;
     z-index: 2;
@@ -137,15 +140,28 @@ button {
 
 
 //STYLE FOR IDS
+#logo {
+	margin-left:1.5%;
+	margin-top:0%;
+	pointer-events:none;
+	position:absolute;
+}
+#activeTrade {
+	z-index:-1;
+	position:absolute;
+}
 #traderoutes {
 	pointer-events:none;
 	z-index:500;
 	position:absolute;
 }
+#submitBattle {
+	display:none;
+}
 #background {
 	position:absolute;
 	z-index:-3000;
-	background-color:#494949;
+	background-color:#262626;
 }
 
 #create_sprite_canvas {
@@ -177,6 +193,11 @@ button {
 	position:absolute;
 	opacity:0.5;
 }
+#itemSelector {
+	display:none;
+	margin-left:10px;
+	margin-top:10px;
+}
 
 #map {
     margin-left:auto;
@@ -197,7 +218,7 @@ button {
 
 #sidePanel {
     position:fixed;
-    background-color:#bf6060;
+    background-color:#000000;
     width:14%;
     margin-left:85%
 }
@@ -208,14 +229,16 @@ button {
     width: 25%;
     height: 5%;
 }
-
+#chessbord {
+	display:none;
+}
 #submit {
 	display:none;
 }
 
 #title {
     position: absolute;                                                         
-    background-color:#bf6060;//                                                           
+    background-color:#9a0d00;//                                                           
     padding-left:5%;//                                                                    (  .  )(  .  )
     padding-right:5%;                                                   
     margin-top:-2%;//                                                                        ^      ^
@@ -244,7 +267,7 @@ button {
 	position:absolute;
 	z-index:10000;
 	padding:3%;
-	background-color:#bf6060;
+	background-color:#9a0d00;
 	display:none;
 }
 #alertBox > div.corner {
@@ -253,7 +276,12 @@ button {
     width: 10%;
     height: 15%;
 }
-
+#activeCanvas {
+	display:none;
+}
+#create_battle {
+	display:none;
+}
 
 //Color Picker
 
@@ -275,7 +303,7 @@ button {
         border:none;
         border-radius:10px;}
 .swatchImage {
-	display:none
+	display:none;
 }
 							
 button#FF0000  {margin-top:10px;
@@ -337,3 +365,182 @@ button#LB700FF {margin-bottom:10px;
 	display:none;
 }
 
+
+//Battle on land css
+
+.one {
+    margin-right:1px;
+    background-color:#888888;
+    border:1px solid black;
+}
+
+.two {
+    background-color:#cccccc;
+    border:1px solid black;
+}
+
+table {
+    background-color:#000000;
+}
+
+.number {
+    background-color:#ffffff;
+    text-align:center;
+    border:1px solid black;
+}
+
+.letter {
+    height:16px;
+    width:64px;
+    background-color:#ffffff;
+    line-height:15px;
+    text-align:center;
+    border:1px solid black;
+}
+
+#space {
+    border:1px solid black;
+    width:16px;
+}
+
+#casualties {
+z-index:3000000000000000000000000;
+    margin-left:584px;
+    height:584px;
+    width:192px;
+    float:left;
+    position:fixed;
+    background-color:black;
+    border-top-left-radius:none;
+    border-top-right-radius:10px;
+    border-bottom-left-radius:none;
+    border-bottom-right-radius:10px;
+    border:5px solid black;
+    border-left:none;
+    display:block;
+}
+
+#board {
+
+    float:left;
+
+}
+
+#theirs {
+    width:192px;
+    height:289px;
+    border-top-left-radius:none;
+    border-top-right-radius:10px;
+    border-bottom-left-radius:none;
+    border-bottom-right-radius:none;
+    border-bottom:0px solid black;
+    background-color:#cccccc;
+    margin-bottom:1px;
+}
+
+#yours {
+    width:192px;
+    height:289px;
+    border-top-left-radius:none;
+    border-top-right-radius:none;
+    border-bottom-left-radius:none;
+    border-bottom-right-radius:10px;
+    border-top:2px solid black;
+    background-color:#cccccc;
+}
+
+.heading {
+    text-align:center;
+    border-bottom:5px solid black;
+    background-color:#888888;
+}
+
+#top {
+    border-top-right-radius:10px;
+}
+.pieceSVG {
+	position:static;
+}
+
+#chessBoard {
+z-index:3000000000000000000000000;
+display:none;
+    position:fixed;
+}
+body {
+	font-family:couriercode;
+}
+
+//battle at sea css
+
+
+
+.feild {
+    height:626px;
+    width:576px;
+}
+
+#seaBoard {
+    z-index:-1;
+    position:absolute;
+    overflow:hidden;
+    border-top-right-radius:none;
+    border-bottom-right-radius:none;
+    border-bottom-left-radius:10px;
+    border-top-left-radius:10px;
+    height:auto;
+}
+
+#seaRadar {
+    position:absolute;
+}
+
+.heading {
+    height:50px;
+    width:576px;
+}
+
+#offense {
+    float:left;
+    display:inline;
+
+}
+
+#defense {
+    float:right;
+    display:none;
+}
+
+#battleAtSeaBoard {
+    margin-left:auto;
+    margin-right:auto;
+    width:576px;
+    height:626px;
+    position:absolute;
+z-index:1000;
+display:none;
+
+}
+
+#sidebar {
+    height:576px;
+    width:auto;
+    margin-left:none;
+    background-color:red;
+}
+#battleAtSeaPieces {
+z-index:1000;
+    margin-left:576px;
+    height:576px;
+    width:192px;
+    float:left;
+    position:fixed;
+    background-color:black;
+    border-top-left-radius:none;
+    border-top-right-radius:10px;
+    border-bottom-left-radius:none;
+    border-bottom-right-radius:10px;
+
+    border-left:none;
+    display:block;
+}

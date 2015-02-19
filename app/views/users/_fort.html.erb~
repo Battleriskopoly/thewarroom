@@ -1,2 +1,2 @@
-[{name:'<%= fort.name %>', ownership:<%= fort.ownership %>, territory:'<%= fort.territory %>', xco:<%= fort.xco %>, yco:<%= fort.yco %>, owner:'<%= fort.user_id %>', date:'<%= fort.date_created' %>}],
+[{name:'<%= fort.name %>', ownership:<%= fort.ownership %>, territory:'<%= fort.territory %>', xco:<%= fort.xco %>, yco:<%= fort.yco %>, owner_id:<%= fort.user_id %>, date:'<%= fort.date_created%>', id:<%= fort.id %>}],
 

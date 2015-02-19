@@ -1,0 +1,7 @@
+
+//CSS FOR MISC ITEMS
+
+@font-face {
+    font-family:couriercode;
+    src: url(/assets/fonts/couriercode.ttf)
+}

@@ -1,0 +1,1 @@
+{id:<%= user.id%>,color:"<%= user.color%>"},

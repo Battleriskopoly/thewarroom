@@ -1,0 +1,8 @@
+<div class="battle_fields">
+<%= f.hidden_field :user_two_id %>
+<%= f.hidden_field :location_one_id %>
+<%= f.hidden_field :location_one_type %>
+<%= f.hidden_field :location_two_type %>
+<%= f.hidden_field :location_two_type %>
+<%= f.hidden_field :battle_type %>
+</div>

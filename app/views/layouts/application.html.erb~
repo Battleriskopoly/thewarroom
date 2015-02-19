@@ -1,29 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Battleriskopoly</title>
+  <title>The War Room</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "http://localhost:9292/faye.js", "type" =>"text/javascript"%>
   <%= csrf_meta_tags %>
-  <%= favicon_link_tag 'favicon.png' %>
-<br>
-<div id="title">
-    <div class="corner top left"></div>
-    <div class="corner top right"></div>
-    <div class="content">Battleriskopoly</div>
-    <div class="corner bottom left"></div>
-    <div class="corner bottom right"></div>
-</div>
-
-
+  <%= favicon_link_tag 'favicon.ico' %>
+<%= image_tag("finwarroom.svg", :width => "35%", :id => "logo") %>
 </head>
 <body>
-<li><%= link_to "Home", root_path %></li>
-<% if signed_in? %>
-	<li><%= link_to "Sign Out", signout_path, method: "delete" %></li>
-<% else %>
-          
-<% end %>
 <%= yield %>
 </body>
 </html>

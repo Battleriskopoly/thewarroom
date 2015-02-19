@@ -1,0 +1,6 @@
+class ChangeTradeCostFromIntToFloat < ActiveRecord::Migration
+  def change
+	remove_column :trades, :cost
+	add_column :tades, :cost, :float
+  end
+end

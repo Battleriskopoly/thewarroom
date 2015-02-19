@@ -1,7 +1,9 @@
 <div class="fields" id="trade_fields">
+	<p>Quantity</p>
 	<%= f.hidden_field :what %>
-	<%= f.hidden_field :quantity %>
-	<p><%= link_to_add_fields "Trade Proposal", f, :trade_proposal, "create_trade_proposal" %>
-	<%= f.fields_for :trade_proposal do |builder| %>
+	<%= f.hidden_field :cost %>
+	<%= f.text_field :quantity %>
+	<p><%= link_to_add_fields "Leg", f, :legs, "create_leg" %>
+	<%= f.fields_for :leg do |builder| %>
   	<% end %>
 </div>

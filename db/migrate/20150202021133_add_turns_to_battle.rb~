@@ -1,0 +1,4 @@
+class AddTurnsToBattle < ActiveRecord::Migration
+  def change
+  end
+end

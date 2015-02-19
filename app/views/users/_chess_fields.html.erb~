@@ -1,0 +1,2 @@
+<%= f.hidden_field :user_two_id %>
+<%= f.hidden_field :pieces %>

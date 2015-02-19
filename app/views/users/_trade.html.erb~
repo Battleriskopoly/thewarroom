@@ -1,0 +1,12 @@
+		<%logger.info clientItinerary%>
+<% clientItinerary.each_with_index do |i,index|%>
+	var newTradeLegs<%=index%> = []
+	<% i[2].each do |y| %>
+		<%logger.info y%>
+		newTradeLegs<%=index%>.push({id:<%=y[0]%>,location_type:"<%=y[1]%>"})
+	<%end%>	
+
+	rendered_trades.push({what:<%=i[0]%>,quantity:<%=i[1]%>,itinerary:newTradeLegs<%=index%>})
+<%end%>
+console.log(rendered_trades)
+
