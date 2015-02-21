@@ -1,5 +1,4 @@
 class RemoveTabels < ActiveRecord::Migration
   def change
-	remove_column :trades
   end
 end
