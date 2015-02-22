@@ -501,7 +501,7 @@ body {
 }
 @font-face {
     font-family:couriercode;
-    src: font-url(/assets/couriercode) format("truetype");
+    src: font-url("/assets/couriercode.ttf") format("truetype");
 }
 #offense {
     float:left;
