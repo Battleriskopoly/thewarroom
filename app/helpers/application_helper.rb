@@ -18,5 +18,8 @@ module ApplicationHelper
 	Net::HTTP.post_form(uri, :message => message.to_json)
    
   end
-
+  def current_user
+    remember_token = User.digest(cookies[:remember_token])
+    @current_user ||= User.find_by(remember_token: remember_token)
+  end
 end

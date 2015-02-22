@@ -1,6 +1,5 @@
 class Change < ActiveRecord::Migration
   def change
-	drop_table :chesses
     create_table :battle do |t|
 
       t.string :kind

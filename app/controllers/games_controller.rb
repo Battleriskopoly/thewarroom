@@ -8,8 +8,9 @@ class GamesController < ApplicationController
 	def create
 		@game = Game.new(game_params)
 		if @game.save
-		
-		  redirect_to edit_user_url(current_user.id)
+		@user = current_user
+
+		  redirect_to edit_user_url(@user.id)
 		else
 			render 'new'
 		end

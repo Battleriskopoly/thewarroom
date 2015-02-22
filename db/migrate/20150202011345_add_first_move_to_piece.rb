@@ -1,5 +1,5 @@
 class AddFirstMoveToPiece < ActiveRecord::Migration
   def change
-	add_column :pieces, :first_move, :booleene
+	add_column :pieces, :first_move, :boolean 
   end
 end
