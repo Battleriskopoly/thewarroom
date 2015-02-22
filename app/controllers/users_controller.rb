@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 	def create
 
 		@user = User.new(user_params)
-		@user.game_id = 1
+
 		if @user.save
 			redirect_to edit_user_url(@user.id)
 
@@ -113,30 +113,39 @@ colorUser = UserGameAttribute.find(attr_value)
   def update
 
     @user = User.find(params[:id])
-    @game = Game.find(@user.game_id)
+
 	if params[:user][:game_id] != nil 
 
-		User.update(@user.id, :game_id => params[:user][:game_id])
-		@gameAttribute = @user.user_game_attributes.build(user_params[:game_attributes])
-		@gameAttribute.save
-		@game = Game.find(params[:user][:game_id])
-
-		respond_to do |format|
-
-			if User.update(@user.id, :game_id => params[:user][:game_id])
-
-				format.html { redirect_to @user }
-				format.js   { redirect_to @user }
-				format.json { redirect_to @user}
+		if params[:user][:game_attributes][:name] != nil
+			@game = @user.games.build(:private => params[:user][:game_attributes][:private], :name => params[:user][:game_attributes][:name])
+			@game.save
+			@user.game_id = @game.id
+			@user.color = params[:user][:color]
+			if  @user.save
+			redirect_to user_url(@user.id)
+			else
+			redirect_to edit_user_url(@user.id)
 			end
-		end
+		else
+    @game = Game.find(@user.game_id)
+			User.update(@user.id, :game_id => params[:user][:game_id])
+			@gameAttribute = @user.user_game_attributes.build(user_params[:game_attributes])
+			@gameAttribute.save
+			@game = Game.find(params[:user][:game_id])
 
-		@game.attributes.each do |attr_name, attr_value|
+				if User.update(@user.id, :game_id => params[:user][:game_id])
 
-			if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "private"
+					redirect_to user_path(@user.id)
+				end
 
-				gameThings = {params[:user][:game_id]  => { attr_name => @gameAttribute.id }}
-				Game.update(gameThings.keys, gameThings.values)
+
+			@game.attributes.each do |attr_name, attr_value|
+
+				if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "private"
+
+					gameThings = {params[:user][:game_id]  => { attr_name => @gameAttribute.id }}
+					Game.update(gameThings.keys, gameThings.values)
+				end
 			end
 		end
 	end
@@ -352,7 +361,7 @@ format.json { render json: @user.errors, status: :unprocessable_entity }
 
     	def user_params
 
-        params.require(:user).permit(:name, :email, :username, :password, :password_confirmation, :game_id, forts_attributes: [ :name, :xco, :yco, :territory, :ownership, :id, :date_created, :game_id], encampments_attributes: [ :name, :xco, :yco, :territory, :id, :date_created, :game_id], pieces_attributes: [ :coordinates, :id], battles_attributes:[:user_two_id, :location_two_id, :location_two_type, :location_one_type, :location_one_id, :battle_type, :type ],game_attributes: [:color, :game_id],trades_attributes: [:cost, :sending_user_id, :recipient_user_i, :game_id, :sending_fort_id, :what, :quantity, :recipient_fort_id, legs_attributes: [:location_id, :location_type, :trade_index], trade_proposal: [:what, :quantity, :location_id, :location_type, :durration]])
+        params.require(:user).permit(:name, :email, :username, :password, :password_confirmation, :game_id, :color, forts_attributes: [ :name, :xco, :yco, :territory, :ownership, :id, :date_created, :game_id], encampments_attributes: [ :name, :xco, :yco, :territory, :id, :date_created, :game_id], pieces_attributes: [ :coordinates, :id], battles_attributes:[:user_two_id, :location_two_id, :location_two_type, :location_one_type, :location_one_id, :battle_type, :type ],game_attributes: [:game_id, :name, :private],trades_attributes: [:cost, :sending_user_id, :recipient_user_i, :game_id, :sending_fort_id, :what, :quantity, :recipient_fort_id, legs_attributes: [:location_id, :location_type, :trade_index], trade_proposal: [:what, :quantity, :location_id, :location_type, :durration]])
 
    		end
 

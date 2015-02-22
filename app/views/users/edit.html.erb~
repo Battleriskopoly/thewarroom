@@ -1,4 +1,5 @@
 <script>
+var gameId = -1
 	$( document ).ready(function() {
 		$(".join_button").click( function(e) {
 			$(".game").css("display","none")
@@ -18,16 +19,52 @@
 		$("#finalJoin").click( function() {
 			$("#submit").click();	
 		})
+		$("#create_game").click( function() {
+			$(".game").css("display","none")
+			$("#create_game").css("display","none")
+			$("#create_game_fake").css("display","inline")
+			$(".displaynone").css("display","inline")
+		})
+		$("#create_game_fake").on("click", function() {
+			$(".game").css("display","none")
+			$(this).css("display","none")
+
+			$("#colorPicker").css("display","inline")
+			$("#finalJoin").css("display","inline")
+			$("#game_id").val("-1")
+		})
 	});
 
 </script>
+<style>
+#create_game {
+display:inline;
+}
+#finalJoin {
+display:none;
+}
+#create_game_fake {
+display:none;
+}
+.displaynone {
+display:none;
+}
+</style>
 
-<%= button_to("Create a Game",new_game_path, :method => get) %>
-
+<button id="create_game" class="newObjectButton">Create a New Game</button>
 <%= form_for(@user) do |f| %>
 	<%= f.hidden_field :game_id, :id => "game_id" %>
+
+	<%= f.hidden_field :color, :id => "color" %>
   <%= f.fields_for :game_attributes do |builder| %>
-	<%= builder.hidden_field :color, :id => "color" %>
+    <%= f.label :name, "Name", :class => "displaynone"%>
+	<%= builder.text_field :name, :class => "displaynone" %>
+	<%= builder.label :private, "Private" , :class => "displaynone"%>
+	<%= builder.radio_button :private, "T", :class => "displaynone" %>
+	<%= builder.label :private, "Public", :class => "displaynone"  %>
+	<%= builder.radio_button :private, "F", :class => "displaynone" %>
+
+
 	<%= builder.hidden_field :game_id, :id => "other_game_id" %>
   <% end %>
   	<%= f.submit "Create", :id => "submit", :class => "button" %>
@@ -38,6 +75,9 @@
 	<button class="join_button" id="<%=i.id%>">Join</button>
 	</div>
 <% end %>
+
+
+<button id="create_game_fake">Create Game</button>
 <div id="colorPicker">
 <%= render partial: "color_picker" %>
 </div>

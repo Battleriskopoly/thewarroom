@@ -17,6 +17,7 @@
 //= require comments
 //= require_tree .
 function add_fields(link, association, content) {
+console.log($(link).parent())
         var new_id = 100000000000;
         var regexp = new RegExp("new_" + association, "g");
         $(link).parent().before(content.replace(regexp, new_id));

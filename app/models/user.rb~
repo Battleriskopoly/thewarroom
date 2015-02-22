@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :user_game_attributes
 
   belongs_to :game
+  has_many :games
 
   has_many :legs
   accepts_nested_attributes_for :legs
@@ -31,14 +32,14 @@ class User < ActiveRecord::Base
 
   before_save { self.email = email.downcase }
   before_create :create_remember_token
-  validates :username, presence: true, length: { maximum: 50 }
-  validates :name, presence: true, length: { maximum: 50 }
+  validates :username, presence: true, length: { maximum: 50 }, on: :create
+  validates :name, presence: true, length: { maximum: 50 }, on: :create
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence:   true,
                     format:     { with: VALID_EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }
+                    uniqueness: { case_sensitive: false }, on: , on: :create:create
   has_secure_password
-  validates :password, length: { minimum: 6 }
+  validates :password, length: { minimum: 6 }, on: :create
 
   def User.new_remember_token
     SecureRandom.urlsafe_base64

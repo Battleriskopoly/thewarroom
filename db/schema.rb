@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150207142605) do
+ActiveRecord::Schema.define(version: 20150222194435) do
 
 # Could not dump table "battles" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 20150207142605) do
     t.string   "western_europe_owner_id"
     t.string   "western_canada_owner_id"
     t.string   "western_south_america_owner_id"
+    t.integer  "user_id"
   end
 
   create_table "legs", force: true do |t|
