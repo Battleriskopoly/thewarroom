@@ -73,7 +73,6 @@ input[type=submit]:hover, input[type=button]:hover, button:hover {
 	border-width:10px;
 	pointer-events:none;
 	border-color:#1cbcbb;
-	background-color:#1cbcbb;
 }
 .continent {
     display:none;

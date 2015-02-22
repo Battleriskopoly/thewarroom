@@ -191,9 +191,8 @@ color:white;
         <title>The War Room</title>
         
         <link rel="icon" type="image/png" href="favicon.png">
-        
-        <link rel="stylesheet" type="text/css" href="main.css">
-        <script src="main.js"></script>
+       
+
         
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -279,7 +278,7 @@ color:white;
             <div class="row">
                 <div id="maincol" class="col-xs-12">
 <%= link_to "Sign in", signin_path %>
-<%= link_to "Sign Up", signup_path %>
+<%= link_to "Sign Up", signup_path %><br>
 <%= image_tag("thewarroom.svg", :id => "logo") %>
 
                 </div>
