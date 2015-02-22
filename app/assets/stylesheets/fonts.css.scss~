@@ -3,5 +3,5 @@
 
 @font-face {
     font-family:couriercode;
-    src: url(/assets/fonts/couriercode.ttf)
+    src: url(/assets/couriercode.ttf)
 }
