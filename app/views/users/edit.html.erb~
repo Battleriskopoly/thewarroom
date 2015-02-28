@@ -1,74 +1,22 @@
 <script>
 var gameId = -1
 	$( document ).ready(function() {
-		$(".join_button").click( function(e) {
-			$(".game").css("display","none")
-			$(this).css("display","none")
-			$(this).parent().css("display","inline")
-			$("#colorPicker").css("display","inline")
-			$("#finalJoin").css("display","inline")
-			$("#game_id").val(this.id);
-			$("#other_game_id").val(this.id);
-		});
-		$(".swatchButton").click( function() {
-			$("#placement").children().remove()
-			console.log(".swatchImage#" + this.id)
-			$("#placement").html($(".swatchImage#" + this.id).clone().css("display","inline"))
-			$("#color").val(this.id.replace("L",""))
-		}) 
-		$("#finalJoin").click( function() {
-			$("#submit").click();	
-		})
-		$("#create_game").click( function() {
-			$(".game").css("display","none")
-			$("#create_game").css("display","none")
-			$("#create_game_fake").css("display","inline")
-			$(".displaynone").css("display","inline")
-		})
-		$("#create_game_fake").on("click", function() {
-			$(".game").css("display","none")
-			$(this).css("display","none")
 
-			$("#colorPicker").css("display","inline")
-			$("#finalJoin").css("display","inline")
-			$("#game_id").val("-1")
-		})
 	});
 
 </script>
-<style>
-#create_game {
-display:inline;
-}
-#finalJoin {
-display:none;
-}
-#create_game_fake {
-display:none;
-}
-.displaynone {
-display:none;
-}
-</style>
-
-<button id="create_game" class="newObjectButton">Create a New Game</button>
-<%= form_for(@user) do |f| %>
-	<%= f.hidden_field :game_id, :id => "game_id" %>
-
-	<%= f.hidden_field :color, :id => "color" %>
-  <%= f.fields_for :game_attributes do |builder| %>
-    <%= f.label :name, "Name", :class => "displaynone"%>
-	<%= builder.text_field :name, :class => "displaynone" %>
-	<%= builder.label :private, "Private" , :class => "displaynone"%>
-	<%= builder.radio_button :private, "T", :class => "displaynone" %>
-	<%= builder.label :private, "Public", :class => "displaynone"  %>
-	<%= builder.radio_button :private, "F", :class => "displaynone" %>
 
 
-	<%= builder.hidden_field :game_id, :id => "other_game_id" %>
-  <% end %>
-  	<%= f.submit "Create", :id => "submit", :class => "button" %>
+
+<h1>Continue to a Game</h1>
+<% @currentGames.each_with_index do |i,index|%>
+	<div id="current<%=index%>" class="game">
+	<p class="gameName">Game: <%= i.name %></p>
+	<button class="join_button" id="<%=i.id%>">Join</button>
+	</div>
 <% end %>
+
+<h1>Join a New Game</h1>
 <% @games.each_with_index do |i,index|%>
 	<div id="<%=index%>" class="game">
 	<p class="gameName">Game: <%= i.name %></p>
@@ -76,9 +24,27 @@ display:none;
 	</div>
 <% end %>
 
+<%= form_for(@user) do |f| %>
+	<%= f.hidden_field :game_id, :id => "game_id" %>
+	<%= f.hidden_field :color, :id => "color" %>
+	<%= f.fields_for @game do |builder| %>
+	   	<%= builder.label :name, "Name"%>
+		<%= builder.text_field :name %>
+		<%= builder.label :private, "Private" %>
+		<%= builder.radio_button :private, "T" %>
+		<%= builder.label :private, "Public" %>
+		<%= builder.radio_button :private, "F" %>
+	   	<%= builder.label :name, "Start Delay"%>
+		<%= builder.select :start_date, '<option value="1">1 Day</option><option value="2">2 Days</option><option value="3">3 Days</option><option value="4">4 Days</option><option value="5">5 Days</option>'%>
 
-<button id="create_game_fake">Create Game</button>
+  	<% end %>
+
+
+
+  	<%= f.submit "Create", :id => "submit", :class => "button" %>
+<% end %>
+
 <div id="colorPicker">
 <%= render partial: "color_picker" %>
 </div>
-<button id="finalJoin" style="diplay:none">Join Game</button>
+

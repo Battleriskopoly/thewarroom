@@ -3,6 +3,7 @@ BR::Application.routes.draw do
 	resources :forts
 	resources :encampments
 	resources :users
+	resources :games
 
   	root 'home#home'
 	match '/signup',  to: 'users#new',            via: 'get'

@@ -12,11 +12,11 @@ class User < ActiveRecord::Base
   has_many :trade_proposals
   accepts_nested_attributes_for :trade_proposals
 
-  has_many :user_game_attributes
-  accepts_nested_attributes_for :user_game_attributes
+  has_many :game_attributes
+  accepts_nested_attributes_for :game_attributes
 
-  belongs_to :game
   has_many :games
+  accepts_nested_attributes_for :games
 
   has_many :legs
   accepts_nested_attributes_for :legs

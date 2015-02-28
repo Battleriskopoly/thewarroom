@@ -625,8 +625,8 @@ function appendMove(piece,move,empty,turn) {
 }
 $( document ).ready(function() {
 
-//renderChess(rendered_battles[0])
-renderBattleAtSea(rendered_battles[21])
+renderChess(rendered_battles[rendered_battles.length - 1])
+//renderBattleAtSea(rendered_battles[21])
 //truncating script
 	Number.prototype.toFixedDown = function(digits) {
 	    var re = new RegExp("(\\d+\\.\\d{" + digits + "})(\\d)"),

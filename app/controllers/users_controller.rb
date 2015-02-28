@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 	respond_to :html, :json
 	helper UsersHelper
 
-
+# User creation - Perfect, Don't Touch!
 	def new
 		@user = User.new
 	end
@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 		@user = User.new(user_params)
 
 		if @user.save
+			sign_in(@user)
 			redirect_to edit_user_url(@user.id)
 
 		else
@@ -23,6 +24,7 @@ class UsersController < ApplicationController
 	end
 
 	def show
+
 		@user = User.find(params[:id])
 		@game = Game.find(@user.game_id)
 
@@ -31,7 +33,7 @@ class UsersController < ApplicationController
 		@battles = Array.new
 		
 		@game.battles.each do |battle|
-		if battle.user_one_id == @user.id || battle.user_twoo_id == @user.id
+		if battle.user_one_id == @user.id || battle.user_two_id == @user.id
 				@battles << battle
 			end
 		end
@@ -106,28 +108,47 @@ colorUser = UserGameAttribute.find(attr_value)
 	def edit
 
 		@user = User.find(params[:id])
-		@games = Game.all
+		@currentGames = @user.game_attributes
+		@games = Array.new
+		Game.all.each do |game|
+			@currentGames.each do |currentgame|
+				if game.id == currentgame.game_id
+					valid = false
+				end
+			end
+			if valid == true 
+				@games << game
+			end
+		end
+		@game = Game.new()
 
 	end
+
+# All the logic happens here - Do touch
 
   def update
 
     @user = User.find(params[:id])
+	@game = Game.find(@user.game_id)
 
 	if params[:user][:game_id] != nil 
 
 		if params[:user][:game_attributes][:name] != nil
+
 			@game = @user.games.build(:private => params[:user][:game_attributes][:private], :name => params[:user][:game_attributes][:name])
+
 			@game.save
 			@user.game_id = @game.id
 			@user.color = params[:user][:color]
 			if  @user.save
-			redirect_to user_url(@user.id)
+
+				redirect_to user_url(@user.id)
 			else
-			redirect_to edit_user_url(@user.id)
+
+				redirect_to edit_user_url(@user.id)
 			end
 		else
-    @game = Game.find(@user.game_id)
+
 			User.update(@user.id, :game_id => params[:user][:game_id])
 			@gameAttribute = @user.user_game_attributes.build(user_params[:game_attributes])
 			@gameAttribute.save
@@ -137,10 +158,7 @@ colorUser = UserGameAttribute.find(attr_value)
 
 					redirect_to user_path(@user.id)
 				end
-
-
 			@game.attributes.each do |attr_name, attr_value|
-
 				if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "private"
 
 					gameThings = {params[:user][:game_id]  => { attr_name => @gameAttribute.id }}
@@ -158,17 +176,19 @@ colorUser = UserGameAttribute.find(attr_value)
 			@battle = Battle.find(@piece.battle_id)
 =begin
 			if @battle.turn == @user.id
+
 				if @battle.turn == @battle.user_one_id
+
 					@battle.update(:turn => @battle.user_two_id)
 				else
+
 					@battle.update(:turn => @battle.user_one_id)
-				end
+			end
 =end
-				board = createBoardArray(@battle)
+			board = createBoardArray(@battle)
 
-				logger.info varifyMove(board,true, @piece)
 
-					#if move == user_params[:pieces_attributes]["1000"][:coordinates]
+			#if move == user_params[:pieces_attributes]["1000"][:coordinates]
 
 
 						@move = [user_params[:pieces_attributes]["1000"][:coordinates].split("")[0].to_i, user_params[:pieces_attributes]["1000"][:coordinates].split("")[1].to_i]

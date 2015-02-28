@@ -7,7 +7,10 @@
   <%= javascript_include_tag "http://localhost:9292/faye/client.js", "type" =>"text/javascript"%>
   <%= csrf_meta_tags %>
   <%= favicon_link_tag 'favicon.png' %>
+<% if signed_in?%>
+<%= link_to "Log out", logout_path, method: :delete %>
 
+<%end%>
 </head>
 <body>
 <%= yield %>

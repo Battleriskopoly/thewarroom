@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222194435) do
+ActiveRecord::Schema.define(version: 20150228210906) do
 
 # Could not dump table "battles" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
@@ -62,6 +62,19 @@ ActiveRecord::Schema.define(version: 20150222194435) do
     t.integer  "game_id"
   end
 
+  create_table "game_attributes", force: true do |t|
+    t.integer  "game_id"
+    t.integer  "user_id"
+    t.string   "color"
+    t.integer  "militants"
+    t.integer  "money"
+    t.integer  "population"
+    t.integer  "energy_units"
+    t.integer  "food_units"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "games", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -106,6 +119,8 @@ ActiveRecord::Schema.define(version: 20150222194435) do
     t.string   "western_canada_owner_id"
     t.string   "western_south_america_owner_id"
     t.integer  "user_id"
+    t.string   "start_date"
+    t.boolean  "start_status"
   end
 
   create_table "legs", force: true do |t|
@@ -143,14 +158,6 @@ ActiveRecord::Schema.define(version: 20150222194435) do
     t.float    "cost"
   end
 
-  create_table "user_game_attributes", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-    t.integer  "game_id"
-    t.string   "color"
-  end
-
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "username"
@@ -158,12 +165,11 @@ ActiveRecord::Schema.define(version: 20150222194435) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password_digest"
-    t.string   "remember_token"
     t.integer  "game_id"
     t.string   "color"
+    t.string   "remember_token"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
 
 end

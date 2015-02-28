@@ -449,7 +449,7 @@ z-index:3000000000000000000000000;
     background-color:#cccccc;
 }
 
-.heading {
+.headingland {
     text-align:center;
     border-bottom:5px solid black;
     background-color:#888888;
@@ -501,7 +501,7 @@ body {
 }
 @font-face {
     font-family:couriercode;
-    src: asset_url("/assets/couriercode.ttf") format("truetype");
+    src: asset_url("assets/couriercode.ttf") format("truetype");
 }
 #offense {
     float:left;
