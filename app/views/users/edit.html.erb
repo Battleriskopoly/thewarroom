@@ -34,11 +34,11 @@ var gameId = -1
 		<%= builder.radio_button :private, "T" %>
 		<%= builder.label :private, "Public" %>
 		<%= builder.radio_button :private, "F" %>
-	   	<%= builder.label :name, "Start Delay"%>
-		<%= builder.select :start_date, '<option value="1">1 Day</option><option value="2">2 Days</option><option value="3">3 Days</option><option value="4">4 Days</option><option value="5">5 Days</option>'%>
+	   	<%= builder.label :start_date, "Start Delay"%>
+		<%= builder.datetime_field :start_date %>
+
 
   	<% end %>
-
 
 
   	<%= f.submit "Create", :id => "submit", :class => "button" %>

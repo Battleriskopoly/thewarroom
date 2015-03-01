@@ -1,2 +1,0 @@
-module TradeProposalsHelper
-end
