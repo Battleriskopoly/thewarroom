@@ -120,6 +120,8 @@ colorUser = UserGameAttribute.find(attr_value)
 				@games << game
 			end
 		end
+		logger.info @games
+		@game = Game.new()
 
 	end
 

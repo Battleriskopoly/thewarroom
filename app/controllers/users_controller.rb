@@ -110,6 +110,7 @@ colorUser = UserGameAttribute.find(attr_value)
 		@user = User.find(params[:id])
 		@currentGames = @user.game_attributes
 		@games = Array.new
+		valid = true
 		Game.all.each do |game|
 			@currentGames.each do |currentgame|
 				if game.id == currentgame.game_id
@@ -120,6 +121,7 @@ colorUser = UserGameAttribute.find(attr_value)
 				@games << game
 			end
 		end
+		logger.info @games
 		@game = Game.new()
 
 	end
