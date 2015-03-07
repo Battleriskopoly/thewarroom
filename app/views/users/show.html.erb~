@@ -47,6 +47,8 @@ var activeBattleContext = {}
 var players = {<%= render partial: "user", collection: @users %>}
 // Defining lists of territories and continents with their active color values and their starting points.
 
+	var territoryPaths = <%= render partial: "images"%>
+
 	var colors = {central_america:[ [0xe5,0x42,0x42], [488,780] ,[0.311006362]],
 central_asia:[[0xf1,0x71,0x71], [2054,526] ,[0.284473688]],
  central_south_america:[[0xfb,0x07,0x07], [822,1020],[0.402101331]], 
@@ -90,7 +92,7 @@ western_south_america:[[0xea,0xdb,0x35], [834,1143] ,[2.043553816]]};
 
 // order asia australia africa e na sa 
 
-var continents ={ asia:["central_asia","china","southeastern_asia","russia","mongolia","pacific_asia","india","middle_east"],
+var continentKey ={ asia:["central_asia","china","southeastern_asia","russia","mongolia","pacific_asia","india","middle_east"],
 australia:["northern_australia","southern_australia","new_zealand","indonesia"],
 africa:["sahara","egypt","congo","eastern_africa","southern_african_territory","madagascar","coastal_africa"],
 europe:["northern_europe","southern_europe","western_europe","ukraine","united_kingdom","iceland"],
@@ -625,7 +627,7 @@ function appendMove(piece,move,empty,turn) {
 }
 $( document ).ready(function() {
 
-renderChess(rendered_battles[5])
+//renderChess(rendered_battles[rendered_battles.length - 1])
 //renderBattleAtSea(rendered_battles[21])
 //truncating script
 	Number.prototype.toFixedDown = function(digits) {
@@ -659,31 +661,24 @@ renderChess(rendered_battles[5])
 		$("#alertBox").css("margin-top",($("#background").height()/2) - ($("#alertBox").height()/2) -  $("#alertBox").offset().top + "px")
 	
 	}
-	function setOriginalZoom() {
-		$(".territoryImage").attr("viewBox", "0 0 " + $(window).width()*0.85 + " " + $(window).height()*0.98);
-		$(".territoryImage").attr("width", $(".territoryImage").attr("viewBox").split(" ")[2]);
-		$(".territoryImage").attr("height", $(".territoryImage").attr("viewBox").split(" ")[3]);
-		$("#sidePanel").css("height", $(".territoryImage").height())
-		$("#background").css("width", $(".territoryImage").width())
-		$("#renderedSprites").css("height", $(".territoryImage").height())
-		$("#renderedSprites").css("width", $(".territoryImage").width())
-		$("#background").css("height", $(".territoryImage").height())
-		$(".filter").css("width", $(".territoryImage").width())
-		$(".filter").css("height", $(".territoryImage").height())
-		$("g").not(".pieceSVG > g").attr("transform", "scale(" + $(".territoryImage").attr("viewBox").split(" ")[2]/3508 + ")")
-		$("#globalSVG").children("g").attr("transform", $("#globalSVG").children("g").attr("transform") + " translate(0 " + (($("#background").height()/2) - ($("#globalSVG")[0].getBoundingClientRect().height/2) + ($("#globalSVG").offset().top - $("#background").offset().top))/(($(".territoryImage").attr("viewBox").split(" ")[2]/3508)*2) + ")")
-		$("#traderoutes").attr("width",$("#background").width())
-		$("#traderoutes").attr("height",$("#background").height())
-		for (i = 0; i < $(".button").length; i++) {
-			$($(".button")[i])
-		} 
-		centerAlertBox()
-	}
-
 	function colorMap() {
 		for (i = 0; i < territoryColors.length; i++) {
-			color = "L" + territoryColors[i][1][0].toString(16) + territoryColors[i][1][1].toString(16) + territoryColors[i][1][2].toString(16)
-			color = color.replace("0","00").toUpperCase()
+			var firstSeg = territoryColors[i][1][0].toString(16)
+			var secondSeg = territoryColors[i][1][1].toString(16)
+			var thridSeg = territoryColors[i][1][2].toString(16)
+			if (firstSeg == "0") {
+				firstSeg = "00"
+			}
+			if (secondSeg == "0") {
+				secondSeg = "00"
+			}
+			if (thridSeg == "0") {
+				thridSeg = "00"
+			}
+			color = "L" + firstSeg + secondSeg + thridSeg
+
+			color = color.toUpperCase()
+			
 			color = swatches[territoryColors[i][0].replace("#","")][color];
 
 			$(territoryColors[i][0]).css("fill", "#" + color)
@@ -728,9 +723,9 @@ function renderObject(object,levelInfo,remove) {
 		}
 
 		else if (levelInfo[0] == "continental") {
-			for (i = 0; i < continents[$("#continentalSVG").children("g").children("path").attr("class")].length; i++) {
+			for (i = 0; i < continents[$("#continentalMap").children("g").children("path").attr("class")].length; i++) {
 				for (y = 0; y < list.length; y++) {
-					if (list[y][0].territory == "#" + continents[$("#continentalSVG").children("g").children("path").attr("class")][i]) {
+					if (list[y][0].territory == "#" + continents[$("#continentalMap").children("g").children("path").attr("class")][i]) {
 						sortedList.push(list[y]);
 					}
 				}
@@ -757,8 +752,8 @@ function renderObject(object,levelInfo,remove) {
 					$("#renderedSprites").append($("#sprites").children("#".concat(object) + sortedList[i][1]).clone().attr("class","renderedSprite").attr("id",object + i));	
 				}
 
-				var xPosition = (sortedList[i][0].xco*$("#territorialSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialSVG").offset().left - $("#background").offset().left
-				var yPosition = (sortedList[i][0].yco*$("#territorialSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialSVG").offset().top - $("#background").offset().top
+				var xPosition = (sortedList[i][0].xco*$("#territorialMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialMap").offset().left - $("#background").offset().left
+				var yPosition = (sortedList[i][0].yco*$("#territorialMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialMap").offset().top - $("#background").offset().top
 
 				$("#" + object + i).css("top",yPosition + "px").css("left",xPosition + "px")
 
@@ -778,8 +773,8 @@ function renderObject(object,levelInfo,remove) {
 					$("#renderedSprites").append($("#sprites").children("#".concat(object)+ sortedList[i][1] + "Medium" ).clone().attr("class","renderedSprite").attr("id",object + i));	
 				}
 
-				var xPosition = ((sortedList[i][0].xco + colors[sortedList[i][0].territory.replace("#","")][1][0] - color_key[$($("#continentalSVG").children("g").children("path")[0]).attr("class")][1][0])*$("#continentalSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalSVG").offset().left - $("#background").offset().left
-				var yPosition = ((sortedList[i][0].yco + colors[sortedList[i][0].territory.replace("#","")][1][1] - color_key[$($("#continentalSVG").children("g").children("path")[0]).attr("class")][1][1])*$("#continentalSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalSVG").offset().top - $("#background").offset().top
+				var xPosition = ((sortedList[i][0].xco + colors[sortedList[i][0].territory.replace("#","")][1][0] - color_key[$($("#continentalMap").children("g").children("path")[0]).attr("class")][1][0])*$("#continentalMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalMap").offset().left - $("#background").offset().left
+				var yPosition = ((sortedList[i][0].yco + colors[sortedList[i][0].territory.replace("#","")][1][1] - color_key[$($("#continentalMap").children("g").children("path")[0]).attr("class")][1][1])*$("#continentalMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalMap").offset().top - $("#background").offset().top
 				$("#" + object + i).css("top",yPosition + "px").css("left",xPosition + "px")
 
 			}
@@ -797,8 +792,8 @@ function renderObject(object,levelInfo,remove) {
 				}
 
 
-				var xPosition = (sortedList[i][0].xco + colors[sortedList[i][0].territory.replace("#","")][1][0])*($("#globalSVG").children("g").attr("transform").split("(")[1].split(")")[0])
-				var yPosition = (sortedList[i][0].yco + colors[sortedList[i][0].territory.replace("#","")][1][1] + parseFloat($("#globalSVG").children("g").attr("transform").split("translate(")[1].split(" ")[1]))*($("#globalSVG").children("g").attr("transform").split("(")[1].split(")")[0])
+				var xPosition = (sortedList[i][0].xco + colors[sortedList[i][0].territory.replace("#","")][1][0])*($("#globalMap").children("g").attr("transform").split("(")[1].split(")")[0])
+				var yPosition = (sortedList[i][0].yco + colors[sortedList[i][0].territory.replace("#","")][1][1] + parseFloat($("#globalMap").children("g").attr("transform").split("translate(")[1].split(" ")[1]))*($("#globalMap").children("g").attr("transform").split("(")[1].split(")")[0])
 				$("#" + object + i).css("top",yPosition + "px").css("left",xPosition + "px")
 
 			}
@@ -1024,7 +1019,7 @@ function renderObject(object,levelInfo,remove) {
 		activeContext.drawImage(activeImage,0,0);
 		var activePixelData = activeContext.getImageData(0,0,$("#activeCanvas").width(),$("#activeCanvas").height())["data"];
 
-		var globalScaleFactor = parseFloat($("#globalSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
+		var globalScaleFactor = parseFloat($("#globalMap").children("g").attr("transform").split(")")[0].replace("scale(",""))
 
 		var oldxco
 		var oldyco
@@ -1106,7 +1101,7 @@ function renderObject(object,levelInfo,remove) {
 		var oldObject;
 		var oldxco
 		var oldyco
-		var globalScaleFactor = parseFloat($("#globalSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
+		var globalScaleFactor = parseFloat($("#globalMap").children("g").attr("transform").split(")")[0].replace("scale(",""))
 		var xco = ((alertContext.pageX - $("#background").offset().left)/globalScaleFactor)*0.1251425314
 		var yco = ((alertContext.pageY - $("#background").offset().top)/globalScaleFactor)*0.1251425314
 
@@ -2338,7 +2333,7 @@ function renderObject(object,levelInfo,remove) {
 		var xco = (currentObject[0]["xco"] + colors[currentObject[0]["territory"].replace("#","")][1][0])*0.1251425314
 		var yco = (currentObject[0]["yco"] + colors[currentObject[0]["territory"].replace("#","")][1][1])*0.1251425314
 
-		var globalScaleFactor = parseFloat($("#globalSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
+		var globalScaleFactor = parseFloat($("#globalMap").children("g").attr("transform").split(")")[0].replace("scale(",""))
 
 		var color = [colors[currentObject[0]["territory"].replace("#","")][0][0],colors[currentObject[0]["territory"].replace("#","")][0][1],colors[currentObject[0]["territory"].replace("#","")][0][2]]	
 
@@ -2378,29 +2373,29 @@ function renderObject(object,levelInfo,remove) {
 
 			if (zoomLevel[0] == "territorial") {
 
-				var xcoOne = (locationOne.xco*$("#territorialSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialSVG").offset().left - $("#background").offset().left
-				var ycoOne = (locationOne.yco*$("#territorialSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialSVG").offset().top - $("#background").offset().top
+				var xcoOne = (locationOne.xco*$("#territorialMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialMap").offset().left - $("#background").offset().left
+				var ycoOne = (locationOne.yco*$("#territorialMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialMap").offset().top - $("#background").offset().top
 
-				var xcoTwo = (locationTwo.xco*$("#territorialSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialSVG").offset().left - $("#background").offset().left
-				var ycoTwo = (locationTwo.yco*$("#territorialSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialSVG").offset().top - $("#background").offset().top
+				var xcoTwo = (locationTwo.xco*$("#territorialMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialMap").offset().left - $("#background").offset().left
+				var ycoTwo = (locationTwo.yco*$("#territorialMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialMap").offset().top - $("#background").offset().top
 
 			}
 			if (zoomLevel[0] == "continental") {
 
-				var xcoOne = ((locationOne.xco + colors[locationOne.territory.replace("#","")][1][0] - color_key[$($("#continentalSVG").children("g").children("path")[0]).attr("class")][1][0])*$("#continentalSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalSVG").offset().left - $("#background").offset().left
-				var ycoOne = ((locationOne.yco + colors[locationOne.territory.replace("#","")][1][1] - color_key[$($("#continentalSVG").children("g").children("path")[0]).attr("class")][1][1])*$("#continentalSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalSVG").offset().top - $("#background").offset().top
+				var xcoOne = ((locationOne.xco + colors[locationOne.territory.replace("#","")][1][0] - color_key[$($("#continentalMap").children("g").children("path")[0]).attr("class")][1][0])*$("#continentalMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalMap").offset().left - $("#background").offset().left
+				var ycoOne = ((locationOne.yco + colors[locationOne.territory.replace("#","")][1][1] - color_key[$($("#continentalMap").children("g").children("path")[0]).attr("class")][1][1])*$("#continentalMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalMap").offset().top - $("#background").offset().top
 
-				var xcoTwo = ((locationTwo.xco + colors[locationTwo.territory.replace("#","")][1][0] - color_key[$($("#continentalSVG").children("g").children("path")[0]).attr("class")][1][0])*$("#continentalSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalSVG").offset().left - $("#background").offset().left
-				var ycoTwo = ((locationTwo.yco + colors[locationTwo.territory.replace("#","")][1][1] - color_key[$($("#continentalSVG").children("g").children("path")[0]).attr("class")][1][1])*$("#continentalSVG").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalSVG").offset().top - $("#background").offset().top
+				var xcoTwo = ((locationTwo.xco + colors[locationTwo.territory.replace("#","")][1][0] - color_key[$($("#continentalMap").children("g").children("path")[0]).attr("class")][1][0])*$("#continentalMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalMap").offset().left - $("#background").offset().left
+				var ycoTwo = ((locationTwo.yco + colors[locationTwo.territory.replace("#","")][1][1] - color_key[$($("#continentalMap").children("g").children("path")[0]).attr("class")][1][1])*$("#continentalMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalMap").offset().top - $("#background").offset().top
 
 			}
 			if (zoomLevel[0] == "global") {
 
-				var xcoOne = (locationOne.xco + colors[locationOne.territory.replace("#","")][1][0])*($("#globalSVG").children("g").attr("transform").split("(")[1].split(")")[0])
-				var ycoOne = (locationOne.yco + colors[locationOne.territory.replace("#","")][1][1] + parseFloat($("#globalSVG").children("g").attr("transform").split("translate(")[1].split(" ")[1]))*($("#globalSVG").children("g").attr("transform").split("(")[1].split(")")[0])
+				var xcoOne = (locationOne.xco + colors[locationOne.territory.replace("#","")][1][0])*($("#globalMap").children("g").attr("transform").split("(")[1].split(")")[0])
+				var ycoOne = (locationOne.yco + colors[locationOne.territory.replace("#","")][1][1] + parseFloat($("#globalMap").children("g").attr("transform").split("translate(")[1].split(" ")[1]))*($("#globalMap").children("g").attr("transform").split("(")[1].split(")")[0])
 
-				var xcoTwo = (locationTwo.xco + colors[locationTwo.territory.replace("#","")][1][0])*($("#globalSVG").children("g").attr("transform").split("(")[1].split(")")[0])
-				var ycoTwo = (locationTwo.yco + colors[locationTwo.territory.replace("#","")][1][1] + parseFloat($("#globalSVG").children("g").attr("transform").split("translate(")[1].split(" ")[1]))*($("#globalSVG").children("g").attr("transform").split("(")[1].split(")")[0])
+				var xcoTwo = (locationTwo.xco + colors[locationTwo.territory.replace("#","")][1][0])*($("#globalMap").children("g").attr("transform").split("(")[1].split(")")[0])
+				var ycoTwo = (locationTwo.yco + colors[locationTwo.territory.replace("#","")][1][1] + parseFloat($("#globalMap").children("g").attr("transform").split("translate(")[1].split(" ")[1]))*($("#globalMap").children("g").attr("transform").split("(")[1].split(")")[0])
 
 			}
 
@@ -2574,9 +2569,9 @@ function renderObject(object,levelInfo,remove) {
 
 				if (currentObject["territory"] != "global") {
 
-					var scaleFactor = parseFloat($("#globalSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
-					var ytransform = parseFloat($("#globalSVG").children("g").attr("transform").split("(")[2].replace("0 ","").replace(")",""))
-					var xtransform = parseFloat($("#globalSVG").children("g").attr("transform").split(" ")[1].replace("translate(","").replace(")",""))
+					var scaleFactor = parseFloat($("#globalMap").children("g").attr("transform").split(")")[0].replace("scale(",""))
+					var ytransform = parseFloat($("#globalMap").children("g").attr("transform").split("(")[2].replace("0 ","").replace(")",""))
+					var xtransform = parseFloat($("#globalMap").children("g").attr("transform").split(" ")[1].replace("translate(","").replace(")",""))
 
 					xco = (xco + colors[currentObject["territory"].replace("#","")][1][0] + xtransform)*scaleFactor
 					yco = (yco + colors[currentObject["territory"].replace("#","")][1][1] + ytransform)*scaleFactor
@@ -2584,7 +2579,7 @@ function renderObject(object,levelInfo,remove) {
 				}
 
 				if (i != 0) {
-					var scaleFactor = parseFloat($("#globalSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
+					var scaleFactor = parseFloat($("#globalMap").children("g").attr("transform").split(")")[0].replace("scale(",""))
 					var svg =  document.getElementById("traderoutes")
 					var newPath = document.createElementNS("http://www.w3.org/2000/svg", 'path');
 					newPath.setAttribute("d","M" + oldxco + " " + oldyco + " C" + (oldxco + (xco - oldxco)/4) + " " + (oldyco + (yco - oldyco)/4 - 45*scaleFactor) +  " "+ (oldxco + (xco - oldxco)*0.75) + " " + (oldyco + (yco - oldyco)*0.75 - 45*scaleFactor) + " " + xco + " " + yco);
@@ -2631,8 +2626,8 @@ function renderObject(object,levelInfo,remove) {
 				}
 				if (zoomLevel[0] == "continental") {
 						if (typeof oldObject !== "undefined") {
-							var scaleFactor = parseFloat($("#continentalSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
-							var globalScaleFactor = parseFloat($("#globalSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
+							var scaleFactor = parseFloat($("#continentalMap").children("g").attr("transform").split(")")[0].replace("scale(",""))
+							var globalScaleFactor = parseFloat($("#globalMap").children("g").attr("transform").split(")")[0].replace("scale(",""))
 							var oldDeclared = false
 							var currentDeclared = false
 							for (var y = 0; y < continents[zoomLevel[1]].length; y++) {
@@ -2640,8 +2635,8 @@ function renderObject(object,levelInfo,remove) {
 								if (continents[zoomLevel[1]][y] == currentObject["territory"].replace("#","") || continents[zoomLevel[1]][y] == oldObject["territory"].replace("#","")) {
 
 									if (continents[zoomLevel[1]][y] == currentObject["territory"].replace("#","")) {
-										xco = (xco + colors[currentObject["territory"].replace("#","")][1][0] - color_key[zoomLevel[1]][1][0])*scaleFactor + $("#continentalSVG").offset().left - $("#background").offset().left	
-										yco = (yco + colors[currentObject["territory"].replace("#","")][1][1] - color_key[zoomLevel[1]][1][1])*scaleFactor + $("#continentalSVG").offset().top - $("#background").offset().top
+										xco = (xco + colors[currentObject["territory"].replace("#","")][1][0] - color_key[zoomLevel[1]][1][0])*scaleFactor + $("#continentalMap").offset().left - $("#background").offset().left	
+										yco = (yco + colors[currentObject["territory"].replace("#","")][1][1] - color_key[zoomLevel[1]][1][1])*scaleFactor + $("#continentalMap").offset().top - $("#background").offset().top
 
 									currentDeclared = true
 									}
@@ -2654,31 +2649,31 @@ function renderObject(object,levelInfo,remove) {
 							if (currentDeclared == true || oldDeclared == true) {
 								if (currentDeclared == false) {
 											if (currentObject["territory"] != "global") {
-												xco = oldxco + (xco + colors[currentObject["territory"].replace("#","")][1][0] - oldObject["xco"] - colors[oldObject["territory"].replace("#","")][1][0])*scaleFactor + $("#continentalSVG").offset().left - $("#background").offset().left
-												yco = oldyco + (yco + colors[currentObject["territory"].replace("#","")][1][1] - oldObject["yco"] - colors[oldObject["territory"].replace("#","")][1][1])*scaleFactor + $("#continentalSVG").offset().top - $("#background").offset().top
+												xco = oldxco + (xco + colors[currentObject["territory"].replace("#","")][1][0] - oldObject["xco"] - colors[oldObject["territory"].replace("#","")][1][0])*scaleFactor + $("#continentalMap").offset().left - $("#background").offset().left
+												yco = oldyco + (yco + colors[currentObject["territory"].replace("#","")][1][1] - oldObject["yco"] - colors[oldObject["territory"].replace("#","")][1][1])*scaleFactor + $("#continentalMap").offset().top - $("#background").offset().top
 
 											}
 											else {
 
-												xco = oldxco + (xco*(scaleFactor/globalScaleFactor)) - ((oldObject["xco"] + colors[oldObject["territory"].replace("#","")][1][0])*scaleFactor) + $("#continentalSVG").offset().left - $("#background").offset().left
-												yco = oldyco + (yco*(scaleFactor/globalScaleFactor)) - ((oldObject["yco"] + colors[oldObject["territory"].replace("#","")][1][1])*scaleFactor) + $("#continentalSVG").offset().top - $("#background").offset().top									
+												xco = oldxco + (xco*(scaleFactor/globalScaleFactor)) - ((oldObject["xco"] + colors[oldObject["territory"].replace("#","")][1][0])*scaleFactor) + $("#continentalMap").offset().left - $("#background").offset().left
+												yco = oldyco + (yco*(scaleFactor/globalScaleFactor)) - ((oldObject["yco"] + colors[oldObject["territory"].replace("#","")][1][1])*scaleFactor) + $("#continentalMap").offset().top - $("#background").offset().top									
 
 											}
 								}
 								if (oldDeclared == false) {
 										if (continents[zoomLevel[1]][y] != oldObject["territory"].replace("#","") && oldObject["territory"] != "global" && oldDeclared == false) {
 
-											oldxco = xco + (oldxco + colors[oldObject["territory"].replace("#","")][1][0] - currentObject["xco"] - colors[currentObject["territory"].replace("#","")][1][0])*scaleFactor + $("#continentalSVG").offset().left - $("#background").offset().left
-											oldyco = yco + (oldyco + colors[oldObject["territory"].replace("#","")][1][1] - currentObject["yco"] - colors[currentObject["territory"].replace("#","")][1][1])*scaleFactor + $("#continentalSVG").offset().top - $("#background").offset().top
+											oldxco = xco + (oldxco + colors[oldObject["territory"].replace("#","")][1][0] - currentObject["xco"] - colors[currentObject["territory"].replace("#","")][1][0])*scaleFactor + $("#continentalMap").offset().left - $("#background").offset().left
+											oldyco = yco + (oldyco + colors[oldObject["territory"].replace("#","")][1][1] - currentObject["yco"] - colors[currentObject["territory"].replace("#","")][1][1])*scaleFactor + $("#continentalMap").offset().top - $("#background").offset().top
 
 										}
 										if (oldObject["territory"] == "global"  && oldDeclared == false) {
-											oldxco = xco + (oldxco*(scaleFactor/globalScaleFactor)) - ((currentObject["xco"] + colors[currentObject["territory"].replace("#","")][1][0])*scaleFactor) + $("#continentalSVG").offset().left - $("#background").offset().left
-											oldyco = yco + (oldyco*(scaleFactor/globalScaleFactor)) - ((currentObject["yco"] + colors[currentObject["territory"].replace("#","")][1][1])*scaleFactor) + $("#continentalSVG").offset().top - $("#background").offset().top
+											oldxco = xco + (oldxco*(scaleFactor/globalScaleFactor)) - ((currentObject["xco"] + colors[currentObject["territory"].replace("#","")][1][0])*scaleFactor) + $("#continentalMap").offset().left - $("#background").offset().left
+											oldyco = yco + (oldyco*(scaleFactor/globalScaleFactor)) - ((currentObject["yco"] + colors[currentObject["territory"].replace("#","")][1][1])*scaleFactor) + $("#continentalMap").offset().top - $("#background").offset().top
 
 										}
 								}
-									var scaleFactor = parseFloat($("#continentalSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
+									var scaleFactor = parseFloat($("#continentalMap").children("g").attr("transform").split(")")[0].replace("scale(",""))
 									var svg =  document.getElementById("traderoutes")
 									var newPath = document.createElementNS("http://www.w3.org/2000/svg", 'path');
 									newPath.setAttribute("d","M" + oldxco + " " + oldyco + " C" + (oldxco + (xco - oldxco)/4) + " " + (oldyco + (yco - oldyco)/4 - 45*scaleFactor) +  " "+ (oldxco + (xco - oldxco)*0.75) + " " + (oldyco + (yco - oldyco)*0.75 - 45*scaleFactor) + " " + xco + " " + yco);
@@ -2723,13 +2718,13 @@ function renderObject(object,levelInfo,remove) {
 								
 						}
 						else {
-							var scaleFactor = parseFloat($("#continentalSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
+							var scaleFactor = parseFloat($("#continentalMap").children("g").attr("transform").split(")")[0].replace("scale(",""))
 							for (var y = 0; y < continents[zoomLevel[1]].length; y++) {
 
 								if (continents[zoomLevel[1]][y] == currentObject["territory"].replace("#","")) {
 
-									xco = (xco + colors[currentObject["territory"].replace("#","")][1][0] - color_key[zoomLevel[1]][1][0])*scaleFactor + $("#continentalSVG").offset().left - $("#background").offset().left	
-									yco = (yco + colors[currentObject["territory"].replace("#","")][1][1] - color_key[zoomLevel[1]][1][1])*scaleFactor + $("#continentalSVG").offset().top - $("#background").offset().top	 
+									xco = (xco + colors[currentObject["territory"].replace("#","")][1][0] - color_key[zoomLevel[1]][1][0])*scaleFactor + $("#continentalMap").offset().left - $("#background").offset().left	
+									yco = (yco + colors[currentObject["territory"].replace("#","")][1][1] - color_key[zoomLevel[1]][1][1])*scaleFactor + $("#continentalMap").offset().top - $("#background").offset().top	 
 								
 								}
 							}
@@ -2740,11 +2735,11 @@ function renderObject(object,levelInfo,remove) {
 						if (typeof oldObject !== "undefined") {
 							if (zoomLevel[1] == currentObject["territory"] || zoomLevel[1] == oldObject["territory"]) {
 
-								var scaleFactor = parseFloat($("#territorialSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
-								var globalScaleFactor = parseFloat($("#globalSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
+								var scaleFactor = parseFloat($("#territorialMap").children("g").attr("transform").split(")")[0].replace("scale(",""))
+								var globalScaleFactor = parseFloat($("#globalMap").children("g").attr("transform").split(")")[0].replace("scale(",""))
 								if (zoomLevel[1] == currentObject["territory"]) {
-									xco = xco*scaleFactor + $("#territorialSVG").offset().left - $("#background").offset().left	
-									yco = yco*scaleFactor + $("#territorialSVG").offset().top - $("#background").offset().top	 
+									xco = xco*scaleFactor + $("#territorialMap").offset().left - $("#background").offset().left	
+									yco = yco*scaleFactor + $("#territorialMap").offset().top - $("#background").offset().top	 
 								}
 								else {
 									if (currentObject["territory"] != "global") {
@@ -2766,7 +2761,7 @@ function renderObject(object,levelInfo,remove) {
 									oldxco = xco + (oldxco*(scaleFactor/globalScaleFactor)) - ((currentObject["xco"] + colors[currentObject["territory"].replace("#","")][1][0])*scaleFactor)
 									oldyco = yco + (oldyco*(scaleFactor/globalScaleFactor)) - ((currentObject["yco"] + colors[currentObject["territory"].replace("#","")][1][1])*scaleFactor)
 								}
-								var scaleFactor = parseFloat($("#territorialSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
+								var scaleFactor = parseFloat($("#territorialMap").children("g").attr("transform").split(")")[0].replace("scale(",""))
 								var svg =  document.getElementById("traderoutes")
 								var newPath = document.createElementNS("http://www.w3.org/2000/svg", 'path');
 								newPath.setAttribute("d","M" + oldxco + " " + oldyco + " C" + (oldxco + (xco - oldxco)/4) + " " + (oldyco + (yco - oldyco)/4 - 45*scaleFactor) +  " "+ (oldxco + (xco - oldxco)*0.75) + " " + (oldyco + (yco - oldyco)*0.75 - 45*scaleFactor) + " " + xco + " " + yco);
@@ -2811,9 +2806,9 @@ function renderObject(object,levelInfo,remove) {
 						}
 						else {
 							if (zoomLevel[1] == currentObject["territory"]) {
-								var scaleFactor = parseFloat($("#territorialSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
-								xco = xco*scaleFactor + $("#territorialSVG").offset().left - $("#background").offset().left	
-								yco = yco*scaleFactor + $("#territorialSVG").offset().top - $("#background").offset().top
+								var scaleFactor = parseFloat($("#territorialMap").children("g").attr("transform").split(")")[0].replace("scale(",""))
+								xco = xco*scaleFactor + $("#territorialMap").offset().left - $("#background").offset().left	
+								yco = yco*scaleFactor + $("#territorialMap").offset().top - $("#background").offset().top
 							}
 						}
 				}
@@ -2853,7 +2848,7 @@ function renderObject(object,levelInfo,remove) {
 			}
 			else {
 
-				var globalScaleFactor = parseFloat($("#globalSVG").children("g").attr("transform").split(")")[0].replace("scale(",""))
+				var globalScaleFactor = parseFloat($("#globalMap").children("g").attr("transform").split(")")[0].replace("scale(",""))
 				xco = (itinerary[i][0]["xco"]/globalScaleFactor)*0.1251425314
 				xco = (itinerary[i][0]["yco"]/globalScaleFactor)*0.1251425314
 				currentObject = itinerary[i][0]
@@ -2918,7 +2913,7 @@ function renderObject(object,levelInfo,remove) {
 
 				newObject = {name:"",
 				 ownership:"",
-				 territory: "#" + $("#territorialSVG").children("g").children("path").attr("id"),
+				 territory: "#" + $("#territorialMap").children("g").children("path").attr("id"),
 				 xco:"",
 				 yco:"",
 				 owner:<%= @user.id %>,
@@ -2928,7 +2923,7 @@ function renderObject(object,levelInfo,remove) {
 			else if (object == "encampment") {
 
 				newObject = {name:"",
-				 territory: "#" + $("#territorialSVG").children("g").children("path").attr("id"),
+				 territory: "#" + $("#territorialMap").children("g").children("path").attr("id"),
 				 xco:"",
 				 yco:"",
 				 owner:<%= @user.id %>,
@@ -2941,7 +2936,7 @@ function renderObject(object,levelInfo,remove) {
 		$("#curser" + object).css("display","inline")
 		$("#submitObject").css("display","inline")
 
-		$("#territorialSVG").mousemove( function(e) {
+		$("#territorialMap").mousemove( function(e) {
 
 			if (followMouse == true) {
 
@@ -2954,9 +2949,9 @@ function renderObject(object,levelInfo,remove) {
 		$("path").click(function(e){
 			if (zooming == false && newObject != rendered_forts[rendered_forts.length - 1] && newObject != rendered_encampments[rendered_encampments.length - 1]) {
 
-				x = ((parseInt($("#curser" + object).css("left")) -  ($("#territorialSVG").children("g").children("path").position().left))/parseFloat($("#territorialSVG").children("g").attr("transform").split("(")[1].split(")")[0]))
+				x = ((parseInt($("#curser" + object).css("left")) -  ($("#territorialMap").children("g").children("path").position().left))/parseFloat($("#territorialMap").children("g").attr("transform").split("(")[1].split(")")[0]))
 
-				y =  ((parseInt($("#curser" + object).css("top")) - ($("#territorialSVG").children("g").children("path").offset().top - $("#background").offset().top))/parseFloat($("#territorialSVG").children("g").attr("transform").split("(")[1].split(")")[0]))
+				y =  ((parseInt($("#curser" + object).css("top")) - ($("#territorialMap").children("g").children("path").offset().top - $("#background").offset().top))/parseFloat($("#territorialMap").children("g").attr("transform").split("(")[1].split(")")[0]))
 
 				followMouse = false
 				$("#curser" + object).css("pointer-events","auto");
@@ -2976,7 +2971,7 @@ function renderObject(object,levelInfo,remove) {
 
 					newObject = {name:$("#user_forts_attributes_100000000000_name").val(),
 					 ownership:$("#user_forts_attributes_100000000000_ownership").val(),
-					 territory: "#" + $("#territorialSVG").children("g").children("path").attr("id"),
+					 territory: "#" + $("#territorialMap").children("g").children("path").attr("id"),
 					 xco:x,
 					 yco:y,
 					 owner:<%= @user.id %>,
@@ -2993,7 +2988,7 @@ function renderObject(object,levelInfo,remove) {
 				else if (object == "encampment") {
 
 					newObject = {name:$("#user_encampments_attributes_100000000000_name").val(),
-					 territory: "#" + $("#territorialSVG").children("g").children("path").attr("id"),
+					 territory: "#" + $("#territorialMap").children("g").children("path").attr("id"),
 					 xco:x,
 					 yco:y,
 					 owner:<%= @user.id %>,
@@ -3041,9 +3036,6 @@ function renderObject(object,levelInfo,remove) {
 
 
 //Calls of Initial Functions
-	colorMap();
-	setOriginalZoom();
-
 	var pathClicked;
 	var zoomLevel = ["global","globe"];
 	levelChange(zoomLevel)
@@ -3063,207 +3055,211 @@ $(".newObjectButton").click( function() {
 
 
 //Zooming
+	function initDisplay() {
 
+		$("#sidePanel").css("height",$(window).height())
+		var map = Raphael($("#display")[0],"100%",$(window).height())
+		continents = {africa:map.set(),asia:map.set(),europe:map.set(),australia:map.set(),north_america:map.set(),south_america:map.set()}
+		var allTerritories = map.set()
+		var pathId = {}
+		for (continent in territoryPaths) {
 
-		$("svg").on('click','path',function(e){
+			for (territory in territoryPaths[continent]) {
 
-			if (zooming == true) {
-
-				if (zoomLevel[0] == "global") {
-					var continent = $("." + $(this).attr("class"))
-					for (i = 0; i < continent.length; i++) {
-						$("#continentalSVG").append($(continent[i]).parent().clone())
-					}
-
-					var box = $("#continentalSVG")[0].getBoundingClientRect()
-					var newScaleFactor
-					if (box.width/$("#background").width() > box.height/$("#background").height()) {
-						newScaleFactor = (($("#background").width()*parseFloat($("#continentalSVG").children("g").attr("transform").split(")")[0].replace("scale(","")))/box.width);
-					}
-					else {
-						newScaleFactor = (($("#background").height()*parseFloat($("#continentalSVG").children("g").attr("transform").split(")")[0].replace("scale(","")))/box.height);
-					}
-
-					$("#continentalSVG").children("g").attr("transform","scale(" + newScaleFactor + ")");
-					var scaledBox = $("#continentalSVG").offset();
-					scaledBox.top = ((scaledBox.top - $("#background").offset().top)/newScaleFactor) - (($("#background").height()/2) - ($("#continentalSVG")[0].getBoundingClientRect().height/2))
-					scaledBox.left = ((scaledBox.left - $("#background").offset().left)/newScaleFactor) - (($("#background").width()/2) - ($("#continentalSVG")[0].getBoundingClientRect().width/2))
-					$("#continentalSVG").children("g").attr("transform", $("#continentalSVG").children("g").attr("transform") + " translate(" + -1*scaledBox.left + ", " + -1*scaledBox.top + ")")
-					$("#continentalSVG").css("z-index","2");
-					$("#continentFilter").css("display","inline");
-					zoomLevel = ["continental",$(continent).attr("class")];
-
-					levelChange(zoomLevel)
-				}
-				else if (zoomLevel[0] == "continental") {
-					var territory = "#" + document.elementFromPoint(e.pageX,e.pageY).id;
-					$("#territorialSVG").append($(territory).parent().clone())
-					var box = $("#territorialSVG")[0].getBoundingClientRect();
-					var newScaleFactor
-					if (box.width/$("#background").width() > box.height/$("#background").height()) {
-						newScaleFactor = (($("#background").width()*parseFloat($("#territorialSVG").children("g").attr("transform").split(")")[0].replace("scale(","")))/box.width);
-					}
-					else {
-						newScaleFactor = (($("#background").height()*parseFloat($("#territorialSVG").children("g").attr("transform").split(")")[0].replace("scale(","")))/box.height);
-					}
-					$("#territorialSVG").children("g").attr("transform","scale(" + newScaleFactor + ")");
-					var scaledBox = $("#territorialSVG").offset()
-					scaledBox.top = ((scaledBox.top - $("#background").offset().top)/newScaleFactor) - ($("#background").height() - ($("#territorialSVG")[0].getBoundingClientRect().height))/(newScaleFactor*2)
-					scaledBox.left = ((scaledBox.left - $("#background").offset().left)/newScaleFactor) - ($("#background").width() - ($("#territorialSVG")[0].getBoundingClientRect().width))/(newScaleFactor*2)
-			
-					$("#territorialSVG").children("g").attr("transform", $("#territorialSVG").children("g").attr("transform") + " translate(" + -1*scaledBox.left + ", " + -1*scaledBox.top + ")")
-					$("#territorialSVG").css("z-index","4");
-					$("#territoryFilter").css("display","inline");
-					zoomLevel = ["territorial",territory, zoomLevel[1]];
-
-					levelChange(zoomLevel)
-				}
-				pathClicked = true
+				territoryPaths[continent][territory] = map.path(territoryPaths[continent][territory]).attr("stroke-width","0")
+				pathId[territoryPaths[continent][territory].id] = territory
+				pathId[territory] = territoryPaths[continent][territory].id
+				territoryPaths[territory] = territoryPaths[continent][territory]
+				continents[continent].push(territoryPaths[continent][territory])
+				allTerritories.push(territoryPaths[continent][territory])
 			}
-			else if (zooming = false) {
-				
+		}
+		var allTerritoriesBBox = allTerritories.getBBox(true)
+		var displayWidth = $("#display").width()
+		var displayHeight = $("#display").height()
+		if (allTerritoriesBBox.width/$("#display").width() < allTerritoriesBBox.height/$("#display").height()) {
+
+			var scaleFactor = $("#display").height()/allTerritoriesBBox.height
+			map.forEach( function(el) {
+
+				el.scale(scaleFactor, scaleFactor,0,0) 
+				el.translate(-1*((allTerritoriesBBox.x + (allTerritoriesBBox.width/2))) + ((displayWidth/2)/(scaleFactor)),-1*((allTerritoriesBBox.y + (allTerritoriesBBox.height/2))) + ((displayHeight/2)/(scaleFactor)))
+			})
+		}
+		else {
+
+			var scaleFactor = $("#display").width()/allTerritoriesBBox.width
+			map.forEach( function(el) {
+
+				el.scale(scaleFactor, scaleFactor,0,0) 
+				el.translate(-1*((allTerritoriesBBox.x + (allTerritoriesBBox.width/2))) + ((displayWidth/2)/(scaleFactor)),-1*((allTerritoriesBBox.y + (allTerritoriesBBox.height/2))) + ((displayHeight/2)/(scaleFactor)))
+			})
+		}
+		for (i = 0; i < territoryColors.length; i++) {
+
+			var firstSeg = territoryColors[i][1][0].toString(16)
+			var secondSeg = territoryColors[i][1][1].toString(16)
+			var thridSeg = territoryColors[i][1][2].toString(16)
+			if (firstSeg == "0") {
+
+				firstSeg = "00"
 			}
-		});
-		
-			$("svg").click( function(e) {
+			if (secondSeg == "0") {
 
-				if (pathClicked != true && zooming == true) {
-					if (zoomLevel[0] == "continental") {
-						$("#continentalSVG").children().remove();
-						$("#continentFilter").css("display","none");
-						$("#continentalSVG").css("z-index","-1");
-						zoomLevel = ["global","globe"];
-					}
-					else if (zoomLevel[0] == "territorial") {
-						$("#territorialSVG").children().remove();
-						$("#territoryFilter").css("display","none");
-						$("#territorialSVG").css("z-index","-1");
-						$("#continentalSVG").css("z-index","2");
+				secondSeg = "00"
+			}
+			if (thridSeg == "0") {
 
-						zoomLevel = ["continental", zoomLevel[2]];
-					}
-					else if (zoomLevel[0] == "global") {
-				
-						if (trading == true) {
-							$("#renderedSprites").css("pointer-events","auto");
+				thridSeg = "00"
+			}
+			territoryPaths[territoryColors[i][0].replace("#","")].attr({fill:"#" + swatches[territoryColors[i][0].replace("#","")][("L" + firstSeg + secondSeg + thridSeg).toUpperCase()]})
+		}
+		territories = map.set(continents.asia,continents.africa,continents.australia,continents.europe,continents.south_america,continents.north_america)
 
-							if (document.elementFromPoint(e.pageX,e.pageY).id.replace(/[0-9]/g, '') == "seapoint") {
+		return {map:map, territoryPaths:territoryPaths, territories:territories, continents:continents, pathId:pathId,allTerritories:allTerritories}
+	}
+	var mapContext = initDisplay()
+	var filterOne = mapContext.map.rect(0,0,mapContext.map.width,mapContext.map.height).attr({fill:"#000"}).attr("fill-opacity","0.0").toBack()
+	var filterTwo = mapContext.map.rect(0,0,mapContext.map.width,mapContext.map.height).attr({fill:"#000"}).attr("fill-opacity","0.0").toBack()
+	filters = mapContext.map.set(filterOne,filterTwo)
+	mapContext.territories.forEach( function(continent) {
 
-								if (seapoints[document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,'')][1] == "selpast" || seapoints[document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,'')][1] == "sel") {
-									for (i = 0; i < itinerary.length; i++) {
+		continent.click( function() {
 
-										if (typeof itinerary[i][1] !== "undefined" && itinerary[i][0]["xco"] == seapoints[document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,'')][0]["xco"] && (seapoints[document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,'')][1] == "selpast" || (seapoints[document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,'')][1] == "sel" && i - 1 == itinerary.length))) {
+			if (zoomLevel[0] == "global") {
 
-											changeLeg = [true,i,document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,''),"seapoint"]
+				filterOne.attr("fill-opacity","0.90").toFront()
+				continent.toFront()
+				continent.transform("")
+				var continentBBox = continent.getBBox(true)
+				var displayWidth = $("#display").width()
+				var displayHeight = $("#display").height()
+				var displayWidth = $("#display").width()
+				var displayHeight = $("#display").height()
+				if (continentBBox.width/$("#display").width() < continentBBox.height/$("#display").height()) {
 
-											changeSel("seapoint",document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,''))
-
-										}
-										else if (typeof itinerary[i][1] !== "undefined" && seapoints[document.elementFromPoint(e.pageX,e.pageY).id.replace(/\D/g,'')][1] == "sel") {
-										changeLeg[0] = false
-										selectFirst("seapoint",itinerary)
-										}
-									}
-								}
-							}
-							else if ($("#alertBox").css("display") == "none") {
-
-								$("#renderedSprites").css("pointer-events","none");
-								alertBox("Would you like to place a sea point?","seapoint",e,["alertConfirm","alertCancel"])
-							}
-
-							$("#renderedSprites").css("pointer-events","none");
-						}
-					}
-					levelChange(zoomLevel)
-				}
-				else if (pathClicked == true && zooming == true) {
-
-					pathClicked = false;
-
-				}
-		});
-		$(".selectionSprite").click( function() {
-			if (trading == true) {
-
-				if ($("#user_trades_attributes_100000000000_what").val() == "") {
-					$(this).css("margin-left","20px")
-					$("#itemSelector").children().not(this).css("display","none")
-					$("#user_trades_attributes_100000000000_what").val(this.id)	
+					var scaleFactor = $("#display").height()/continentBBox.height
+					continent.scale(scaleFactor, scaleFactor,0,0) 
+					continent.translate(-1*((continentBBox.x + (continentBBox.width/2))) + ((displayWidth/2)/(scaleFactor)),-1*((continentBBox.y + (continentBBox.height/2))) + ((displayHeight/2)/(scaleFactor)))
 				}
 				else {
-					$(this).css("margin-left","0px")
-					$("#itemSelector").children().css("display","inline")
-					$("#user_trades_attributes_100000000000_what").val("")	
+
+					var scaleFactor = $("#display").width()/continentBBox.width
+					continent.scale(scaleFactor, scaleFactor,0,0) 
+					continent.translate(-1*((continentBBox.x + (continentBBox.width/2))) + ((displayWidth/2)/(scaleFactor)),-1*((continentBBox.y + (continentBBox.height/2))) + ((displayHeight/2)/(scaleFactor)))
+				}
+				for (key in continentKey) {
+
+					for (var i = 0 ; i < continentKey[key].length;i++) {
+
+						if (continentKey[key][i] == mapContext.pathId[this.id].toLowerCase()) {
+
+							zoomLevel = ["continental", key]
+						}
+					}
 				}
 			}
-			return
+			else if (zoomLevel[0] == "continental") {
+
+				if (typeof continentKey[zoomLevel[1]] !== "undefined") {
+
+					for (var i = 0 ; i < continentKey[zoomLevel[1]].length;i++) {
+
+						if (continentKey[zoomLevel[1]][i] == mapContext.pathId[this.id].toLowerCase()) {
+
+							filterOne.attr("fill-opacity","0.45")
+							filterTwo.attr("fill-opacity","0.6525").toFront()
+							this.toFront()
+							this.transform("")
+							var territoryBBox = this.getBBox(true)
+							if (territoryBBox.width/$("#display").width() < territoryBBox.height/$("#display").height()) {
+
+
+								this.scale($("#display").height()/territoryBBox.height, $("#display").height()/territoryBBox.height,0,0) 
+								this.translate(-1*((territoryBBox.x + (territoryBBox.width/2))) + (($("#display").width()/2)/($("#display").height()/territoryBBox.height)),-1*((territoryBBox.y + (territoryBBox.height/2))) + (($("#display").height()/2)/($("#display").height()/territoryBBox.height)))
+							}
+							else {
+
+								this.scale($("#display").width()/territoryBBox.width, $("#display").width()/territoryBBox.width,0,0) 
+								this.translate(-1*((territoryBBox.x + (territoryBBox.width/2))) + (($("#display").width()/2)/($("#display").width()/territoryBBox.width)),-1*((territoryBBox.y + (territoryBBox.height/2))) + (($("#display").height()/2)/($("#display").width()/territoryBBox.width))) 
+							}
+							zoomLevel = ["territorial",continentKey[zoomLevel[1]][i],zoomLevel[1],this]
+						}
+					}
+				}
+			}
 		})
-});
+	})
+
+	filters.click( function() {
+
+		if (zoomLevel[0] == "territorial") {
+
+			filterOne.attr("fill-opacity","0.90")
+			filterTwo.attr("fill-opacity","0").toBack()
+			for (var i = 0, found = false;i < continentKey[zoomLevel[2]].length && found != true;i++) {
+
+				if (continentKey[zoomLevel[2]][i] != mapContext.pathId[zoomLevel[3].id].toLowerCase()) {
+
+					zoomLevel[3].transform(mapContext.map.getById(mapContext.pathId[continentKey[zoomLevel[2]][i]]).matrix.toTransformString())
+					found = true
+				}
+			}
+			zoomLevel = ["continental",zoomLevel[2]]	
+		}
+		else if (zoomLevel[0] == "continental") {
+
+			filterOne.attr("fill-opacity","0").toBack()
+			var found = false
+			for (var key in mapContext.continents) {
+
+				if (key.toLowerCase() != zoomLevel[1] && found == false) {
+
+					mapContext.continents[zoomLevel[1]].transform(mapContext.continents[key][0].matrix.toTransformString())
+					found = true
+				}
+			}
+			zoomLevel = ["global","globe"]
+		}
+	})
+	//$()
+
 
 //End of Zooming
 
-
+});
 </script>
 
+<div id="container">
+	<div id="display">
 
-
-
-<div id="sprites">
-    <%= render partial: "sprites" %>
-</div>
-
-<div class="test1"  width="100%" height="100%">
-	<%= render partial: "chess_board"%>
-	<%= render partial: "battle_at_sea_board"%>
-	<div id="renderedSprites"></div>
-	<div id="background"></div>
-	<div id="continentFilter" class="filter"></div>
-	<div id="territoryFilter" class="filter"></div>
-	<svg
-    preserveAspectRatio="xMinYMin meet"
-	class="territoryImage" 
-	id="continentalSVG"></svg>
-	<svg
-    preserveAspectRatio="xMinYMin meet"
-	class="territoryImage" 
-	id="territorialSVG"></svg>
-    <%= render partial: "images" %>
-	<svg 
-	id="traderoutes">
-<path style="stroke:black"></path>
-	</svg>
-</div>
+	</div>
 	<div id="sidePanel" class="box">
- 	<div class="corner top right"></div>
-	<div class="corner top left"></div>
-	<div id="forms">
-<br>
-	    <div id="itemSelector">
-		<%= image_tag("foodunit.png", :class => "selectionSprite", :id => "foodUnit", :width => "32") %>
-		<%= image_tag("energyunit.png", :class => "selectionSprite", :id => "energyUnit", :width => "32") %>
-		<%= image_tag("genpop.png", :class => "selectionSprite", :id => "genPop", :width => "32") %>
-		<%= image_tag("militant.png", :class => "selectionSprite", :id => "militant", :width => "32") %>
-	    </div>
-	    <%= render partial: "form" %>
-	</div>
-	<div class="corner bottom left"></div>
-	<div class="corner bottom right"></div>
-	</div>
-<div id="alertBox" class="box">
- 	<div class="corner top right"></div>
-	<div class="corner top left"></div>
-		<p></p>
-		<div id="alertButtons">
-			<button class="alertButton" id="alertConfirm">Confirm</button>
-			<button class="alertButton" id="alertCancel">Cancel</button>
-			<button class="alertButton" id="alertOkay">Okay</button>
+		<div id="forms">
+			<div id="itemSelector">
+				<%= image_tag("foodunit.png", :class => "selectionSprite", :id => "foodUnit", :width => "32") %>
+				<%= image_tag("energyunit.png", :class => "selectionSprite", :id => "energyUnit", :width => "32") %>
+				<%= image_tag("genpop.png", :class => "selectionSprite", :id => "genPop", :width => "32") %>
+				<%= image_tag("militant.png", :class => "selectionSprite", :id => "militant", :width => "32") %>
+				<div id="fortsCamps">
+				    <button id="fortsCamps" class="apple mainbutton">Forts/Camps</button><br>
+				    <div id="mineola">
+					<button class="gala">Build Fort</button>
+					<button class="gala">Build Camp</button>
+					<button class="gala">Leave Fort</button>
+					<button class="gala">Leave Camp</button>
+				    </div>
+				</div>
+			</div>
+			<%= render partial: "form" %>
 		</div>
-	<div class="corner bottom left"></div>
-	<div class="corner bottom right"></div>
+	</div>
 </div>
 
 <%= image_tag("active_map.png", :class => "active", :id => "activeImage") %>
 <canvas id="activeCanvas" width="439px" height="245px">Your Browser Doesn't Support HTML5 Canvases... Sorry :( </canvas>
 
+<div id="sprites">
+    <%= render partial: "sprites" %>
+</div>
 

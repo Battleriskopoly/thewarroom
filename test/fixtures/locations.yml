@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  game_id: 1
+  user_id: 1
+  territory: MyString
+  food_units: 1
+  energy_units: 1
+  money: 1
+  militants: 1
+  population: 1
+  xco: 1
+  yco: 1
+  active_date: 2015-03-05 18:02:23
+
+two:
+  type: 
+  game_id: 1
+  user_id: 1
+  territory: MyString
+  food_units: 1
+  energy_units: 1
+  money: 1
+  militants: 1
+  population: 1
+  xco: 1
+  yco: 1
+  active_date: 2015-03-05 18:02:23

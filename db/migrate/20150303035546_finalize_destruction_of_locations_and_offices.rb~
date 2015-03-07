@@ -1,0 +1,4 @@
+class FinalizeDestructionOfLocationsAndOffices < ActiveRecord::Migration
+  def change
+  end
+end

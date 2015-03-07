@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150228210906) do
+ActiveRecord::Schema.define(version: 20150306023406) do
 
 # Could not dump table "battles" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
@@ -19,47 +19,6 @@ ActiveRecord::Schema.define(version: 20150228210906) do
   create_table "conversations", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "encampments", force: true do |t|
-    t.string   "name"
-    t.string   "date_created"
-    t.integer  "xco"
-    t.integer  "yco"
-    t.integer  "troops"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-    t.string   "territory"
-    t.integer  "game_id"
-  end
-
-  create_table "forts", force: true do |t|
-    t.string   "name"
-    t.integer  "xco"
-    t.integer  "yco"
-    t.float    "ownership"
-    t.string   "date_created"
-    t.integer  "trained_troops"
-    t.integer  "untrained_troops"
-    t.integer  "jeeps"
-    t.integer  "blackhawks"
-    t.integer  "cargo_aircraft"
-    t.integer  "tanks"
-    t.integer  "flagpoles"
-    t.integer  "patrol_boats"
-    t.integer  "cruisers"
-    t.integer  "destroyers"
-    t.integer  "submarines"
-    t.integer  "battleships"
-    t.integer  "aircraft_carriers"
-    t.integer  "energy_units"
-    t.integer  "food_units"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-    t.string   "territory"
-    t.integer  "game_id"
   end
 
   create_table "game_attributes", force: true do |t|
@@ -73,6 +32,8 @@ ActiveRecord::Schema.define(version: 20150228210906) do
     t.integer  "food_units"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "status"
+    t.integer  "place"
   end
 
   create_table "games", force: true do |t|
@@ -104,7 +65,6 @@ ActiveRecord::Schema.define(version: 20150228210906) do
     t.string   "northern_europe_owner_id"
     t.string   "northwestern_united_states_owner_id"
     t.string   "pacific_asia_owner_id"
-    t.string   "papua_new_guinea_owner_id"
     t.string   "russia_owner_id"
     t.string   "sahara_owner_id"
     t.string   "southeastern_asia_owner_id"
@@ -119,8 +79,11 @@ ActiveRecord::Schema.define(version: 20150228210906) do
     t.string   "western_canada_owner_id"
     t.string   "western_south_america_owner_id"
     t.integer  "user_id"
-    t.string   "start_date"
     t.boolean  "start_status"
+    t.integer  "players"
+    t.date     "start_date"
+    t.string   "invitation"
+    t.integer  "new_zealand_owner_id"
   end
 
   create_table "legs", force: true do |t|
@@ -130,6 +93,24 @@ ActiveRecord::Schema.define(version: 20150228210906) do
     t.string   "location_type"
     t.integer  "location_id"
     t.integer  "trade_index"
+  end
+
+  create_table "locations", force: true do |t|
+    t.string   "type"
+    t.integer  "game_id"
+    t.integer  "user_id"
+    t.string   "territory"
+    t.integer  "food_units"
+    t.integer  "energy_units"
+    t.integer  "money"
+    t.integer  "militants"
+    t.integer  "population"
+    t.integer  "xco"
+    t.integer  "yco"
+    t.datetime "active_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "messages", force: true do |t|
@@ -165,9 +146,8 @@ ActiveRecord::Schema.define(version: 20150228210906) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password_digest"
-    t.integer  "game_id"
-    t.string   "color"
     t.string   "remember_token"
+    t.integer  "game_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

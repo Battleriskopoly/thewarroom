@@ -1,10 +1,32 @@
 class Game < ActiveRecord::Base
 	belongs_to :user
+	has_many :users
 	has_many :game_attributes
-	has_many :forts
-	has_many :encampments
+	has_many :locations
 	has_many :trades
    	has_many :trade_proposals
 	has_many :battles
 	has_many :pieces
+  	validates :name, presence: true, length: { maximum: 50 }, on: :create
+  	validates :private, presence: true
+  	validates :players, presence: true, numericality: { only_integer: true, greater_than: 1, less_than: 39}
+  	validate :start_date_cannot_be_in_the_past, on: :create
+  	validate :must_be_invitations_if_private
+  	validate :invited_people_must_equal_players_for_private_game
+
+	def start_date_cannot_be_in_the_past
+	    if start_date.present? && start_date <= Date.today
+	      errors.add(:start_date, "Must be in the future")
+	    end
+	end
+	def must_be_invitations_if_private
+	    if private == "T" && invitation == ""
+	      errors.add(:private, "You must invite people to a private game")
+	    end
+	end
+	def invited_people_must_equal_players_for_private_game
+	    if private == "T" && players != invitation.split(",").length + 1
+	      errors.add(:private, "You must invite enough people to play the game")
+	    end
+	end
 end

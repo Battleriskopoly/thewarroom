@@ -1,0 +1,6 @@
+class AddPlaceAndStatusToUserAttributes < ActiveRecord::Migration
+  def change
+	add_column :user_attributes, :status, :boolean
+	add_column :user_attributes, :place, :integer
+  end
+end

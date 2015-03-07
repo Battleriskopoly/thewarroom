@@ -1,0 +1,6 @@
+class ChangeStartDateToDate < ActiveRecord::Migration
+  def change
+	remove_colum :games, :start_date
+	add_colum :games, :start_date, :date
+  end
+end

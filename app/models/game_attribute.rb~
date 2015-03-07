@@ -1,2 +1,5 @@
 class GameAttribute < ActiveRecord::Base
+	belongs_to :user
+	belongs_to :game
+  	validates :color, presence: true, length: { maximum: 50 }, on: :create
 end

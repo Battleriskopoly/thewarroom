@@ -1,5 +1,5 @@
 class Trade < ActiveRecord::Base
-	belongs_to :fort
+	belongs_to :location
 	belongs_to :user
 	belongs_to :game
 	has_many :legs

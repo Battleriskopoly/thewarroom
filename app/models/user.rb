@@ -1,10 +1,9 @@
 class User < ActiveRecord::Base
 
-  has_many :encampments
-  accepts_nested_attributes_for :encampments
+  belongs_to :game
 
-  has_many :forts, inverse_of: :user
-  accepts_nested_attributes_for :forts
+  has_many :locations
+  accepts_nested_attributes_for :locations
 
   has_many :trades
   accepts_nested_attributes_for :trades
@@ -31,6 +30,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :battles
 
   before_save { self.email = email.downcase }
+  before_save { self.username = username.downcase }
   before_create :create_remember_token
   validates :username, presence: true, length: { maximum: 50 }, on: :create
   validates :name, presence: true, length: { maximum: 50 }, on: :create

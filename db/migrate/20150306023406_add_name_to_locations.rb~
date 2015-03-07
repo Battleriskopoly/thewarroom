@@ -1,0 +1,4 @@
+class AddNameToLocations < ActiveRecord::Migration
+  def change
+  end
+end

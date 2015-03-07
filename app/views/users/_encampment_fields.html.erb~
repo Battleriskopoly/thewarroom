@@ -1,9 +1,9 @@
-<div class="fields" id="encampment_fields">
+<div class="fields" id="location_fields">
     <%= f.label :name, "Name" %>
     <%= f.text_field :name %>
 	<%= f.hidden_field :xco %>
 	<%= f.hidden_field :yco %>
-	<%= f.hidden_field :game_id %>
 	<%= f.hidden_field :territory %>
+	<%= f.hidden_field :type %>
 	<%= f.hidden_field :date_created %>
 </div>

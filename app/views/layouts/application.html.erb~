@@ -8,6 +8,7 @@
   <%= csrf_meta_tags %>
   <%= favicon_link_tag 'favicon.png' %>
 <% if signed_in?%>
+<%= #link_to "Log out", logout_path, method: :delete %>
 
 <%end%>
 </head>

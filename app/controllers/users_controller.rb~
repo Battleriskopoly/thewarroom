@@ -3,6 +3,84 @@ class UsersController < ApplicationController
 	respond_to :html, :json
 	helper UsersHelper
 
+	$territoryStats = Hash[[["Central_America",[81297103,16714766457,20726392710,2502977002208.47,202155631,690879757,6852777556,91525073,91525073]],
+["Central_Asia",[155384433,35988418317,83779005510,2247507961843.90,387290981,2792633517,6153341442,197061839,197061839]],
+["Central_South_America",[37200326,6677174880,27564457920,1087019538072.58,92327168,918815264,2976097298,36562217,36562217]],
+["China",[618588627,50323725693,28926563400,13285787244911.30,1355692576,964218780,36374503066,275557704,275557704]],
+["Coastal_Africa",[77477870,26055103454,22508101440,765220921997.21,307365566,750270048,2095060704,142669971,142669971]],
+["Coastal_South_America",[25359324,18573083033,5112103260,1187231066998.67,63721240,170403442,3250461511,101700660,101700660]],
+["Congo",[26000754,5957381818,15051875580,117302877498.48,106462255,501729186,485428822.7,32620845,32620845]],
+["East_Africa",[86097678,27718974627,1717191630,508253419401.14,331977057,57239721,1391522024,151780833,151780833]],
+["Eastern_Canada",[8889448,7532655439,10555145280,1129478395142.65,24182430,351838176,3092343313,41246628,41246628]],
+["Eastern_South_America",[86678546,34229214368,18291898800,2497733382801.79,209360648,609729960,6838421308,187428963,187428963]],
+["Egypt",[38275459,2083093435,15183516600,644066819600.90,93139273,506117220,1763358849,11406398,11406398]],
+["Greenland",[22164,404096,404096,2216755200.29,57728,0,6069144.97,0,0]],
+["Iceland",[124292,55311634,2221457,12916185701.65,317351,0,35362589.19,302870,302870]],
+["India",[489571520,71011854230,6824656440,4945378524000.15,1236344631,227488548,13539708485,388839722,388839722]],
+["Indonesia",[107538660,10605834378,6715070460,1318770143599.43,253609653,223835682,3610595876,58074384,58074384]],
+["Madagascar",[7072251,1578874576,162413482,23201925999.24,23201926,0,63523411.36,8645446,8645446]],
+["Middle_East",[76503157,12973726935,1.09249E+11,2546297402807.80,186576152,3641644074,6971382349,71040257,71040257]],
+["Mongolia",[1482827,275283629,20672330,17423821000.11,2953190,9935,47703822.04,1507371,1507371]],
+["New_Zealand",[3986518,340975850,521601720,153592634699.60,11060327,17386724,420513715.8,1867082,1867082]],
+["Non_Contiguous_United_States",[806288,12705926913,13488579060,112949020798.88,2139186,449619302,309237565.5,69573864,69573864]],
+["Northeastern_United_States",[46716048,11514022111,12223256100,6544223611119.12,123943629,407441870,17917107765,63047349,63047349]],
+["Northern_Australia",[1930962,9099989348,1481922690,2262311720000.98,5261189,49397423,6193870691,49828826,49828826]],
+["Northern_Europe",[74547714,17595660153,16679654700,6628345168327.97,197231231,555988490,18147420036,96348584,96348584]],
+["Northwestern_United_States",[13178136,19401372146,20596446360,1845361055999.08,34950020,686548212,5052323220,106236124,106236124]],
+["Pacific_Asia",[74335175,3569353394,933893100,6393300194301.43,200995001,31129770,17503901969,19544714,19544714]],
+["Russia",[45614734,54859776583,71954568000,2578711923199.98,142170272,2398485600,7060128469,300395765,300395765]],
+["Sahara",[53283581,23103538658,13431943920,416097725998.91,150509355,447731464,1139213487,126508083,126508083]],
+["Southeastern_Asia",[110955679,18153056307,11034622410,1726662767601.70,269244873,367820747,4727345017,99400719,99400719]],
+["Southeastern_United_States",[22042865,6740904613,7149685680,3087878745600.20,58482552,238322856,8454151254,36911182,36911182]],
+["Southern_African_Territory",[28549879,11859924271,1249656480,686308887398.60,109196836,41655216,1879011328,64941406,64941406]],
+["Southern_Australia",[6548092,12869716336,2095818330,766775999998.54,17832000,69860611,2099318275,70470726,70470726]],
+["Southern_Europe",[57254748,15742960026,2184620640,3467461864798.82,147836437,72820688,9493393196,86203751,86203751]],
+["Southwestern_United_States",[36091747,21593425134,23087134410,5040822177601.79,95470117,769571147,13801018967,118239152,118239152]],
+["Ukraine",[22097364,18956641189,920666970,631207950700.72,44291413,30688899,1728153185,103800910,103800910]],
+["United_Kingdom",[24035131,2735132987,5319399960,2377613042100.35,64100000,177313332,6509549739,14976772,14976772]],
+["Western_Europe",[46589119,15856182778,736362660,404999555109.76,124810787,24545422,11088283507,86823725,86823725]],
+["Western_Canada",[3365026,11433492339,16022865270,574295515259.63,9154054,534095509,1572335429,62606392,62606392]],
+["Western_South_America",[16129267,3363130688,1458389520,393115251498.94,40779421,48612984,1076290901,18415500,18415500]]]]
+
+
+	$empireDistribution = [["Central_America",[2,3,4,5,6,7,8,9,10]],
+["Central_Asia",[1,1,2,1,2,3,3,3,2]],
+["Central_South_America",[2,3,4,5,6,7,8,7,10]],
+["China",[1,1,1,1,1,1,1,1,1]],
+["Coastal_Africa",[2,3,2,5,6,7,5,7,5]],
+["Coastal_South_America",[2,3,4,5,6,7,8,7,10]],
+["Congo",[2,3,2,5,6,3,5,7,5]],
+["East_Africa",[2,3,2,2,2,3,3,7,5]],
+["Eastern_Canada",[2,2,3,4,4,5,5,8,8]],
+["Eastern_South_America",[2,3,4,5,6,7,8,7,10]],
+["Egypt",[2,2,2,2,6,3,5,7,5]],
+["Greenland",[2,2,3,3,4,5,5,8,8]],
+["Iceland",[2,2,3,3,4,4,5,8,7]],
+["India",[1,1,2,2,2,1,3,2,4]],
+["Indonesia",[1,1,2,2,2,1,3,4,4]],
+["Madagascar",[2,3,2,2,2,3,3,9,5]],
+["Middle_East",[1,1,2,2,2,3,3,3,4]],
+["Mongolia",[1,1,1,1,1,1,1,3,2]],
+["New_Zealand",[1,3,2,2,2,1,3,4,4]],
+["Non_Contiguous_United_States",[2,2,3,4,4,5,6,4,4]],
+["Northeastern_United_States",[2,3,3,4,5,6,7,8,9]],
+["Northern_Australia",[1,3,2,2,2,1,3,4,4]],
+["Northern_Europe",[1,2,2,3,3,4,4,5,6]],
+["Northwestern_United_States",[2,2,3,5,4,5,6,8,8]],
+["Pacific_Asia",[1,1,1,2,2,2,2,2,3]],
+["Russia",[1,1,1,1,1,2,2,3,2]],
+["Sahara",[2,2,2,3,3,3,5,7,5]],
+["Southeastern_Asia",[1,1,2,2,2,1,3,2,3]],
+["Southeastern_United_States",[2,3,4,4,5,6,7,9,9]],
+["Southern_African_Territory",[2,3,2,5,6,3,5,7,5]],
+["Southern_Australia",[1,3,2,2,2,3,3,4,4]],
+["Southern_Europe",[1,2,2,2,3,3,3,6,5]],
+["Southwestern_United_States",[2,3,4,5,5,7,6,9,8]],
+["Ukraine",[1,1,2,1,3,3,4,3,2]],
+["United_Kingdom",[2,2,3,3,4,4,5,5,7]],
+["Western_Europe",[2,2,3,3,4,5,5,6,7]],
+["Western_Canada",[2,2,3,4,4,5,6,8,4]],
+["Western_South_America",[2,3,4,5,6,7,8,7,10]]]
 # User creation - Perfect, Don't Touch!
 	def new
 		@user = User.new
@@ -26,75 +104,51 @@ class UsersController < ApplicationController
 	def show
 
 		@user = User.find(params[:id])
-		@game = Game.find(@user.game_id)
 
-		@users = @game.users
+		@gameAttribute = GameAttribute.where(game_id: @user.game_id)
+
+		@game = Game.find(@user.game_id)
 
 		@battles = Array.new
 		
 		@game.battles.each do |battle|
-		if battle.user_one_id == @user.id || battle.user_two_id == @user.id
+		if battle.user_one_id == @gameAttribute.id || battle.user_two_id == @gameAttribute.id
 				@battles << battle
 			end
 		end
 
 		@battles.each_with_index do |battle, index|
-
 			@battles[index] = [@battles[index],createBoardArray(battle)]
-
 		end
 
-		@forts = @game.forts
+		@forts = @game.locations.where(:type => "fort")
+		@forts = @game.locations.where(:type => "encampment", :user_id => @user.id)
 
-		@user.user_game_attributes.each do |attribute|
-			if attribute.game_id == @game.id
-				@attribute = attribute
-			end
-		end
-
-		@encampments = Array.new
-		@user.encampments.each do |encampment|
-		if encampment.game_id == @user.game_id
-				@encampments << encampment
-			end
-		end
-
-		@game.encampments.each do |encampment|
-		if @game[encampment.territory.gsub("#","") + "owner_id"] == @attribute.user_id
-			@encampments << encampment
-		end
-		end
 		@clientItinerary = Array.new
-
 		@game.trades.each do |i|
-		
 			if i.recipient_user_id == @user.id || i.sending_user_id == @user.id
-
 				@clientItinerary << [i.what,i.quantity,Array.new]
 				i.legs.each do |y|
-
-@clientItinerary[@clientItinerary.length - 1][2] << [y.location_id,y.location_type]
+					@clientItinerary[@clientItinerary.length - 1][2] << [y.location_id,y.location_type]
 				end
 			end
 		end
-
-		
 		@territoryOwners = Array.new
 		@territoryColors = Array.new
 
 		@game.attributes.each do |attr_name, attr_value|
-			if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "private" && attr_value.instance_of?(NilClass) != true
-				if UserGameAttribute.find(attr_value).color.instance_of?(NilClass) != true
-@territoryColors << Array.new
-colorUser = UserGameAttribute.find(attr_value)
-@territoryOwners << Array.new
-@territoryOwners[@territoryOwners.length - 1] << colorUser.user_id
-@territoryOwners[@territoryOwners.length - 1] << User.find(colorUser.user_id).username
-@territoryOwners[@territoryOwners.length - 1] << attr_name.gsub(/\_owner_id\b/, '')
+			if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "players"&& attr_name != "start_date" && attr_name != "start_status" && attr_name != "user_id" && attr_name != "private" && attr_name != "invitation" && attr_value.instance_of?(NilClass) != true
+				if GameAttribute.find(attr_value).color.instance_of?(NilClass) != true
+					@territoryColors << Array.new
+					colorUser = GameAttribute.find(attr_value)
+					@territoryOwners << Array.new
+					@territoryOwners[@territoryOwners.length - 1] << colorUser.user_id
+					@territoryOwners[@territoryOwners.length - 1] << User.find(colorUser.user_id).username
+					@territoryOwners[@territoryOwners.length - 1] << attr_name.gsub(/\_owner_id\b/, '')
 
-@territoryColors[@territoryColors.length - 1] << colorUser.color[0,2].insert(0, "0x").hex
-@territoryColors[@territoryColors.length - 1] << colorUser.color[2,2].insert(0, "0x").hex
-@territoryColors[@territoryColors.length - 1] << colorUser.color[4,6].insert(0, "0x").hex
+					@territoryColors[@territoryColors.length - 1] << colorUser.color[0,2].insert(0, "0x").hex
+					@territoryColors[@territoryColors.length - 1] << colorUser.color[2,2].insert(0, "0x").hex
+					@territoryColors[@territoryColors.length - 1] << colorUser.color[4,6].insert(0, "0x").hex
 				end
 			end
 		end
@@ -108,20 +162,77 @@ colorUser = UserGameAttribute.find(attr_value)
 	def edit
 
 		@user = User.find(params[:id])
-		@currentGames = @user.game_attributes
-		@games = Array.new
-		Game.all.each do |game|
-			@currentGames.each do |currentgame|
-				if game.id == currentgame.game_id
-					valid = false
+
+		@currentGameAttributes = @user.game_attributes.where(status: "t")
+logger.info @currentGameAttributes[0].color
+		@user.game_attributes.where(status: "f").each do |attribute|
+			if Date.today >= Game.find(attribute.game_id).start_date && Game.find(attribute.game_id).game_attributes.length > 1
+				@currentGameAttributes << attribute
+				@startingGame = Game.find(attribute.game_id)
+				@startingGame.start_status = true
+				@startingGame.game_attributes.each do |attribute|
+					attribute.status = true
+					@territories = Array.new
+					$empireDistribution.each do |territory|
+logger.info @startingGame.game_attributes.length
+logger.info territory
+							if territory[1][@startingGame.game_attributes.length - 2] == attribute.place
+								@territories << territory[0]
+							end
+					end
+					@energy_units = 0
+					@food_units = 0
+					@money = 0
+					@population = 0
+					@militants = 0
+					@territories.each do |territory|
+						logger.info territory
+						@startingGame[territory.downcase + "_owner_id"] = attribute.id
+						logger.info @startingGame[territory.downcase + "_owner_id"]
+						logger.info attribute.id
+						@energy_units = @energy_units + $territoryStats[territory][2]
+						@food_units = @food_units + $territoryStats[territory][1]
+						@money = @money + $territoryStats[territory][3]
+						@population = @population + $territoryStats[territory][4]
+						@militants = @militants + $territoryStats[territory][0]
+
+
+					end
+					attribute.energy_units = @energy_units
+					attribute.food_units = @food_units
+					attribute.money = @money
+					attribute.population = @population
+					attribute.militants = @militants
+					attribute.save
+				end
+				@startingGame.save
+			elsif Date.today >= Game.find(attribute.game_id).start_date
+				Game.find(attribute.game_id).game_attributes.destroy()
+				Game.find(attribute.game_id).destroy()
+			end
+			
+		end
+
+		@currentGames = Array.new
+		@conflictGames = Array.new
+logger.info @currentGameAttributes
+		@currentGameAttributes.each do |attribute|
+logger.info attribute
+				@currentGames << Game.find(attribute.game_id)
+		end
+ 		@user.game_attributes.where(status: "f").each do |attribute|
+			@conflictGames << Game.find(attribute.game_id)
+		end
+
+		@games = Game.where(start_status: "f", private: "F")
+		Game.where(private: "T").each do |game|
+			game.invitation.split(",").each do |id|
+				if id.to_i == @user.id 
+					@games << game
 				end
 			end
-			if valid == true 
-				@games << game
-			end
 		end
-		logger.info @games
-		@game = Game.new()
+		@games = @games - @conflictGames
 
 	end
 
@@ -130,44 +241,78 @@ colorUser = UserGameAttribute.find(attr_value)
   def update
 
     @user = User.find(params[:id])
-	@game = Game.find(@user.game_id)
 
-	if params[:user][:game_id] != nil 
+	logger.info GameAttribute.where(:game_id => user_params[:game_id], :user_id => @user.id).length
 
-		if params[:user][:game_attributes][:name] != nil
+	if user_params[:game_id] == ""
 
-			@game = @user.games.build(:private => params[:user][:game_attributes][:private], :name => params[:user][:game_attributes][:name])
+		@game = @user.games.build(user_params[:games_attributes])
+		if @game.valid?
+
+			@invitedUsers = Array.new
+			@game.invitation.split(",").each do |username|
+				if User.find_by_username(username.downcase)
+					@invitedUsers << User.find_by_username(username.downcase).id	
+				end
+			end
+			@game.invitation =  @invitedUsers.to_s.gsub("[","").gsub("]","").gsub(" ","")
+
+			@game.start_status = false
+			array = [*1..@game.players]
+			takenarray = Array.new
+
+			@game.game_attributes.each do |attribute|
+
+				takenarray << attribute.place
+			end
+			array = array - takenarray
+			place = array[(rand*(array.length - 1)).round]
+
+			@gameAttribute = @game.game_attributes.build(:color => user_params[:color],:status => false,:place => place)
+			@user.game_attributes << @gameAttribute
 
 			@game.save
-			@user.game_id = @game.id
-			@user.color = params[:user][:color]
-			if  @user.save
+		end
+			redirect_to edit_user_url(@user.id)
 
-				redirect_to user_url(@user.id)
-			else
+	elsif GameAttribute.where(:game_id => user_params[:game_id], :user_id => @user.id).length < 1
+		logger.info "Called"
+		@game = Game.find(user_params[:game_id])
 
-				redirect_to edit_user_url(@user.id)
+		if @game.game_attributes.length < @game.players
+			valid = true
+			if @game.private == "T"
+				valid = false
+				@game.invitation.split(",").each do |id|
+					if id.to_i == @user.id 
+						valid = true
+					end
+				end
 			end
-		else
+			if valid == true
+		logger.info "Called"
+				array = [*1..@game.players]
+				takenarray = Array.new
 
-			User.update(@user.id, :game_id => params[:user][:game_id])
-			@gameAttribute = @user.user_game_attributes.build(user_params[:game_attributes])
-			@gameAttribute.save
-			@game = Game.find(params[:user][:game_id])
+				@game.game_attributes.each do |attribute|
 
-				if User.update(@user.id, :game_id => params[:user][:game_id])
-
-					redirect_to user_path(@user.id)
+					takenarray << attribute.place
 				end
-			@game.attributes.each do |attr_name, attr_value|
-				if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "private"
+				array = array - takenarray
+				place = array[(rand*(array.length - 1)).round]
 
-					gameThings = {params[:user][:game_id]  => { attr_name => @gameAttribute.id }}
-					Game.update(gameThings.keys, gameThings.values)
-				end
+				@gameAttribute = @game.game_attributes.build(:color => user_params[:color],:status => false,:place => place)
+				@user.game_attributes << @gameAttribute
+				@gameAttribute.save
 			end
 		end
+		redirect_to edit_user_url(@user.id)
+	else
+		@user.game_id = user_params[:game_id]
+		@user.save
+		redirect_to @user
 	end
+
 
 	if user_params[:pieces_attributes] != nil
 
@@ -382,7 +527,7 @@ format.json { render json: @user.errors, status: :unprocessable_entity }
 
     	def user_params
 
-        params.require(:user).permit(:name, :email, :username, :password, :password_confirmation, :game_id, :color, forts_attributes: [ :name, :xco, :yco, :territory, :ownership, :id, :date_created, :game_id], encampments_attributes: [ :name, :xco, :yco, :territory, :id, :date_created, :game_id], pieces_attributes: [ :coordinates, :id], battles_attributes:[:user_two_id, :location_two_id, :location_two_type, :location_one_type, :location_one_id, :battle_type, :type ],game_attributes: [:game_id, :name, :private],trades_attributes: [:cost, :sending_user_id, :recipient_user_i, :game_id, :sending_fort_id, :what, :quantity, :recipient_fort_id, legs_attributes: [:location_id, :location_type, :trade_index], trade_proposal: [:what, :quantity, :location_id, :location_type, :durration]])
+        params.require(:user).permit(:name, :email, :username, :password, :password_confirmation, :game_id, :color, forts_attributes: [ :name, :xco, :yco, :territory, :ownership, :id, :date_created, :game_id], locations_attributes: [ :name, :xco, :yco, :territory, :id, :active_date, :game_id], pieces_attributes: [ :coordinates, :id], battles_attributes:[:user_two_id, :location_two_id, :location_two_type, :location_one_type, :location_one_id, :battle_type, :type ],games_attributes: [:game_id, :name, :private, :players, :start_date, :invitation],trades_attributes: [:cost, :sending_user_id, :recipient_user_i, :game_id, :sending_fort_id, :what, :quantity, :recipient_fort_id, legs_attributes: [:location_id, :location_type, :trade_index], trade_proposal: [:what, :quantity, :location_id, :location_type, :durration]])
 
    		end
 

@@ -1,5 +1,4 @@
 class Leg < ActiveRecord::Base
 	belongs_to :trades
-	has_many :users, through: :trades
-	has_many :forts, through: :trades
+	has_many :locations, through: :trades
 end

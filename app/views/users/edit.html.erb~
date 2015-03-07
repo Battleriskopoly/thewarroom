@@ -1,7 +1,18 @@
 <script>
 var gameId = -1
 	$( document ).ready(function() {
-
+		$(".edit_user")[0].reset()
+			$("#game_id").val("")
+		$(".swatchButton").click( function() {
+			$("#placement").children().remove()
+			console.log(".swatchImage#" + this.id)
+			$("#placement").html($(".swatchImage#" + this.id).clone().css("display","inline"))
+			$("#color").val(this.id.replace("L",""))
+		})
+		$(".join_button").click( function() {
+			$("#game_id").val(this.id)
+			$(".edit_user").submit()
+		})
 	});
 
 </script>
@@ -23,31 +34,33 @@ var gameId = -1
 	<button class="join_button" id="<%=i.id%>">Join</button>
 	</div>
 <% end %>
-
+<div>
+<%= render partial: "color_picker" %>
+</div>
+<h1>Create a Game</h1>
 <%= form_for(@user) do |f| %>
 	<%= f.hidden_field :game_id, :id => "game_id" %>
 	<%= f.hidden_field :color, :id => "color" %>
-	<%= f.fields_for @game do |builder| %>
-	   	<%= builder.label :name, "Name"%>
-		<%= builder.text_field :name %>
-		<%= builder.label :private, "Private" %>
+	<%= f.fields_for :games_attributes do |builder| %>
+	   	<%= builder.label :name, "Name:"%>
+		<%= builder.text_field :name %><br><br>
+		<%= builder.label :private, "Private:" %>
 		<%= builder.radio_button :private, "T" %>
-		<%= builder.label :private, "Public" %>
-		<%= builder.radio_button :private, "F" %>
-	   	<%= builder.label :start_date, "Start Delay"%>
-		<%= builder.datetime_field :start_date %>
-
-
+		<%= builder.label :private, "Public:" %>
+		<%= builder.radio_button :private, "F" %><br><br>
+	   	<%= builder.label :players, "Maximum Number of Players:"%>
+		<%= builder.number_field :players, in: 2..38, step: 1, :value => "2" %><br><br>
+	   	<%= builder.label :invitation, "Invite Users by Username:"%>
+		<%= builder.text_field :invitation %><br><br>
+	   	<%= builder.label :start_date, "Start Date:"%>
+		<%= builder.date_select :start_date,  :selected => Date.tomorrow %><br><br>
   	<% end %>
-<select>
-<option value="1">1 Day</option><option value="2">2 Days</option><option value="3">3 Days</option><option value="4">4 Days</option><option value="5">5 Days</option>
-</select>
-
-
-  	<%= f.submit "Create", :id => "submit", :class => "button" %>
-<% end %>
-
-<div id="colorPicker">
+<div>
 <%= render partial: "color_picker" %>
 </div>
+
+  	<%= f.submit "Create", :id => "game_submit", :class => "display" %>
+<% end %>
+
+
 
