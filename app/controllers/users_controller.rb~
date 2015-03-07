@@ -237,11 +237,74 @@ class UsersController < ApplicationController
 # All the logic happens here - Do touch
 
   def update
-		@currentGames = Array.new
-	@games = Array.new
+
     @user = User.find(params[:id])
 
-	logger.info @user.errors.full_messages
+		@currentGameAttributes = @user.game_attributes.where(status: "t")
+
+		@user.game_attributes.where(status: "f").each do |attribute|
+			if Date.today >= Game.find(attribute.game_id).start_date && Game.find(attribute.game_id).game_attributes.length > 1
+				@currentGameAttributes << attribute
+				@startingGame = Game.find(attribute.game_id)
+				@startingGame.start_status = true
+				@startingGame.game_attributes.each do |attribute|
+					attribute.status = true
+					@territories = Array.new
+					$empireDistribution.each do |territory|
+							if territory[1][@startingGame.game_attributes.length - 2] == attribute.place
+								@territories << territory[0]
+							end
+					end
+					@energy_units = 0
+					@food_units = 0
+					@money = 0
+					@population = 0
+					@militants = 0
+					@territories.each do |territory|
+						@startingGame[territory.downcase + "_owner_id"] = attribute.id
+						@energy_units = @energy_units + $territoryStats[territory][2]
+						@food_units = @food_units + $territoryStats[territory][1]
+						@money = @money + $territoryStats[territory][3]
+						@population = @population + $territoryStats[territory][4]
+						@militants = @militants + $territoryStats[territory][0]
+
+
+					end
+					attribute.energy_units = @energy_units
+					attribute.food_units = @food_units
+					attribute.money = @money
+					attribute.population = @population
+					attribute.militants = @militants
+					attribute.save
+				end
+				@startingGame.save
+			elsif Date.today >= Game.find(attribute.game_id).start_date
+				Game.find(attribute.game_id).game_attributes.destroy()
+				Game.find(attribute.game_id).destroy()
+			end
+			
+		end
+
+		@currentGames = Array.new
+		@conflictGames = Array.new
+
+		@currentGameAttributes.each do |attribute|
+
+				@currentGames << Game.find(attribute.game_id)
+		end
+ 		@user.game_attributes.where(status: "f").each do |attribute|
+			@conflictGames << Game.find(attribute.game_id)
+		end
+
+		@games = Game.where(start_status: "f", private: "F")
+		Game.where(private: "T").each do |game|
+			game.invitation.split(",").each do |id|
+				if id.to_i == @user.id 
+					@games << game
+				end
+			end
+		end
+		@games = @games - @conflictGames
 
 	if user_params[:game_id] == ""
 
