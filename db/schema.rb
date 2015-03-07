@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150306023406) do
+ActiveRecord::Schema.define(version: 20150307165032) do
 
 # Could not dump table "battles" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
@@ -148,6 +148,7 @@ ActiveRecord::Schema.define(version: 20150306023406) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.integer  "game_id"
+    t.string   "color"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

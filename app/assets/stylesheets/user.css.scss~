@@ -2,7 +2,8 @@
 
 body {
     background-color:#000000;
-    font-family:couriercode;
+    font-family:monospace;
+	color:#ffffff;
 	margin:0px;
 	width:100%;
 	height:100%;
@@ -22,7 +23,7 @@ input[type=submit], input[type=button], button {
     margin-left:5px;
     margin-top:5px;
 }
-.newObjectButton .cancelButton .submitButton .submitBattle  {
+.newObjectButton, .cancelButton, .submitButton, .submitBattle  {
 	display:none;
 }
 input[type=submit]:hover, input[type=button]:hover, button:hover {
@@ -30,7 +31,11 @@ input[type=submit]:hover, input[type=button]:hover, button:hover {
     color:#4d4d4d;
 
 }
-
+#logout {
+	position:absolute;
+	z-index:5;
+	margin:15px;
+}
 @font-face {
     font-family:couriercode;
     src: asset_url("assets/couriercode.ttf") format("truetype");

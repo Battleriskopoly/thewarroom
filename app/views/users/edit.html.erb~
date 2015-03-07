@@ -55,10 +55,6 @@ var gameId = -1
 	   	<%= builder.label :start_date, "Start Date:"%>
 		<%= builder.date_select :start_date,  :selected => Date.tomorrow %><br><br>
   	<% end %>
-<div>
-<%= render partial: "color_picker" %>
-</div>
-
   	<%= f.submit "Create", :id => "game_submit", :class => "display" %>
 <% end %>
 

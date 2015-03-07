@@ -3231,8 +3231,8 @@ $(".newObjectButton").click( function() {
 </script>
 
 <div id="container">
+<%=link_to "Log out", logout_path, method: :delete, :id=> "logout"%>
 	<div id="display">
-
 	</div>
 	<div id="sidePanel" class="box">
 		<div id="forms">
@@ -3252,6 +3252,7 @@ $(".newObjectButton").click( function() {
 				</div>
 			</div>
 			<%= render partial: "form" %>
+
 		</div>
 	</div>
 </div>

@@ -1,0 +1,4 @@
+class AddColorBackToUsers < ActiveRecord::Migration
+  def change
+  end
+end

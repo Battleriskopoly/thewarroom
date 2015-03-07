@@ -164,7 +164,7 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 
 		@currentGameAttributes = @user.game_attributes.where(status: "t")
-logger.info @currentGameAttributes[0].color
+
 		@user.game_attributes.where(status: "f").each do |attribute|
 			if Date.today >= Game.find(attribute.game_id).start_date && Game.find(attribute.game_id).game_attributes.length > 1
 				@currentGameAttributes << attribute
@@ -174,8 +174,6 @@ logger.info @currentGameAttributes[0].color
 					attribute.status = true
 					@territories = Array.new
 					$empireDistribution.each do |territory|
-logger.info @startingGame.game_attributes.length
-logger.info territory
 							if territory[1][@startingGame.game_attributes.length - 2] == attribute.place
 								@territories << territory[0]
 							end
@@ -215,9 +213,9 @@ logger.info territory
 
 		@currentGames = Array.new
 		@conflictGames = Array.new
-logger.info @currentGameAttributes
+
 		@currentGameAttributes.each do |attribute|
-logger.info attribute
+
 				@currentGames << Game.find(attribute.game_id)
 		end
  		@user.game_attributes.where(status: "f").each do |attribute|
@@ -239,10 +237,11 @@ logger.info attribute
 # All the logic happens here - Do touch
 
   def update
-
+		@currentGames = Array.new
+	@games = Array.new
     @user = User.find(params[:id])
 
-	logger.info GameAttribute.where(:game_id => user_params[:game_id], :user_id => @user.id).length
+	logger.info @user.errors.full_messages
 
 	if user_params[:game_id] == ""
 
@@ -273,7 +272,7 @@ logger.info attribute
 
 			@game.save
 		end
-			redirect_to edit_user_url(@user.id)
+		render "edit"
 
 	elsif GameAttribute.where(:game_id => user_params[:game_id], :user_id => @user.id).length < 1
 		logger.info "Called"
@@ -290,7 +289,6 @@ logger.info attribute
 				end
 			end
 			if valid == true
-		logger.info "Called"
 				array = [*1..@game.players]
 				takenarray = Array.new
 
@@ -306,13 +304,12 @@ logger.info attribute
 				@gameAttribute.save
 			end
 		end
-		redirect_to edit_user_url(@user.id)
+		render "edit"
 	else
 		@user.game_id = user_params[:game_id]
 		@user.save
 		redirect_to @user
 	end
-
 
 	if user_params[:pieces_attributes] != nil
 
@@ -527,7 +524,7 @@ format.json { render json: @user.errors, status: :unprocessable_entity }
 
     	def user_params
 
-        params.require(:user).permit(:name, :email, :username, :password, :password_confirmation, :game_id, :color, forts_attributes: [ :name, :xco, :yco, :territory, :ownership, :id, :date_created, :game_id], locations_attributes: [ :name, :xco, :yco, :territory, :id, :active_date, :game_id], pieces_attributes: [ :coordinates, :id], battles_attributes:[:user_two_id, :location_two_id, :location_two_type, :location_one_type, :location_one_id, :battle_type, :type ],games_attributes: [:game_id, :name, :private, :players, :start_date, :invitation],trades_attributes: [:cost, :sending_user_id, :recipient_user_i, :game_id, :sending_fort_id, :what, :quantity, :recipient_fort_id, legs_attributes: [:location_id, :location_type, :trade_index], trade_proposal: [:what, :quantity, :location_id, :location_type, :durration]])
+        params.require(:user).permit(:name, :email, :username, :password, :password_confirmation, :game_id, :color, locations_attributes: [ :name, :xco, :yco, :territory, :id, :active_date, :game_id], pieces_attributes: [ :coordinates, :id], battles_attributes:[:user_two_id, :location_two_id, :location_two_type, :location_one_type, :location_one_id, :battle_type, :type ],games_attributes: [:game_id, :name, :private, :players, :start_date, :invitation],trades_attributes: [:cost, :sending_user_id, :recipient_user_i, :game_id, :sending_fort_id, :what, :quantity, :recipient_fort_id, legs_attributes: [:location_id, :location_type, :trade_index], trade_proposal: [:what, :quantity, :location_id, :location_type, :durration]])
 
    		end
 

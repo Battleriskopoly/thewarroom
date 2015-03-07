@@ -164,7 +164,7 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 
 		@currentGameAttributes = @user.game_attributes.where(status: "t")
-logger.info @currentGameAttributes[0].color
+
 		@user.game_attributes.where(status: "f").each do |attribute|
 			if Date.today >= Game.find(attribute.game_id).start_date && Game.find(attribute.game_id).game_attributes.length > 1
 				@currentGameAttributes << attribute
@@ -174,8 +174,6 @@ logger.info @currentGameAttributes[0].color
 					attribute.status = true
 					@territories = Array.new
 					$empireDistribution.each do |territory|
-logger.info @startingGame.game_attributes.length
-logger.info territory
 							if territory[1][@startingGame.game_attributes.length - 2] == attribute.place
 								@territories << territory[0]
 							end
@@ -215,9 +213,9 @@ logger.info territory
 
 		@currentGames = Array.new
 		@conflictGames = Array.new
-logger.info @currentGameAttributes
+
 		@currentGameAttributes.each do |attribute|
-logger.info attribute
+
 				@currentGames << Game.find(attribute.game_id)
 		end
  		@user.game_attributes.where(status: "f").each do |attribute|
@@ -242,7 +240,74 @@ logger.info attribute
 
     @user = User.find(params[:id])
 
-	logger.info GameAttribute.where(:game_id => user_params[:game_id], :user_id => @user.id).length
+		@currentGameAttributes = @user.game_attributes.where(status: "t")
+
+		@user.game_attributes.where(status: "f").each do |attribute|
+			if Date.today >= Game.find(attribute.game_id).start_date && Game.find(attribute.game_id).game_attributes.length > 1
+				@currentGameAttributes << attribute
+				@startingGame = Game.find(attribute.game_id)
+				@startingGame.start_status = true
+				@startingGame.game_attributes.each do |attribute|
+					attribute.status = true
+					@territories = Array.new
+					$empireDistribution.each do |territory|
+							if territory[1][@startingGame.game_attributes.length - 2] == attribute.place
+								@territories << territory[0]
+							end
+					end
+					@energy_units = 0
+					@food_units = 0
+					@money = 0
+					@population = 0
+					@militants = 0
+					@territories.each do |territory|
+						logger.info territory
+						@startingGame[territory.downcase + "_owner_id"] = attribute.id
+						logger.info @startingGame[territory.downcase + "_owner_id"]
+						logger.info attribute.id
+						@energy_units = @energy_units + $territoryStats[territory][2]
+						@food_units = @food_units + $territoryStats[territory][1]
+						@money = @money + $territoryStats[territory][3]
+						@population = @population + $territoryStats[territory][4]
+						@militants = @militants + $territoryStats[territory][0]
+
+
+					end
+					attribute.energy_units = @energy_units
+					attribute.food_units = @food_units
+					attribute.money = @money
+					attribute.population = @population
+					attribute.militants = @militants
+					attribute.save
+				end
+				@startingGame.save
+			elsif Date.today >= Game.find(attribute.game_id).start_date
+				Game.find(attribute.game_id).game_attributes.destroy()
+				Game.find(attribute.game_id).destroy()
+			end
+			
+		end
+
+		@currentGames = Array.new
+		@conflictGames = Array.new
+
+		@currentGameAttributes.each do |attribute|
+
+				@currentGames << Game.find(attribute.game_id)
+		end
+ 		@user.game_attributes.where(status: "f").each do |attribute|
+			@conflictGames << Game.find(attribute.game_id)
+		end
+
+		@games = Game.where(start_status: "f", private: "F")
+		Game.where(private: "T").each do |game|
+			game.invitation.split(",").each do |id|
+				if id.to_i == @user.id 
+					@games << game
+				end
+			end
+		end
+		@games = @games - @conflictGames
 
 	if user_params[:game_id] == ""
 
@@ -273,7 +338,7 @@ logger.info attribute
 
 			@game.save
 		end
-			redirect_to edit_user_url(@user.id)
+		render "edit"
 
 	elsif GameAttribute.where(:game_id => user_params[:game_id], :user_id => @user.id).length < 1
 		logger.info "Called"
@@ -290,7 +355,6 @@ logger.info attribute
 				end
 			end
 			if valid == true
-		logger.info "Called"
 				array = [*1..@game.players]
 				takenarray = Array.new
 
@@ -306,13 +370,12 @@ logger.info attribute
 				@gameAttribute.save
 			end
 		end
-		redirect_to edit_user_url(@user.id)
+		render "edit"
 	else
 		@user.game_id = user_params[:game_id]
 		@user.save
 		redirect_to @user
 	end
-
 
 	if user_params[:pieces_attributes] != nil
 
