@@ -102,58 +102,60 @@ class UsersController < ApplicationController
 	end
 
 	def show
+		if signed_in?
+			@user = User.find(params[:id])
 
-		@user = User.find(params[:id])
+			@gameAttribute = GameAttribute.where(game_id: @user.game_id)
 
-		@gameAttribute = GameAttribute.where(game_id: @user.game_id)
+			@game = Game.find(@user.game_id)
 
-		@game = Game.find(@user.game_id)
-
-		@battles = Array.new
+			@battles = Array.new
 		
-		@game.battles.each do |battle|
-		if battle.user_one_id == @gameAttribute.id || battle.user_two_id == @gameAttribute.id
-				@battles << battle
-			end
-		end
-
-		@battles.each_with_index do |battle, index|
-			@battles[index] = [@battles[index],createBoardArray(battle)]
-		end
-
-		@forts = @game.locations.where(:type => "fort")
-		@forts = @game.locations.where(:type => "encampment", :user_id => @user.id)
-
-		@clientItinerary = Array.new
-		@game.trades.each do |i|
-			if i.recipient_user_id == @user.id || i.sending_user_id == @user.id
-				@clientItinerary << [i.what,i.quantity,Array.new]
-				i.legs.each do |y|
-					@clientItinerary[@clientItinerary.length - 1][2] << [y.location_id,y.location_type]
+			@game.battles.each do |battle|
+			if battle.user_one_id == @gameAttribute.id || battle.user_two_id == @gameAttribute.id
+					@battles << battle
 				end
 			end
-		end
-		@territoryOwners = Array.new
-		@territoryColors = Array.new
 
-		@game.attributes.each do |attr_name, attr_value|
-			if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "players"&& attr_name != "start_date" && attr_name != "start_status" && attr_name != "user_id" && attr_name != "private" && attr_name != "invitation" && attr_value.instance_of?(NilClass) != true
-				if GameAttribute.find(attr_value).color.instance_of?(NilClass) != true
-					@territoryColors << Array.new
-					colorUser = GameAttribute.find(attr_value)
-					@territoryOwners << Array.new
-					@territoryOwners[@territoryOwners.length - 1] << colorUser.user_id
-					@territoryOwners[@territoryOwners.length - 1] << User.find(colorUser.user_id).username
-					@territoryOwners[@territoryOwners.length - 1] << attr_name.gsub(/\_owner_id\b/, '')
+			@battles.each_with_index do |battle, index|
+				@battles[index] = [@battles[index],createBoardArray(battle)]
+			end
 
-					@territoryColors[@territoryColors.length - 1] << colorUser.color[0,2].insert(0, "0x").hex
-					@territoryColors[@territoryColors.length - 1] << colorUser.color[2,2].insert(0, "0x").hex
-					@territoryColors[@territoryColors.length - 1] << colorUser.color[4,6].insert(0, "0x").hex
+			@forts = @game.locations.where(:type => "fort")
+			@forts = @game.locations.where(:type => "encampment", :user_id => @user.id)
+
+			@clientItinerary = Array.new
+			@game.trades.each do |i|
+				if i.recipient_user_id == @user.id || i.sending_user_id == @user.id
+					@clientItinerary << [i.what,i.quantity,Array.new]
+					i.legs.each do |y|
+						@clientItinerary[@clientItinerary.length - 1][2] << [y.location_id,y.location_type]
+					end
 				end
 			end
-		end
+			@territoryOwners = Array.new
+			@territoryColors = Array.new
 
-	end
+			@game.attributes.each do |attr_name, attr_value|
+				if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "players"&& attr_name != "start_date" && attr_name != "start_status" && attr_name != "user_id" && attr_name != "private" && attr_name != "invitation" && attr_value.instance_of?(NilClass) != true
+					if GameAttribute.find(attr_value).color.instance_of?(NilClass) != true
+						@territoryColors << Array.new
+						colorUser = GameAttribute.find(attr_value)
+						@territoryOwners << Array.new
+						@territoryOwners[@territoryOwners.length - 1] << colorUser.user_id
+						@territoryOwners[@territoryOwners.length - 1] << User.find(colorUser.user_id).username
+						@territoryOwners[@territoryOwners.length - 1] << attr_name.gsub(/\_owner_id\b/, '')
+
+						@territoryColors[@territoryColors.length - 1] << colorUser.color[0,2].insert(0, "0x").hex
+						@territoryColors[@territoryColors.length - 1] << colorUser.color[2,2].insert(0, "0x").hex
+						@territoryColors[@territoryColors.length - 1] << colorUser.color[4,6].insert(0, "0x").hex
+					end
+				end
+			end
+		else
+			redirect_to "root"
+		end
+	end	
 	
 
 
@@ -196,11 +198,11 @@ class UsersController < ApplicationController
 
 
 					end
-					attribute.energy_units = @energy_units
-					attribute.food_units = @food_units
-					attribute.money = @money
-					attribute.population = @population
-					attribute.militants = @militants
+					attribute.energy_units = @energy_units.to_s
+					attribute.food_units = @food_units.to_s
+					attribute.money = @money.to_s
+					attribute.population = @population.to_s
+					attribute.militants = @militants.to_s
 					attribute.save
 				end
 				@startingGame.save
