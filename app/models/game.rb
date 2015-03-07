@@ -10,7 +10,7 @@ class Game < ActiveRecord::Base
   	validates :name, presence: true, length: { maximum: 50 }, on: :create
   	validates :private, presence: true
   	validates :players, presence: true, numericality: { only_integer: true, greater_than: 1, less_than: 39}
-  	validate :start_date_cannot_be_in_the_past, on: :create
+#  	validate :start_date_cannot_be_in_the_past, on: :create
   	validate :must_be_invitations_if_private
   	validate :invited_people_must_equal_players_for_private_game
 
