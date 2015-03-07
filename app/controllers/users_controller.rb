@@ -196,11 +196,11 @@ class UsersController < ApplicationController
 
 
 					end
-					attribute.energy_units = @energy_units
-					attribute.food_units = @food_units
-					attribute.money = @money
-					attribute.population = @population
-					attribute.militants = @militants
+					attribute.energy_units = @energy_units.to_s
+					attribute.food_units = @food_units.to_s
+					attribute.money = @money.to_s
+					attribute.population = @population.to_s
+					attribute.militants = @militants.to_s
 					attribute.save
 				end
 				@startingGame.save

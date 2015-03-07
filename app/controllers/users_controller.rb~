@@ -213,9 +213,9 @@ class UsersController < ApplicationController
 
 		@currentGames = Array.new
 		@conflictGames = Array.new
-logger.info @currentGameAttributes
+
 		@currentGameAttributes.each do |attribute|
-logger.info attribute
+
 				@currentGames << Game.find(attribute.game_id)
 		end
  		@user.game_attributes.where(status: "f").each do |attribute|
