@@ -26,12 +26,12 @@ function clickButton(button_id) {
   document.getElementById(button_id).click();
   }
 
-$(function() {
+//$(function() {
 
-  var faye = new Faye.Client('http://localhost:9292/faye');
-  faye.subscribe('/game/' + gameId , function (data) {
-   eval(data)
-  });
+  //var faye = new Faye.Client('http://localhost:9292/faye');
+  //faye.subscribe('/game/' + gameId , function (data) {
+   //eval(data)
+  //});
 
-});
+//});
 
