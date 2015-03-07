@@ -18,7 +18,7 @@ var gameId = -1
 </script>
 
 
-
+<%=link_to "Log out", logout_path, method: :delete, :id=> "logout"%> :style => "position:static;"
 <h1>Continue to a Game</h1>
 <% @currentGames.each_with_index do |i,index|%>
 	<div id="current<%=index%>" class="game">
@@ -39,6 +39,8 @@ var gameId = -1
 </div>
 <h1>Create a Game</h1>
 <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages' %>
+
 	<%= f.hidden_field :game_id, :id => "game_id" %>
 	<%= f.hidden_field :color, :id => "color" %>
 	<%= f.fields_for :games_attributes do |builder| %>

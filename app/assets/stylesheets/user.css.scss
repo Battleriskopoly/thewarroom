@@ -31,6 +31,9 @@ input[type=submit]:hover, input[type=button]:hover, button:hover {
     color:#4d4d4d;
 
 }
+#mineola {
+	display:none;
+}
 #logout {
 	position:absolute;
 	z-index:5;
@@ -184,17 +187,25 @@ html {
     background-color:#1cbccb;
     height:595px;   
 }
-
+.edit_user {
+	display:none;
+}
 #grapefruit {
     height:370px;
     background-color:#1cbccb;
 }
 
-#mineola {
+.mineola {
     background-color:#1cbccb;
     height:170px;
 }
-
+.dropdown {
+	display:none;
+}
+.bottomButton {
+	bottom:10px;
+	position:absolute;
+}
 #ham {
     font-family:monospace;
     background-color:#000000;

@@ -2,13 +2,13 @@
 
 var territoryColors = <%= render partial: "territory_colors", locals: {territoryColors: @territoryColors} %>;
 var territoryOwners = {<%= render partial: "territory_owners", locals: {territoryOwners: @territoryOwners} %>}
-rendered_forts = [<%= render partial: "fort", collection: @forts %>];
-rendered_encampments = [<%= render partial: "encampment", collection: @encampments %>];
+renderedLocations = [<%= render partial: "location", collection: @locations %>];
 var rendered_battles = []
 <%= render partial: "battle", collection: @battles %>
 var rendered_trades = []
 <%= render partial: "trade", locals: {clientItinerary: @clientItinerary} %>
-
+var rendered_forts = []
+var rendered_encampments = []
 var fort_string = rendered_forts.toString();
 fort_string = fort_string.replace(",","', '");
 fort_string = fort_string.concat("'");
@@ -3065,7 +3065,7 @@ $(".newObjectButton").click( function() {
 		for (continent in territoryPaths) {
 
 			for (territory in territoryPaths[continent]) {
-
+				console.log(territory)
 				territoryPaths[continent][territory] = map.path(territoryPaths[continent][territory]).attr("stroke-width","0")
 				pathId[territoryPaths[continent][territory].id] = territory
 				pathId[territory] = territoryPaths[continent][territory].id
@@ -3222,7 +3222,14 @@ $(".newObjectButton").click( function() {
 			zoomLevel = ["global","globe"]
 		}
 	})
-	//$()
+	$(".mainbutton").click( function() {
+		if ($(this).parent().children("div").css("display") == "none") {
+			$(this).parent().children("div").css("display","inline")
+		}
+		else {
+			$(this).parent().children("div").css("display","none")
+		}
+	})
 
 
 //End of Zooming
@@ -3231,28 +3238,32 @@ $(".newObjectButton").click( function() {
 </script>
 
 <div id="container">
-	<div id="display">
 <%=link_to "Log out", logout_path, method: :delete, :id=> "logout"%>
+	<div id="display">
 	</div>
 	<div id="sidePanel" class="box">
 		<div id="forms">
+			<%= render partial: "form" %>
 			<div id="itemSelector">
 				<%= image_tag("foodunit.png", :class => "selectionSprite", :id => "foodUnit", :width => "32") %>
 				<%= image_tag("energyunit.png", :class => "selectionSprite", :id => "energyUnit", :width => "32") %>
 				<%= image_tag("genpop.png", :class => "selectionSprite", :id => "genPop", :width => "32") %>
 				<%= image_tag("militant.png", :class => "selectionSprite", :id => "militant", :width => "32") %>
-				<div id="fortsCamps">
-				    <button id="fortsCamps" class="apple mainbutton">Forts/Camps</button><br>
-				    <div id="fortsCamps mineola">
-					<button class="gala">Build Fort</button>
-					<button class="gala">Build Camp</button>
-					<button class="gala">Leave Fort</button>
-					<button class="gala">Leave Camp</button>
-				    </div>
-				</div>
-			</div>
-			<%= render partial: "form" %>
 
+			</div>
+			<div id="fortsCamps">
+			    <button id="fortsCamps" class="apple mainbutton">Forts/Camps</button><br>
+			    <div class="mineola dropdown" id="">
+				<button class="gala">Build Fort</button>
+				<button class="gala">Build Camp</button>
+				<button class="gala">Leave Fort</button>
+				<button class="gala">Leave Camp</button>
+			    </div>
+			</div>
+			<div class="bottomButton">
+				<button id="submit" class="apple bottomButton">Submit</button>
+				<button id="cancel" class="apple bottomButton">Cancel</button>
+			</div>
 		</div>
 	</div>
 </div>

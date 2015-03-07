@@ -121,7 +121,8 @@ class UsersController < ApplicationController
 				@battles[index] = [@battles[index],createBoardArray(battle)]
 			end
 
-			@forts = @game.locations.where(:type => "fort")
+			@locations = @game.locations.where(:type => "fortress")
+			@locations = @locations + @game.locations.where(:type => "encapment",:user_id => @user.id)
 			@forts = @game.locations.where(:type => "encampment", :user_id => @user.id)
 
 			@clientItinerary = Array.new
@@ -153,7 +154,7 @@ class UsersController < ApplicationController
 				end
 			end
 		else
-			redirect_to "root"
+			redirect_to root_path
 		end
 	end	
 	
@@ -162,78 +163,80 @@ class UsersController < ApplicationController
 
 
 	def edit
+		if signed_in?
+			@user = User.find(params[:id])
 
-		@user = User.find(params[:id])
+			@currentGameAttributes = @user.game_attributes.where(status: "t")
 
-		@currentGameAttributes = @user.game_attributes.where(status: "t")
+			@user.game_attributes.where(status: "f").each do |attribute|
+				if Date.today >= Game.find(attribute.game_id).start_date && Game.find(attribute.game_id).game_attributes.length > 1
+					@currentGameAttributes << attribute
+					@startingGame = Game.find(attribute.game_id)
+					@startingGame.start_status = true
+					@startingGame.game_attributes.each do |attribute|
+						attribute.status = true
+						@territories = Array.new
+						$empireDistribution.each do |territory|
+								if territory[1][@startingGame.game_attributes.length - 2] == attribute.place
+									@territories << territory[0]
+								end
+						end
+						@energy_units = 0
+						@food_units = 0
+						@money = 0
+						@population = 0
+						@militants = 0
+						@territories.each do |territory|
+							logger.info territory
+							@startingGame[territory.downcase + "_owner_id"] = attribute.id
+							logger.info @startingGame[territory.downcase + "_owner_id"]
+							logger.info attribute.id
+							@energy_units = @energy_units + $territoryStats[territory][2]
+							@food_units = @food_units + $territoryStats[territory][1]
+							@money = @money + $territoryStats[territory][3]
+							@population = @population + $territoryStats[territory][4]
+							@militants = @militants + $territoryStats[territory][0]
 
-		@user.game_attributes.where(status: "f").each do |attribute|
-			if Date.today >= Game.find(attribute.game_id).start_date && Game.find(attribute.game_id).game_attributes.length > 1
-				@currentGameAttributes << attribute
-				@startingGame = Game.find(attribute.game_id)
-				@startingGame.start_status = true
-				@startingGame.game_attributes.each do |attribute|
-					attribute.status = true
-					@territories = Array.new
-					$empireDistribution.each do |territory|
-							if territory[1][@startingGame.game_attributes.length - 2] == attribute.place
-								@territories << territory[0]
-							end
+
+						end
+						attribute.energy_units = @energy_units.to_s
+						attribute.food_units = @food_units.to_s
+						attribute.money = @money.to_s
+						attribute.population = @population.to_s
+						attribute.militants = @militants.to_s
+						attribute.save
 					end
-					@energy_units = 0
-					@food_units = 0
-					@money = 0
-					@population = 0
-					@militants = 0
-					@territories.each do |territory|
-						logger.info territory
-						@startingGame[territory.downcase + "_owner_id"] = attribute.id
-						logger.info @startingGame[territory.downcase + "_owner_id"]
-						logger.info attribute.id
-						@energy_units = @energy_units + $territoryStats[territory][2]
-						@food_units = @food_units + $territoryStats[territory][1]
-						@money = @money + $territoryStats[territory][3]
-						@population = @population + $territoryStats[territory][4]
-						@militants = @militants + $territoryStats[territory][0]
-
-
-					end
-					attribute.energy_units = @energy_units.to_s
-					attribute.food_units = @food_units.to_s
-					attribute.money = @money.to_s
-					attribute.population = @population.to_s
-					attribute.militants = @militants.to_s
-					attribute.save
+					@startingGame.save
+				elsif Date.today >= Game.find(attribute.game_id).start_date
+					Game.find(attribute.game_id).game_attributes.destroy()
+					Game.find(attribute.game_id).destroy()
 				end
-				@startingGame.save
-			elsif Date.today >= Game.find(attribute.game_id).start_date
-				Game.find(attribute.game_id).game_attributes.destroy()
-				Game.find(attribute.game_id).destroy()
-			end
 			
-		end
+			end
 
-		@currentGames = Array.new
-		@conflictGames = Array.new
+			@currentGames = Array.new
+			@conflictGames = Array.new
 
-		@currentGameAttributes.each do |attribute|
+			@currentGameAttributes.each do |attribute|
 
-				@currentGames << Game.find(attribute.game_id)
-		end
- 		@user.game_attributes.where(status: "f").each do |attribute|
-			@conflictGames << Game.find(attribute.game_id)
-		end
+					@currentGames << Game.find(attribute.game_id)
+			end
+	 		@user.game_attributes.where(status: "f").each do |attribute|
+				@conflictGames << Game.find(attribute.game_id)
+			end
 
-		@games = Game.where(start_status: "f", private: "F")
-		Game.where(private: "T").each do |game|
-			game.invitation.split(",").each do |id|
-				if id.to_i == @user.id 
-					@games << game
+			@games = Game.where(start_status: "f", private: "F")
+			Game.where(private: "T").each do |game|
+				game.invitation.split(",").each do |id|
+					if id.to_i == @user.id 
+						@games << game
+					end
 				end
 			end
+			@games = @games - @conflictGames
+		else
+			redirect_to root_path
 		end
-		@games = @games - @conflictGames
-
 	end
 
 # All the logic happens here - Do touch
