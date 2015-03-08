@@ -121,8 +121,8 @@ class UsersController < ApplicationController
 				@battles[index] = [@battles[index],createBoardArray(battle)]
 			end
 
-			@locations = @game.locations.where(:type => "fortress")
-			@locations = @locations + @game.locations.where(:type => "encapment",:user_id => @user.id)
+			@locations = @game.locations.where(:kindType => "fort")
+			@locations = @locations + @game.locations.where(:kindType => "camp",:user_id => @user.id)
 
 			@clientItinerary = Array.new
 			@game.trades.each do |i|
@@ -246,7 +246,25 @@ class UsersController < ApplicationController
 
 	logger.info @user.errors.full_messages
 
-	if user_params[:game_id] == ""
+	if  user_params[:locations_attributes] != nil
+		if user_params[:locations_attributes][:"100000000000"] != nil
+			@location = @user.locations.build(user_params[:locations_attributes][:"100000000000"])
+			@location.game_id = @user.game_id
+
+			respond_to do |format|
+				if @location.save
+					format.html { redirect_to @user, notice: 'Fort was successfully created.' }
+					format.js   {}
+					format.json { render json: @location, status: :updated, location: @user }
+					else
+
+					format.html { render action: "show" }
+					format.json { render json: @user.errors, status: :unprocessable_entity }
+				end
+			end
+
+		end
+	elsif user_params[:game_id] == ""
 
 		@game = @user.games.build(user_params[:games_attributes])
 		if @game.valid?
@@ -292,7 +310,7 @@ class UsersController < ApplicationController
 				end
 			end
 			if valid == true
-		logger.info "Called"
+
 				array = [*1..@game.players]
 				takenarray = Array.new
 
@@ -314,6 +332,7 @@ class UsersController < ApplicationController
 		@user.save
 		redirect_to @user
 	end
+
 
 	if user_params[:pieces_attributes] != nil
 
@@ -444,47 +463,6 @@ class UsersController < ApplicationController
 
 		end
 	end
-	if  user_params[:forts_attributes] != nil
-		if user_params[:forts_attributes][:"100000000000"] != nil
-
-			@fort = @user.forts.build(user_params[:forts_attributes][:"100000000000"])
-			@fort.game_id = @user.game_id
-
-			respond_to do |format|
-				if @fort.save
-
-format.html { redirect_to @user, notice: 'Fort was successfully created.' }
-format.js   {}
-format.json { render json: @fort, status: :updated, location: @user }
-else
-
-format.html { render action: "show" }
-format.json { render json: @user.errors, status: :unprocessable_entity }
-				end
-			end
-
-		end
-	end
-	if  user_params[:encampments_attributes] != nil
-		if user_params[:encampments_attributes][:"100000000000"] != nil
-
-			@encampment = @user.encampments.build(user_params[:encampments_attributes][:"100000000000"])
-			@encampment.game_id = @user.game_id
-
-			respond_to do |format|
-				if @encampment.save
-
-format.html { redirect_to @user, notice: 'Fort was successfully created.' }
-format.js   {}
-format.json { render json: @encampment, status: :updated, location: @user }
-else
-
-format.html { render action: "show" }
-format.json { render json: @user.errors, status: :unprocessable_entity }
-				end
-			end
-		end
-	end
 
 	if user_params[:battles_attributes] != nil
 		if user_params[:battles_attributes][:"100000000000"] != nil
@@ -528,7 +506,7 @@ format.json { render json: @user.errors, status: :unprocessable_entity }
 
     	def user_params
 
-        params.require(:user).permit(:name, :email, :username, :password, :password_confirmation, :game_id, :color, locations_attributes: [ :name, :xco, :yco, :territory, :id, :active_date, :game_id], pieces_attributes: [ :coordinates, :id], battles_attributes:[:user_two_id, :location_two_id, :location_two_type, :location_one_type, :location_one_id, :battle_type, :type ],games_attributes: [:game_id, :name, :private, :players, :start_date, :invitation],trades_attributes: [:cost, :sending_user_id, :recipient_user_i, :game_id, :sending_fort_id, :what, :quantity, :recipient_fort_id, legs_attributes: [:location_id, :location_type, :trade_index], trade_proposal: [:what, :quantity, :location_id, :location_type, :durration]])
+        params.require(:user).permit(:name, :email, :username, :password, :password_confirmation, :game_id, :color, locations_attributes: [ :kindType, :name, :xco, :yco, :territory, :id, :active_date, :game_id], pieces_attributes: [ :coordinates, :id], battles_attributes:[:user_two_id, :location_two_id, :location_two_type, :location_one_type, :location_one_id, :battle_type, :type ],games_attributes: [:game_id, :name, :private, :players, :start_date, :invitation],trades_attributes: [:cost, :sending_user_id, :recipient_user_i, :game_id, :sending_fort_id, :what, :quantity, :recipient_fort_id, legs_attributes: [:location_id, :location_type, :trade_index], trade_proposal: [:what, :quantity, :location_id, :location_type, :durration]])
 
    		end
 

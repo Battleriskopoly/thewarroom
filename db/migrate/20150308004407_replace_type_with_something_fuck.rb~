@@ -1,0 +1,4 @@
+class ReplaceTypeWithSomethingFuck < ActiveRecord::Migration
+  def change
+  end
+end

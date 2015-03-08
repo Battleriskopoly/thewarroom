@@ -142,7 +142,7 @@ south_america:["coastal_south_america","eastern_south_america","western_south_am
 				movingPiece = shipElem
 				$(this).css("display","none")
 				$(movingPiece).click( function(e) {
-console.log(navy)
+
 					if (clickStatus != false) {
 						$(movingPiece).css("display","none")
 						if (document.elementFromPoint(e.pageX,e.pageY).id == "seaRadar") {
@@ -163,7 +163,7 @@ console.log(navy)
 							var tempNavy = navy.slice()
 							var tempObject = jQuery.extend({},{id:parseInt(movingPiece.id.replace("piece","")),type:$(movingPiece).attr("alt").replace("Bas",""),coordinates:[xcoordinate,ycoordinate]});
 							if (navy.length == 0) {
-console.log($(movingPiece).css("transform"))
+
 								if ($(movingPiece).css("transform") != "none" && $(movingPiece).css("transform") != "matrix(1, 0, 0, 1, 0, 0)") {
 									tempNavy = [{id:parseInt(movingPiece.id.replace("piece","")),type:$(movingPiece).attr("alt").replace("Bas",""),coordinates:[xcoordinate,ycoordinate],rotation:"90deg"}]
 									tempObject.rotation = "90deg"
@@ -320,7 +320,7 @@ console.log($(movingPiece).css("transform"))
 										navyTemp[i]["coordinates"] = [xcoordinate,ycoordinate]
 									}
 								}
-console.log(navyTemp,navy)
+
 								var tempObject = jQuery.extend({},selObject);
 								tempObject["rotation"] = "90deg"
 								if (varifyShipPlacement(navyTemp,tempObject) == true) {
@@ -393,7 +393,7 @@ console.log(navyTemp,navy)
 	}
 	function varifyShipPlacement(navy,ship) {
 		valid = true
-console.log(navy,ship)
+
 		if (ship["rotation"] == "0deg") {
 			for (var l = ship["coordinates"][0]; l < ship["coordinates"][0] + parseInt(ship["type"]); l++) {
 				for (var i = 0 ; i < navy.length; i++) {
@@ -450,7 +450,7 @@ console.log(navy,ship)
 				}
 			}
 		}
-console.log(valid)
+
 		if (ship.rotation == "0deg") {
 			if (varifyShipPlacementBoardValidity(ship.coordinates,parseInt(ship.type) - 1) == false) {
 				valid = false
@@ -461,7 +461,7 @@ console.log(valid)
 				valid = false
 			}
 		}
-console.log(valid)
+
 		return valid
 	}
 	function varifyShipPlacementBoardValidity(coordinates,shipLength) {
@@ -3065,7 +3065,7 @@ $(".newObjectButton").click( function() {
 		for (continent in territoryPaths) {
 
 			for (territory in territoryPaths[continent]) {
-				console.log(territory)
+
 				territoryPaths[continent][territory] = map.path(territoryPaths[continent][territory]).attr("stroke-width","0")
 				pathId[territoryPaths[continent][territory].id] = territory
 				pathId[territory] = territoryPaths[continent][territory].id
@@ -3074,6 +3074,20 @@ $(".newObjectButton").click( function() {
 				allTerritories.push(territoryPaths[continent][territory])
 			}
 		}
+
+		var sprites = {}
+		sprites.fort = map.image("<%=image_path("fort.png")%>", 0, 0, 32, 32).hide() 
+		sprites.fortSel = map.image("<%=image_path("fortsel.png")%>", 0, 0, 32, 32).hide() 
+		sprites.fortSelPast = map.image("<%=image_path("fortselpast.png")%>", 0, 0, 32, 32).hide() 
+		sprites.camp = map.image("<%=image_path("encampment.png")%>", 0, 0, 32, 32).hide() 
+		sprites.campSel = map.image("<%=image_path("encampmentsel.png")%>", 0, 0, 32, 32).hide() 
+		sprites.campSelPast = map.image("<%=image_path("encampmentselpast.png")%>", 0, 0, 32, 32).hide() 
+		sprites.seapointSel = map.image("<%=image_path("seapointsel.png")%>", 0, 0, 24, 24).hide()  
+		sprites.seapointSelPast = map.image("<%=image_path("seapointselpast.png")%>", 0, 0, 24, 24).hide() 
+		sprites.forCamp = map.image("<%=image_path("forencampment.png")%>", 0, 0, 32, 32).hide() 
+		sprites.forFort = map.image("<%=image_path("forfort.png")%>", 0, 0, 32, 32).hide() 
+		sprites.battleLocation = map.image("<%=image_path("battlelocation.png")%>", 0, 0, 32, 32).hide() 
+
 		var allTerritoriesBBox = allTerritories.getBBox(true)
 		var displayWidth = $("#display").width()
 		var displayHeight = $("#display").height()
@@ -3116,7 +3130,7 @@ $(".newObjectButton").click( function() {
 		}
 		territories = map.set(continents.asia,continents.africa,continents.australia,continents.europe,continents.south_america,continents.north_america)
 
-		return {map:map, territoryPaths:territoryPaths, territories:territories, continents:continents, pathId:pathId,allTerritories:allTerritories}
+		return {map:map, territoryPaths:territoryPaths, territories:territories, continents:continents, pathId:pathId,allTerritories:allTerritories,sprites:sprites,renderedSprites:map.set()}
 	}
 	var mapContext = initDisplay()
 	var filterOne = mapContext.map.rect(0,0,mapContext.map.width,mapContext.map.height).attr({fill:"#000"}).attr("fill-opacity","0.0").toBack()
@@ -3125,65 +3139,68 @@ $(".newObjectButton").click( function() {
 	mapContext.territories.forEach( function(continent) {
 
 		continent.click( function() {
+			if (action.status == false) {
+				if (zoomLevel[0] == "global") {
 
-			if (zoomLevel[0] == "global") {
+					filterOne.attr("fill-opacity","0.90").toFront()
+					continent.toFront()
+					continent.transform("")
+					var continentBBox = continent.getBBox(true)
+					var displayWidth = $("#display").width()
+					var displayHeight = $("#display").height()
+					var displayWidth = $("#display").width()
+					var displayHeight = $("#display").height()
+					if (continentBBox.width/$("#display").width() < continentBBox.height/$("#display").height()) {
 
-				filterOne.attr("fill-opacity","0.90").toFront()
-				continent.toFront()
-				continent.transform("")
-				var continentBBox = continent.getBBox(true)
-				var displayWidth = $("#display").width()
-				var displayHeight = $("#display").height()
-				var displayWidth = $("#display").width()
-				var displayHeight = $("#display").height()
-				if (continentBBox.width/$("#display").width() < continentBBox.height/$("#display").height()) {
+						var scaleFactor = $("#display").height()/continentBBox.height
+						continent.scale(scaleFactor, scaleFactor,0,0) 
+						continent.translate(-1*((continentBBox.x + (continentBBox.width/2))) + ((displayWidth/2)/(scaleFactor)),-1*((continentBBox.y + (continentBBox.height/2))) + ((displayHeight/2)/(scaleFactor)))
+					}
+					else {
 
-					var scaleFactor = $("#display").height()/continentBBox.height
-					continent.scale(scaleFactor, scaleFactor,0,0) 
-					continent.translate(-1*((continentBBox.x + (continentBBox.width/2))) + ((displayWidth/2)/(scaleFactor)),-1*((continentBBox.y + (continentBBox.height/2))) + ((displayHeight/2)/(scaleFactor)))
-				}
-				else {
+						var scaleFactor = $("#display").width()/continentBBox.width
+						continent.scale(scaleFactor, scaleFactor,0,0) 
+						continent.translate(-1*((continentBBox.x + (continentBBox.width/2))) + ((displayWidth/2)/(scaleFactor)),-1*((continentBBox.y + (continentBBox.height/2))) + ((displayHeight/2)/(scaleFactor)))
+					}
+					for (key in continentKey) {
 
-					var scaleFactor = $("#display").width()/continentBBox.width
-					continent.scale(scaleFactor, scaleFactor,0,0) 
-					continent.translate(-1*((continentBBox.x + (continentBBox.width/2))) + ((displayWidth/2)/(scaleFactor)),-1*((continentBBox.y + (continentBBox.height/2))) + ((displayHeight/2)/(scaleFactor)))
-				}
-				for (key in continentKey) {
+						for (var i = 0 ; i < continentKey[key].length;i++) {
 
-					for (var i = 0 ; i < continentKey[key].length;i++) {
+							if (continentKey[key][i] == mapContext.pathId[this.id].toLowerCase()) {
 
-						if (continentKey[key][i] == mapContext.pathId[this.id].toLowerCase()) {
-
-							zoomLevel = ["continental", key]
+								zoomLevel = ["continental", key]
+								updateSideBar(zoomLevel[0])
+							}
 						}
 					}
 				}
-			}
-			else if (zoomLevel[0] == "continental") {
+				else if (zoomLevel[0] == "continental") {
 
-				if (typeof continentKey[zoomLevel[1]] !== "undefined") {
+					if (typeof continentKey[zoomLevel[1]] !== "undefined") {
 
-					for (var i = 0 ; i < continentKey[zoomLevel[1]].length;i++) {
+						for (var i = 0 ; i < continentKey[zoomLevel[1]].length;i++) {
 
-						if (continentKey[zoomLevel[1]][i] == mapContext.pathId[this.id].toLowerCase()) {
+							if (continentKey[zoomLevel[1]][i] == mapContext.pathId[this.id].toLowerCase()) {
 
-							filterOne.attr("fill-opacity","0.45")
-							filterTwo.attr("fill-opacity","0.6525").toFront()
-							this.toFront()
-							this.transform("")
-							var territoryBBox = this.getBBox(true)
-							if (territoryBBox.width/$("#display").width() < territoryBBox.height/$("#display").height()) {
+								filterOne.attr("fill-opacity","0.45")
+								filterTwo.attr("fill-opacity","0.6525").toFront()
+								this.toFront()
+								this.transform("")
+								var territoryBBox = this.getBBox(true)
+								if (territoryBBox.width/$("#display").width() < territoryBBox.height/$("#display").height()) {
 
 
-								this.scale($("#display").height()/territoryBBox.height, $("#display").height()/territoryBBox.height,0,0) 
-								this.translate(-1*((territoryBBox.x + (territoryBBox.width/2))) + (($("#display").width()/2)/($("#display").height()/territoryBBox.height)),-1*((territoryBBox.y + (territoryBBox.height/2))) + (($("#display").height()/2)/($("#display").height()/territoryBBox.height)))
+									this.scale($("#display").height()/territoryBBox.height, $("#display").height()/territoryBBox.height,0,0) 
+									this.translate(-1*((territoryBBox.x + (territoryBBox.width/2))) + (($("#display").width()/2)/($("#display").height()/territoryBBox.height)),-1*((territoryBBox.y + (territoryBBox.height/2))) + (($("#display").height()/2)/($("#display").height()/territoryBBox.height)))
+								}
+								else {
+
+									this.scale($("#display").width()/territoryBBox.width, $("#display").width()/territoryBBox.width,0,0) 
+									this.translate(-1*((territoryBBox.x + (territoryBBox.width/2))) + (($("#display").width()/2)/($("#display").width()/territoryBBox.width)),-1*((territoryBBox.y + (territoryBBox.height/2))) + (($("#display").height()/2)/($("#display").width()/territoryBBox.width))) 
+								}
+								zoomLevel = ["territorial",continentKey[zoomLevel[1]][i],zoomLevel[1],this]
+								updateSideBar(zoomLevel[0])
 							}
-							else {
-
-								this.scale($("#display").width()/territoryBBox.width, $("#display").width()/territoryBBox.width,0,0) 
-								this.translate(-1*((territoryBBox.x + (territoryBBox.width/2))) + (($("#display").width()/2)/($("#display").width()/territoryBBox.width)),-1*((territoryBBox.y + (territoryBBox.height/2))) + (($("#display").height()/2)/($("#display").width()/territoryBBox.width))) 
-							}
-							zoomLevel = ["territorial",continentKey[zoomLevel[1]][i],zoomLevel[1],this]
 						}
 					}
 				}
@@ -3192,42 +3209,58 @@ $(".newObjectButton").click( function() {
 	})
 
 	filters.click( function() {
+		if (action.status == false) {
+			if (zoomLevel[0] == "territorial") {
 
-		if (zoomLevel[0] == "territorial") {
+				filterOne.attr("fill-opacity","0.90")
+				filterTwo.attr("fill-opacity","0").toBack()
+				for (var i = 0, found = false;i < continentKey[zoomLevel[2]].length && found != true;i++) {
 
-			filterOne.attr("fill-opacity","0.90")
-			filterTwo.attr("fill-opacity","0").toBack()
-			for (var i = 0, found = false;i < continentKey[zoomLevel[2]].length && found != true;i++) {
+					if (continentKey[zoomLevel[2]][i] != mapContext.pathId[zoomLevel[3].id].toLowerCase()) {
 
-				if (continentKey[zoomLevel[2]][i] != mapContext.pathId[zoomLevel[3].id].toLowerCase()) {
-
-					zoomLevel[3].transform(mapContext.map.getById(mapContext.pathId[continentKey[zoomLevel[2]][i]]).matrix.toTransformString())
-					found = true
+						zoomLevel[3].transform(mapContext.map.getById(mapContext.pathId[continentKey[zoomLevel[2]][i]]).matrix.toTransformString())
+						found = true
+					}
 				}
+				zoomLevel = ["continental",zoomLevel[2]]
+				updateSideBar(zoomLevel[0])	
 			}
-			zoomLevel = ["continental",zoomLevel[2]]	
-		}
-		else if (zoomLevel[0] == "continental") {
+			else if (zoomLevel[0] == "continental") {
 
-			filterOne.attr("fill-opacity","0").toBack()
-			var found = false
-			for (var key in mapContext.continents) {
+				filterOne.attr("fill-opacity","0").toBack()
+				var found = false
+				for (var key in mapContext.continents) {
 
-				if (key.toLowerCase() != zoomLevel[1] && found == false) {
+					if (key.toLowerCase() != zoomLevel[1] && found == false) {
 
-					mapContext.continents[zoomLevel[1]].transform(mapContext.continents[key][0].matrix.toTransformString())
-					found = true
+						mapContext.continents[zoomLevel[1]].transform(mapContext.continents[key][0].matrix.toTransformString())
+						found = true
+					}
 				}
+				zoomLevel = ["global","globe"]
+				updateSideBar(zoomLevel[0])
 			}
-			zoomLevel = ["global","globe"]
 		}
 	})
 	$(".mainbutton").click( function() {
+		if (action.status == false) {
 		if ($(this).parent().children("div").css("display") == "none") {
 			$(this).parent().children("div").css("display","inline")
 		}
 		else {
 			$(this).parent().children("div").css("display","none")
+		}
+		}
+	})
+
+
+	$(".actionButton").click( function() {
+		if (action.status == false) {
+			window[this.id](zoomLevel,mapContext)
+			$(".action").css("display","block")
+			$(".subfields").css("display","none")
+			$("#" + this.id + "Fields").css("display","inline")
+			action.status = true
 		}
 	})
 
@@ -3235,6 +3268,75 @@ $(".newObjectButton").click( function() {
 //End of Zooming
 
 });
+	function buildFort(zoomLevel,mapContext) {
+		buildLocation("fort",zoomLevel,mapContext)
+	}
+	function buildCamp(zoomLevel,mapContext) {
+		buildLocation("camp",zoomLevel,mapContext)
+	}
+	function buildLocation(locationType,zoomLevel,mapContext) {
+
+		if (zoomLevel[0] == "territorial") {
+			var location = mapContext.sprites[locationType].clone().show().toFront().transform("").scale(1,1,0,0)
+			mapContext.renderedSprites.push(location)
+			var coordinates = [0,0]
+			var moving = true
+			zoomLevel[3].mousemove( function(event) {
+				location.transform("T" + event.clientX + "," + event.clientY)
+				coordinates = [event.pageX,event.pageY]
+			})
+			location.click( function(event) {
+				if (moving == true) {
+					if (zoomLevel[3].isPointInside(coordinates[0],coordinates[1]) == true) {
+						zoomLevel[3].unmousemove()
+						moving = false
+					}
+				}
+				else {
+
+					zoomLevel[3].mousemove( function(event) {
+						location.transform("T" + event.clientX + "," + event.clientY)
+						coordinates = [event.clientX,event.clientY]
+						moving = true
+					})
+				}	
+			})
+			$("#submit").click( function() {
+				$("#create_location").click()
+				$("#user_locations_attributes_100000000000_name").val($("#" + locationType + "Name" ).val())
+				$("#user_locations_attributes_100000000000_type").val(locationType)
+				$("#user_locations_attributes_100000000000_xco").val(coordinates[0])
+				$("#user_locations_attributes_100000000000_yco").val(coordinates[1])
+				$("#user_locations_attributes_100000000000_territory").val("#" + zoomLevel[1])
+				$("#submitObject").click()
+
+				zoomLevel[3].unmousemove()
+				location.unclick()
+				mapContext.renderedSprites.exclude(location)
+				location.remove()
+				$("#cancel,#submit").off("click")
+				updateSideBar(zoomLevel[0]) 
+				action.status = false
+			})
+			$("#cancel").click( function() {
+				zoomLevel[3].unmousemove()
+				location.unclick()
+				mapContext.renderedSprites.exclude(location)
+				location.remove()
+				$("#cancel,#submit").off("click")
+				updateSideBar(zoomLevel[0]) 
+				action.status = false
+
+			})
+		}
+	}
+	function updateSideBar(level) {
+		$(".sidebar").css("display","none")
+		$("." + level).css("display","inline")
+		$(".action").css("display","none")
+		$(".subfields").css("display","none")
+	}
+	var action = {status:false}
 </script>
 
 <div id="container">
@@ -3251,18 +3353,27 @@ $(".newObjectButton").click( function() {
 				<%= image_tag("militant.png", :class => "selectionSprite", :id => "militant", :width => "32") %>
 
 			</div>
-			<div id="fortsCamps">
+			<div id="fortsCamps" class="territorial sidebar">
 			    <button id="fortsCamps" class="apple mainbutton">Forts/Camps</button><br>
-			    <div class="mineola dropdown" id="">
-				<button class="gala">Build Fort</button>
-				<button class="gala">Build Camp</button>
-				<button class="gala">Leave Fort</button>
-				<button class="gala">Leave Camp</button>
+			    <div class="mineola dropdown">
+
+				<button class="gala actionButton" id="buildFort">Build Fort</button>
+				<div id="buildFortFields" class="subfields">
+					<input type="text" id="fortName" class="grape" value="Fort Name"></input>
+				</div>
+				<button class="gala actionButton"  id="buildCamp">Build Camp</button>
+				<div id="buildCampFields" class="subfields">
+					<input type="text" id="campName" class="grape" value="Camp Name"></input>
+				</div>
+				<button class="gala actionButton" id="leaveFort">Leave Fort</button>
+				<button class="gala actionButton" id="leaveCamp">Leave Camp</button>
+				</div>
+
 			    </div>
 			</div>
-			<div class="bottomButton">
-				<button id="submit" class="apple bottomButton">Submit</button>
-				<button id="cancel" class="apple bottomButton">Cancel</button>
+			<div class="bottomButton action sidebar">
+				<button id="submit" class="apple">Submit</button>
+				<button id="cancel" class="apple">Cancel</button>
 			</div>
 		</div>
 	</div>

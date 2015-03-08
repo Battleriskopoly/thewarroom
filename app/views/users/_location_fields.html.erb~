@@ -3,5 +3,5 @@
 	<%= f.hidden_field :xco %>
 	<%= f.hidden_field :yco %>
 	<%= f.hidden_field :territory %>
-	<%= f.hidden_field :kindType %>
+	<%= f.hidden_field :type %>
 </div>

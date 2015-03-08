@@ -8,6 +8,7 @@ body {
 	width:100%;
 	height:100%;
 	position:absolute;
+	overflow:hidden;
 }
 
 input[type=submit], input[type=button], button {
@@ -22,6 +23,16 @@ input[type=submit], input[type=button], button {
     border-radius:2px;
     margin-left:5px;
     margin-top:5px;
+}
+.sidebar {
+	display:none;
+}
+.subfields {
+
+	display:none;
+}
+subfields > * {
+	margin-top:10px;
 }
 .newObjectButton, .cancelButton, .submitButton, .submitBattle  {
 	display:none;
@@ -76,7 +87,9 @@ input[type=submit]:hover, input[type=button]:hover, button:hover {
 html {
     font-family:monospace;
 }
-
+.actionButton {
+	display:none;
+}
 
 
 
@@ -201,9 +214,6 @@ html {
 }
 .dropdown {
 	display:none;
-}
-#cancel {
-
 }
 .bottomButton {
 	bottom:10px;
