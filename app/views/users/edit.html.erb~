@@ -18,7 +18,7 @@ var gameId = -1
 </script>
 
 
-<%=link_to "Log out", logout_path, method: :delete, :id=> "logout"%> :style => "position:static;"
+<%=link_to "Log out", logout_path, method: :delete, :id=> "logout", :style => "position:static;"%>
 <h1>Continue to a Game</h1>
 <% @currentGames.each_with_index do |i,index|%>
 	<div id="current<%=index%>" class="game">
@@ -38,6 +38,11 @@ var gameId = -1
 <%= render partial: "color_picker" %>
 </div>
 <h1>Create a Game</h1>
+<style>
+.edit_user {
+	display:inline !importent;
+}
+</style>
 <%= form_for(@user) do |f| %>
       <%= render 'shared/error_messages' %>
 

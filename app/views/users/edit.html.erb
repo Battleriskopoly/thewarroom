@@ -38,6 +38,11 @@ var gameId = -1
 <%= render partial: "color_picker" %>
 </div>
 <h1>Create a Game</h1>
+<style>
+.edit_user {
+	display:inline !important;
+}
+</style>
 <%= form_for(@user) do |f| %>
       <%= render 'shared/error_messages' %>
 
