@@ -3127,7 +3127,17 @@ $(".newObjectButton").click( function() {
 
 				thridSeg = "00"
 			}
-console.log("L" + firstSeg + secondSeg + thridSeg,territoryColors[i][0].replace("#",""))
+console.log(parseInt("0x" + firstSeg),"0x" + firstSeg)
+			if (parseInt("0x" + firstSeg) < 16 ) {
+				firstSeg = "0" + firstSeg
+			}
+			if (parseInt("0x" + secondSeg) < 16) {
+				secondSeg = "0" + secondSeg
+			}
+			if (parseInt("0x" + thridSeg) < 16) {
+				thridSeg = "0" + thridSeg
+			}
+
 			territoryPaths[territoryColors[i][0].replace("#","")].attr({fill:"#" + swatches[territoryColors[i][0].replace("#","")][("L" + firstSeg + secondSeg + thridSeg).toUpperCase()]})
 		}
 		territories = map.set(continents.asia,continents.africa,continents.australia,continents.europe,continents.south_america,continents.north_america)

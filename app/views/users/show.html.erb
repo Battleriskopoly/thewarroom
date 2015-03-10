@@ -3115,19 +3115,16 @@ $(".newObjectButton").click( function() {
 			var firstSeg = territoryColors[i][1][0].toString(16)
 			var secondSeg = territoryColors[i][1][1].toString(16)
 			var thridSeg = territoryColors[i][1][2].toString(16)
-			if (firstSeg == "0") {
-
-				firstSeg = "00"
+			if (parseInt("0x" + firstSeg) < 16 ) {
+				firstSeg = "0" + firstSeg
 			}
-			if (secondSeg == "0") {
-
-				secondSeg = "00"
+			if (parseInt("0x" + secondSeg) < 16) {
+				secondSeg = "0" + secondSeg
 			}
-			if (thridSeg == "0") {
-
-				thridSeg = "00"
+			if (parseInt("0x" + thridSeg) < 16) {
+				thridSeg = "0" + thridSeg
 			}
-console.log("L" + firstSeg + secondSeg + thridSeg,territoryColors[i][0].replace("#",""))
+
 			territoryPaths[territoryColors[i][0].replace("#","")].attr({fill:"#" + swatches[territoryColors[i][0].replace("#","")][("L" + firstSeg + secondSeg + thridSeg).toUpperCase()]})
 		}
 		territories = map.set(continents.asia,continents.africa,continents.australia,continents.europe,continents.south_america,continents.north_america)
