@@ -2,7 +2,7 @@
 
 var territoryColors = <%= render partial: "territory_colors", locals: {territoryColors: @territoryColors} %>;
 var territoryOwners = {<%= render partial: "territory_owners", locals: {territoryOwners: @territoryOwners} %>}
-renderedLocations = [<%= render partial: "location", collection: @locations %>];
+var renderedLocations = [<%= render partial: "location", collection: @locations %>];
 var rendered_battles = []
 <%= render partial: "battle", collection: @battles %>
 var rendered_trades = []
@@ -3062,6 +3062,7 @@ $(".newObjectButton").click( function() {
 		continents = {africa:map.set(),asia:map.set(),europe:map.set(),australia:map.set(),north_america:map.set(),south_america:map.set()}
 		var allTerritories = map.set()
 		var pathId = {}
+
 		for (continent in territoryPaths) {
 
 			for (territory in territoryPaths[continent]) {
@@ -3126,6 +3127,7 @@ $(".newObjectButton").click( function() {
 
 				thridSeg = "00"
 			}
+console.log("L" + firstSeg + secondSeg + thridSeg,territoryColors[i][0].replace("#",""))
 			territoryPaths[territoryColors[i][0].replace("#","")].attr({fill:"#" + swatches[territoryColors[i][0].replace("#","")][("L" + firstSeg + secondSeg + thridSeg).toUpperCase()]})
 		}
 		territories = map.set(continents.asia,continents.africa,continents.australia,continents.europe,continents.south_america,continents.north_america)
@@ -3302,11 +3304,13 @@ $(".newObjectButton").click( function() {
 				}	
 			})
 			$("#submit").click( function() {
+
 				$("#create_location").click()
 				$("#user_locations_attributes_100000000000_name").val($("#" + locationType + "Name" ).val())
-				$("#user_locations_attributes_100000000000_type").val(locationType)
-				$("#user_locations_attributes_100000000000_xco").val(coordinates[0])
-				$("#user_locations_attributes_100000000000_yco").val(coordinates[1])
+				$("#user_locations_attributes_100000000000_kindType").val(locationType)
+
+				$("#user_locations_attributes_100000000000_xco").val((coordinates[0]/scaleFactor) - colors[zoomLevel[1]][1][0])
+				$("#user_locations_attributes_100000000000_yco").val((coordinates[1]/scaleFactor) - colors[zoomLevel[1]][1][1])
 				$("#user_locations_attributes_100000000000_territory").val("#" + zoomLevel[1])
 				$("#submitObject").click()
 

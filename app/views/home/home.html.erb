@@ -1,15 +1,223 @@
 
     <head>
         <style>
-body {
+            body {
+             background-color:black !important;  
+                 line-height: 2.8rem !important;
+
+            }
+            #openVideo {
+                 opacity: 1;  
+                 position:absolute;
+                 z-index:-1;
+            }
+            #logo {
+                position:static;
+                z-index:2; 
+                margin-left:35%;
+                margin-top:20%;
+                opacity:0.0;
+                width:30%;
+            }
+            h2 {
+                margin-left:-5%;
+              font-family:"couriercode" !important;  
+               color: #1cbcbb !important;
+
+            }
+            p {
+            font-family: "Verdana", "courier" !important;
+                font-size:16px !important;   
+            }
+            .homecontent {
+            color:white;
+            }
+            .row {
+             padding-bottom:30px;   
+            }
+            .homecontent {
+                opacity:0.0;
+                display:none;
+            }
+            .secondarycol {
+                opacity:0.0; 
+            }
+            @-webkit-keyframes logoOpacity {
+                from {opacity:0.0;}
+                to {opacity:1.0;}
+            }
+            @-webkit-keyframes videoOpacity {
+                from {opacity:1.0;}
+                to {opacity:0.0;}
+            }
+            @-webkit-keyframes logoFlyUp {
+                from {margin-top:20%;}
+                to {margin-top:2%;}
+
+            }
+            @-webkit-keyframes logoGetSmall {
+                from {width:30%;}
+                to {width:20%;}
+            }
+            @-webkit-keyframes copensateSize {
+                from {margin-left:35%;}
+                to {margin-left:40%;}
+            }
+            @-webkit-keyframes secondarycolDisplay {
+                from {opacity:0.0;}
+                to {opacity:1.0;}
+            }
+            .opacityanimationlogo {
+                -webkit-animation: logoOpacity 2s;
+            }
+            .opacityanimationvideo {
+                   -webkit-animation: videoOpacity 2s;
+            }
+            .flyupanimationlogo {
+                   -webkit-animation: logoFlyUp 2s, logoGetSmall 2s, copensateSize 2s;
+            }
+            .displayanimationsecondarycol {
+                       -webkit-animation: secondarycolDisplay 2s;
+            }
+
+
+            @import url(http://fonts.googleapis.com/css?family=Open+Sans:700);
+            #cssmenu {
+                text-align:center;
+            }
+            #cssmenu ul {
+              list-style: none;
+              margin: 0;
+              padding: 0;
+              line-height: 1;
+              display: block;
+              zoom: 1;
+            }
+            #cssmenu ul:after {
+              homecontent: " ";
+              display: block;
+              font-size: 0;
+              height: 0;
+              clear: both;
+              visibility: hidden;
+            }
+            #cssmenu ul li {
+              display: inline-block;
+              padding: 0;
+              margin: 0;
+            }
+            #cssmenu.align-right ul li {
+              float: center;
+            }
+            #cssmenu.align-center ul {
+              text-align: center;
+            }
+            #cssmenu ul li a {
+              color: #ffffff;
+              text-decoration: none;
+              display: block;
+              padding: 15px 25px;
+              font-family: 'couriercode';
+              font-weight: 700;
+              text-transform: uppercase;
+              font-size: 3em;
+              position: relative;
+              -webkit-transition: color .25s;
+              -moz-transition: color .25s;
+              -ms-transition: color .25s;
+              -o-transition: color .25s;
+              transition: color .25s;
+            }
+            #cssmenu ul li a:hover {
+              color: #1cbcbb;
+            }
+            #cssmenu ul li a:hover:before {
+              width: 100%;
+            }
+            #cssmenu ul li a:after {
+              homecontent: "";
+              display: block;
+              position: absolute;
+              right: -5px;
+              top: 31px;
+              height: 6px;
+              width: 6px;
+              background: #ffffff;
+              opacity: .5;
+            }
+
+            #cssmenu ul li.last > a:after,
+            #cssmenu ul li:last-child > a:after {
+              display: none;
+            }
+            #cssmenu ul li.active a {
+              color: #1cbcbb;
+            }
+            #cssmenu ul li.active a:before {
+              width: 100%;
+            }
+            #cssmenu.align-right li.last > a:after,
+            #cssmenu.align-right li:last-child > a:after {
+              display: block;
+            }
+            #cssmenu.align-right li:first-child a:after {
+              display: none;
+            }
+            @media screen and (max-width: 768px) {
+              #cssmenu ul li {
+                float: none;
+                display: block;
+              }
+              #cssmenu ul li a {
+                width: 100%;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                border-bottom: 1px solid #fb998c;
+              }
+              #cssmenu ul li.last > a,
+              #cssmenu ul li:last-child > a {
+                border: 0;
+              }
+              #cssmenu ul li a:after {
+                display: none;
+              }
+              #cssmenu ul li a:before {
+                display: none;
+              }
+            }
+            
+            body {
  background-color:black !important;  
      line-height: 2.8rem !important;
-
+font-family: monospace !important;
+    overflow-y:hidden;
 }
 #openVideo {
      opacity: 1;  
      position:absolute;
      z-index:-1;
+}
+.bio {
+    text-align:center;
+}
+.arrow {
+ width:5%;
+margin-left: 46%;
+    transform:"rotate(90deg)";
+}
+.bodyimage {
+    width:100%;
+    border:2px solid white;
+
+}
+ul {
+    padding-left:0px !important;
+    list-style-type: none !important;
+}
+ul li {
+    list-style-type: none !important;
+    
 }
 #logo {
     position:static;
@@ -19,23 +227,68 @@ body {
     opacity:0.0;
     width:30%;
 }
-h2 {
-	margin-left:-5%;
-  font-family:"couriercode" !important;  
-   color: #1cbcbb !important;
+.toplevel {
+ width:100% !important; 
+ margin-left:0px !important;   
+ margin-right:0px !important;   
 
 }
+.imagecenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto; 
+}
+.subheadsel {
+       color: #1cbcbb !important;
+}
+h1 {
+  font-family:"couriercode" !important;  
+   color: #1cbcbb !important;
+    margin-left:-5% !important;
+    
+}
+#title {
+    margin-top:0px;
+    font-size:4em!important;
+    text-align:center;
+    font-family:"couriercode" !important; 
+   color: #1cbcbb !important;
+    
+}
+.bioimage {
+    width:75%;
+    margin-left:12.5%;
+}
+.bodysubhead {
+ text-align: left !important; 
+    margin-left:-2.5%;
+}
+.subhead {
+    font-family:"couriercode" !important;  
+    color: white ;
+    font-size:1.5em !important;
+    text-align:center ;
+    margin-bottom:20px;
+}
+.biohead {
+ margin-bottom:0px !important;   
+}
 p {
-font-family: "Verdana", "courier" !important;
+    font-family:monospace;
     font-size:16px !important;   
 }
-.homecontent {
+
+
+.content {
 color:white;
 }
 .row {
  padding-bottom:30px;   
 }
-.homecontent {
+.nobottommargin {
+ padding-bottom:0px !important;   
+}
+.content {
     opacity:0.0;
     display:none;
 }
@@ -67,20 +320,106 @@ color:white;
     from {opacity:0.0;}
     to {opacity:1.0;}
 }
+@-moz-keyframes logoOpacity {
+    from {opacity:0.0;}
+    to {opacity:1.0;}
+}
+@-moz-keyframes videoOpacity {
+    from {opacity:1.0;}
+    to {opacity:0.0;}
+}
+@-moz-keyframes logoFlyUp {
+    from {margin-top:20%;}
+    to {margin-top:2%;}
+
+}
+@-moz-keyframes logoGetSmall {
+    from {width:30%;}
+    to {width:20%;}
+}
+@-moz-keyframes copensateSize {
+    from {margin-left:35%;}
+    to {margin-left:40%;}
+}
+@-moz-keyframes secondarycolDisplay {
+    from {opacity:0.0;}
+    to {opacity:1.0;}
+}
+@-webkit-keyframes oneapear {
+    from {opacity:0.0;}
+    to {opacity:1.0;}
+}
+@-moz-keyframes oneapear {
+    from {opacity:0.0;}
+    to {opacity:1.0;}
+    
+}
+@-webkit-keyframes onedisapear {
+    from {opacity:1.0;}
+    to {opacity:0.0;}
+}
+@-moz-keyframes onedisapear {
+    from {opacity:1.0;}
+    to {opacity:0.0;}
+}
+@-webkit-keyframes rotatearrow {
+    from {transform:90deg;}
+    to {transform:90deg;}
+}
+@-moz-keyframes rotatearrow {
+    from {transform:90deg;}
+    to {transform:90deg;}
+}
+@-webkit-keyframes rerotatearrow {
+    from {transform:0deg;}
+    to {transform:0deg;}
+}
+@-moz-keyframes rerotatearrow {
+    from {transform:0deg;}
+    to {transform:0deg;}
+}
+.rotatearrow {
+            -webkit-animation: rotatearrow .25s;
+               -moz-animation: rotatearrow .25s;
+}
+.rerotatearrow {
+            -webkit-animation: rerotatearrow .25s;
+               -moz-animation: rerotatearrow .25s;
+}
 .opacityanimationlogo {
     -webkit-animation: logoOpacity 2s;
+        -moz-animation: logoOpacity 2s;
 }
 .opacityanimationvideo {
        -webkit-animation: videoOpacity 2s;
+           -moz-animation: videoOpacity 2s;
+
 }
 .flyupanimationlogo {
        -webkit-animation: logoFlyUp 2s, logoGetSmall 2s, copensateSize 2s;
+           -moz-animation: logoFlyUp 2s, logoGetSmall 2s, copensateSize 2s;
+
 }
 .displayanimationsecondarycol {
            -webkit-animation: secondarycolDisplay 2s;
+               -moz-animation: secondarycolDisplay 2s;
+
 }
+.titleapear {
+               -webkit-animation: secondarycolDisplay 2s;
+                   -moz-animation: secondarycolDisplay 2s;
 
+}
+.oneapear {
+                -webkit-animation: oneapear .25s;
+                -moz-animation: oneapear .25s;
 
+}
+.onedisapear {
+                -webkit-animation: onedisapear .25s;
+                -moz-animation: onedisapear .25s;
+
+}
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:700);
 #cssmenu {
     text-align:center;
@@ -94,7 +433,7 @@ color:white;
   zoom: 1;
 }
 #cssmenu ul:after {
-  homecontent: " ";
+  content: " ";
   display: block;
   font-size: 0;
   height: 0;
@@ -107,10 +446,10 @@ color:white;
   margin: 0;
 }
 #cssmenu.align-right ul li {
-  float: center;
+  float: right;
 }
 #cssmenu.align-center ul {
-  text-align: center;
+  text-align: right;
 }
 #cssmenu ul li a {
   color: #ffffff;
@@ -135,7 +474,7 @@ color:white;
   width: 100%;
 }
 #cssmenu ul li a:after {
-  homecontent: "";
+  content: "";
   display: block;
   position: absolute;
   right: -5px;
@@ -173,7 +512,7 @@ color:white;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    border-bottom: 1px solid #fb998c;
+    border-bottom: 1px solid #1cbcbb;
   }
   #cssmenu ul li.last > a,
   #cssmenu ul li:last-child > a {
@@ -185,6 +524,15 @@ color:white;
   #cssmenu ul li a:before {
     display: none;
   }
+}
+
+@font-face {
+    font-family: couriercode;
+    src: url(couriercode.ttf);
+}
+
+.pic {
+    border:2px solid white;
 }
 
 	</style>
@@ -276,52 +624,172 @@ color:white;
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div id="maincol" class="col-xs-12">
-<%= link_to "Sign in", signin_path %>
-<%= link_to "Sign Up", signup_path %><br>
-<%= image_tag("thewarroom.svg", :id => "logo") %>
-
+                <div class="col-lg-12 secondarycol" id="navcol">
+                    <h4 id="title">The War Room</h4>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-1">
-                </div>
-                <div class="col-xs-10 secondarycol" id="navcol">
-                <div id='cssmenu'>
-                    <ul>
-                       <li class="active"><a href='index.html'><span>Home</span></a></li>
-                       <li><a href='about.html'><span>About</span></a></li>
-                       <li><a href='blog.html'><span>Blog</span></a></li>
-                    </ul>
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8 secondarycol content">
+                        <p>Welcome to the War Room - your world superpower simulator. 38 territories, a zoomable map, and accurate stats make the user experience out of this world. Each territory starts with one capital fortress, and players can build additional forts to conquer the world. Resources are produced daily by an empire and traded between players. When a capital fortress trades hands, so does the terriory, and the only way to win is to control the entire map.</p><br>
                     </div>
+                    <div class="col-lg-2"></div>
                 </div>
-                <div class="col-xs-1">
+                <div class="row">
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8 secondarycol content">
+                        <h1 id="head1">Rule Your Empire</h1><BR>
+                        <p>Claim your empire and rule it with undisputed power. Your strategy and success depend upon the geography and resources of your land. Once daily, each territory in your control produces resources. Throughout the day, some of these resources are consumed by the population to survive. To rule the world and win the game you must keep the balance of production and consumption in check.</p><br>
+                        <img class="bodyimage" src="fullmap.png"><br><br>
+                    </div>
+                    <div class="col-lg-2"></div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8 secondarycol content">
+                        <h1 id="head1">Develop Your Territories</h1><BR>
+                        <p>Build forts and camps around the world to hold resources, conduct trade, and execute battle. Encampments are cheap and temporary. They may be placed in any territory and their limited visibility promotes secret diplomacy. Fortresses are strongholds to defend territories and maintain power. They may be placed only in controlled territories and are visible to all players. The ability to effectively balance the two types of structures is what can make or break your conquest experience.</p><br>
+                        <img class="bodyimage" src="development.png"><br><br>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8 secondarycol content">
+                        <h1 id="head1">Trade With Allies</h1><BR>
+                        <p>No territory is perfect. The scarcity of each resource varies across the map. Trade must be leveraged to build your empire and keep the population alive. Shipment comes at a cost and takes time to complete. The price of a shipment depends on the length of the route, the amount of goods being shipped, and the infrastructure of the territory in which goods are being shipped. Any two things can be traded -  including information. If two players decide to trade secrets, resources can be "gifted" in a tactical, honor system agreement.</p><br>
+                        <img class="bodyimage" src="trade.png"><br><br>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8 secondarycol content">
+                        <h1 id="head1">Battle With Enemies</h1><BR>
+                        <p>For the game to end, all territories must be controlled by one player: the winner. In each game you will start with an empire that is comprised of adjacent territories. Only through battle may you expand your empire and dominate the world. Each territory starts with an army. Each game peice represents a certain number of soldiers, and when that peice is gone, so are those troops. By battling a fortress or encampment successfully you win control of that location. Ownership of the territory lies in ownership of the capital fortress.</p><br>
+                        <img class="bodyimage" src="battle.png"><br><br>
+                        <h2 class="subhead bodysubhead">Battle on Land</h2><BR>
+                        <p> Play Battle on Land when fighting territories connected by land. It's chess; pretty self explanatory.</p><br>
+                        <img class="bodyimage" src="battleatland.png"><br><br>
+                        <h2 class="subhead bodysubhead">Battle at Sea</h2><BR>
+                        <p>Play Battle at Sea when fighting across oceans. Place your ships on the grid, and fire random shots at the enemy to sink their fleat.</p><br>
+                        <img class="bodyimage" src="battleatsea.png"><br><br>
+
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8 secondarycol content">
+                        <h1 id="head1">Conspire Offline</h1><BR>
+                        <p>While the War Room is an effective diplomacy portal, we highly encourage you to conspire offline. The actions taken online are only as entertaining as the ideas they stand for, and the embodiment of those ideas is what can make the game experience fantastic. With means such as social media, word processors, and file sharing sites, you can take the politics of the War Room into the real spheres of the internet.</p><br>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+                <div class="row nobottommargin">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8 secondarycol content">
+                        <h1 id="head3">The Cost of War</h1>
+                        <p>As much as we'd all like to make The War Room free, there are costs associated with hosting this game. We offer the first month of gameplay at no charge; No payment method necessary; No commitment required. Beyond the first month, the cost of war is well outlined below.</p>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+                <div class="row nobottommargin">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-2 secondarycol content">
+                        <h2 class="subhead" id="head3">1 Month</h2>
+                        <img class="imagecenter" src="month.png">
+                    </div>
+                    <div class="col-lg-2 secondarycol content">
+                        <h2 class="subhead" id="head3">6 Months</h2>
+                        <img class="imagecenter" src="halfyear.png">
+                    </div>
+                    <div class="col-lg-2 secondarycol content">
+                        <h2 class="subhead" id="head3">1 Year</h2>
+                        <img class="imagecenter" src="year.png">
+                    </div>
+                    <div class="col-lg-2 secondarycol content">
+                        <h2 class="subhead" id="head3">Lifetime</h2>
+                        <img class="imagecenter" src="life.png">
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-2 secondarycol content">
+                        <h2 class="subhead" id="head3">$2.00</h2><BR>
+                    </div>
+                    <div class="col-lg-2 secondarycol content">
+                        <h2 class="subhead" id="head3">$10.00</h2><BR>
+                    </div>
+                    <div class="col-lg-2 secondarycol content">
+                        <h2 class="subhead" id="head3">$18.00</h2><BR>
+                    </div>
+                    <div class="col-lg-2 secondarycol content">
+                        <h2 class="subhead" id="head3">$40.00</h2><BR>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+                <div class="row nobottommargin">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8 secondarycol content">
+                        <h1 id="head4">Our Team</h1><BR>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+                <div class="row nobottommargin">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-2 secondarycol content">
+                        <img class="pic biohead bioimage" id="jakeadams" src="jake.jpg">
+                        <h2 class="subhead biohead " id="jakeadams">Jake Adams</h2>
+                        <img class="arrow"  id="jakeadamsimg" src="arrowup.png">
+                            <ul class="bio" id="jakeadamsbio">
+                                <li>- Graphic Design -</li>
+                                <li>- Data Collection -</li>
+                                <li>- Communications -</li>
+                            </ul>
+                    </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-2 secondarycol content">
+                        <img class="pic biohead bioimage" id="jonahdowns" src="jonah.jpg">
+                        <h2 class="subhead biohead " id="jonahdowns">Jonah Downs</h2>                                                                                <img class="arrow" id="jonahdownsimg"  src="arrowup.png">
+
+                            <ul class="bio" id="jonahdownsbio">
+                                <li>- Management -</li>
+                                <li>- Structure -</li>
+                                <li>- Public Relations -</li>
+                            </ul>
+                    </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-2 secondarycol content">
+                        <img class="pic biohead bioimage" id="alexpedersen" src="alex.jpg">
+                        <h2 class="subhead biohead" id="alexpedersen">Alex Pedersen</h2>
+                                                <img class="arrow" id="alexpedersenimg" src="arrowup.png">
+
+                            <ul class="bio" id="alexpedersenbio">
+                                <li>- Architecture -</li>
+                                <li>- Front End -</li>
+                                <li>- Infrastructure -</li>
+                            </ul>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>    
             <div class="row">
                  <div class="col-xs-2">
                 </div>
-                <div class="col-xs-8 secondarycol homecontent">
-  <h2>Lorem Ipsum</h2><BR>
-                    <p>The Blaines were attached to no city. They were the Blaines of Lake Geneva; they had quite enough relatives to serve in place of friends, and an enviable standing from Pasadena to Cape Cod. But Beatrice grew more and more prone to like only new acquaintances, as there were certain stories, such as the history of her constitution and its many amendments, memories of her years abroad, that it was necessary for her to repeat at regular intervals. Like Freudian dreams, they must be thrown off, else they would sweep in and lay siege to her nerves. But Beatrice was critical about American women, especially the floating population of ex-Westerners.</p>
-<p>“They have accents, my dear,” she told Amory, “not Southern accents or Boston accents, not an accent attached to any locality, just an accent”—she became dreamy. “They pick up old, moth- eaten London accents that are down on their luck and have to be used by some one. They talk as an English butler might after several years in a Chicago grand-opera company.” She became almost in- coherent—“Suppose—time in every Western woman’s life—she feels her husband is prosperous enough for her to have—accent—they try to impress me, my dear—”</p>
-<p>Though she thought of her body as a mass of frailties, she consid- ered her soul quite as ill, and therefore important in her life. She had once been a Catholic, but discovering that priests were infi- nitely more attentive when she was in process of losing or regaining faith in Mother Church, she maintained an enchantingly wavering attitude. Often she deplored the bourgeois quality of the American Catholic clergy, and was quite sure that had she lived in the shadow of the great Continental cathedrals her soul would still be a thin flame on the mighty altar of Rome. Still, next to doctors, priests were her favorite sport.
-“Ah, Bishop Wiston,” she would declare, “I do not want to talk of myself. I can imagine the stream of hysterical women fluttering at your doors, beseeching you to be simpatico”—then after an interlude filled by the clergyman—“but my mood—is—oddly dissimilar.”</p>
-                </div>
-                <div class="col-xs-2">
-                </div>
-            </div>
-            <div class="row">
-                 <div class="col-xs-2">
-                </div>
-                <div class="col-xs-8 secondarycol homecontent">
+                <div class="col-xs-8 secondarycol content">
                 <div id="socialmedia">
 <iframe src="http://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fthewarroomvideogame&amp;width&amp;layout=standard&amp;action=like&amp;show_faces=true&amp;share=true&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:80px;" allowTransparency="true"></iframe>
                     <a href="https://twitter.com/warroomgame" class="twitter-follow-button" data-show-count="false">Follow @warroomgame</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-                    </div>    
+                    </div>
+                    <p style="text-align:center;">Questions? Email us at <a href="mailto:info@warroomgame.com">info@warroomgame.com</a>
+  or call at (717)-743-1378</p>
+
                 </div>
                 <div class="col-xs-2">
                 </div>
+            </div>
             </div>
         </div>
     </body>
