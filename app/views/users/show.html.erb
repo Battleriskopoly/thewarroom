@@ -1,41 +1,18 @@
 <script>
-
 var territoryColors = <%= render partial: "territory_colors", locals: {territoryColors: @territoryColors} %>;
 var territoryOwners = {<%= render partial: "territory_owners", locals: {territoryOwners: @territoryOwners} %>}
-var renderedLocations = [<%= render partial: "location", collection: @locations %>];
+var Locations = [<%= render partial: "location", collection: @locations %>];
 var rendered_battles = []
 <%= render partial: "battle", collection: @battles %>
 var rendered_trades = []
-<%= render partial: "trade", locals: {clientItinerary: @clientItinerary} %>
-var rendered_forts = []
-var rendered_encampments = []
-var fort_string = rendered_forts.toString();
-fort_string = fort_string.replace(",","', '");
-fort_string = fort_string.concat("'");
-fort_string = "'".concat(fort_string);
-
-var encampment_string = rendered_encampments.toString();
-encampment_string = encampment_string.replace(",","', '");
-encampment_string = encampment_string.concat("'");
-encampment_string = "'".concat(encampment_string);
 var gameId = <%= @game.id%>
 var swatches = <%= render partial: "swatch_list"%>
-var clicked = ["f", 1];
-var placing = "f";
-var exception;
-var level = "globe";
-var english_level = "globe";
-var clear_create_canvas
+var userId = <%=@user.id%>
 var trading = false;
 var selected;
 var stop = false
-var zooming = true
-var alerting = "nil";
-var alertContext="nil"
-var userId = <%=@user.id%>
 var possibleMoves 
 var movingObject = -1
-var visibleObjects = {encampment:[],fort:[]};
 seapoints = [];
 var changeLeg = [false,-1]
 itinerary = [];
@@ -45,11 +22,10 @@ mappingBattle = false
 var activeBattleContext = {}
 <%= render partial: "chess_pieces"%>
 var players = {<%= render partial: "user", collection: @users %>}
-// Defining lists of territories and continents with their active color values and their starting points.
 
-	var territoryPaths = <%= render partial: "images"%>
+var territoryPaths = <%= render partial: "images"%>
 
-	var colors = {central_america:[ [0xe5,0x42,0x42], [488,780] ,[0.311006362]],
+var colors = {central_america:[ [0xe5,0x42,0x42], [488,780] ,[0.311006362]],
 central_asia:[[0xf1,0x71,0x71], [2054,526] ,[0.284473688]],
  central_south_america:[[0xfb,0x07,0x07], [822,1020],[0.402101331]], 
 china:[[0xfb,0x07,0xca], [2342,542] ,[0.073106002]], 
@@ -88,7 +64,7 @@ united_kingdom:[ [0x19,0xaf,0xe0], [1522,490] ,[0.01625007]],
  western_canada:[ [0xff,0xea,0x3d], [250,349] ,[1.358437809]], 
 western_south_america:[[0xea,0xdb,0x35], [834,1143] ,[2.043553816]]};
 
-	var color_key = {asia:[ [0x32,0x7c,0x00], [1844,226], [1662,1018]], australia:[ [0x00,0x7c,0x78], [2546,1080], [868,640]], africa:[ [0x2f,0x44,0x5a], [1444,724], [722,842]], europe:[ [0x5a,0x4c,0x2f], [1390,332], [654,442]], north_america:[ [0x43,0x5a,0x2f], [0,178], [1532,912]], south_america:[ [0x53,0x2f,0x5a], [798,1008], [528,786]]};
+var color_key = {asia:[ [0x32,0x7c,0x00], [1844,226], [1662,1018],[1601.740805811558,902.0121478109274]], australia:[ [0x00,0x7c,0x78], [2546,1080], [868,640],[813.8564664278806,587.0005811784008]], africa:[ [0x2f,0x44,0x5a], [1444,724], [722,842],[673.9313422648022,807.502404949169]], europe:[ [0x5a,0x4c,0x2f], [1390,332], [654,442],[629.4471658304692,391.7846088201245]], north_america:[ [0x43,0x5a,0x2f], [0,178], [1532,912],[454.36824505888626,853.0609332048721]], south_america:[ [0x53,0x2f,0x5a], [798,1008], [528,786],[454.36824505888626,751.2988526644504]]};
 
 // order asia australia africa e na sa 
 
@@ -636,213 +612,6 @@ $( document ).ready(function() {
 	    return m ? parseFloat(m[1]) : this.valueOf();
 	};
 
-//Initial Funtions
-	function alertBox(text,tag,context,buttons) {
-		
-		$(".alertButton").css("display","none")
-		for (var i = 0 ; i < buttons.length; i++) {
-			$("#" + buttons[i]).css("display","inline")
-		}
-		alerting = tag
-		alertContext = context
-		$("#alertBox").children("p").html(text) 
-		centerAlertBox()
-		$("#alertBox").css("display","inline")
-
-		$(".alertButton").click( function() {
-			$("#alertBox").css("display","none")
-			alerting ="nil"
-			alertContext="nil"
-		});
-	}
-	function centerAlertBox() {
-
-		$("#alertBox").css("margin-left",($("#background").width()/2) - ($("#alertBox").width()/2) - $("#alertBox").offset().left + "px")
-		$("#alertBox").css("margin-top",($("#background").height()/2) - ($("#alertBox").height()/2) -  $("#alertBox").offset().top + "px")
-	
-	}
-	function colorMap() {
-		for (i = 0; i < territoryColors.length; i++) {
-			var firstSeg = territoryColors[i][1][0].toString(16)
-			var secondSeg = territoryColors[i][1][1].toString(16)
-			var thridSeg = territoryColors[i][1][2].toString(16)
-			if (firstSeg == "0") {
-				firstSeg = "00"
-			}
-			if (secondSeg == "0") {
-				secondSeg = "00"
-			}
-			if (thridSeg == "0") {
-				thridSeg = "00"
-			}
-			color = "L" + firstSeg + secondSeg + thridSeg
-
-			color = color.toUpperCase()
-			
-			color = swatches[territoryColors[i][0].replace("#","")][color];
-
-			$(territoryColors[i][0]).css("fill", "#" + color)
-		}
-	}
-
-//End of Initial Funtions
-
-//Contributing Zoom Funtions
-
-function renderObject(object,levelInfo,remove) {
-
-		if (remove == true) {
-			$("#renderedSprites").children().remove();
-		}
-		for (i = 0; i < $("#renderedSprites").length; i++) {
-			if ( "seapoint" == $("#renderedSprites")[i].id.replace(/[0-9]/g, '')) {
-				$($("#renderedSprites")[i]).remove();
-			}
-		}
-		var list = [];
-
-		if (object == "encampment") {
-			list = rendered_encampments; 
-		}
-		else if (object == "fort") {
-			list = rendered_forts; 
-		}
-		else if (object == "battle") {
-			for (var i = 0; i < rendered_battles.length; i++) {
-				list.push([rendered_battles[i]["location_one"],rendered_battles[i]["location_two"]])
-			}
-		}
-		var sortedList = [];
-
-		if (levelInfo[0] == "territorial") {
-			for (i = 0; i < list.length; i++) {
-				if (list[i][0].territory == levelInfo[1]) {
-					sortedList.push(list[i]);
-				}
-			}
-		}
-
-		else if (levelInfo[0] == "continental") {
-			for (i = 0; i < continents[$("#continentalMap").children("g").children("path").attr("class")].length; i++) {
-				for (y = 0; y < list.length; y++) {
-					if (list[y][0].territory == "#" + continents[$("#continentalMap").children("g").children("path").attr("class")][i]) {
-						sortedList.push(list[y]);
-					}
-				}
-			}
-
-		}
-		else if (levelInfo[0] == "global") {
-			sortedList = list
-		}
-
-		visibleObjects[object] = sortedList;
-		for (i = 0; i < sortedList.length; i++) {
-			if (levelInfo[0] == "territorial") {
-				
-				if (sortedList[i][1] != "sel" && sortedList[i][1] != "selpast") {
-					if (sortedList[i][0]["owner_id"] == <%= @user.id%>) {
-						$("#renderedSprites").append($("#sprites").children("#".concat(object)).clone().attr("class","renderedSprite").attr("id",object + i));
-					}
-					else {
-						$("#renderedSprites").append($("#sprites").children("#foreign".concat(object)).clone().attr("class","renderedSprite").attr("id",object + i));
-					}
-				}
-				else {
-					$("#renderedSprites").append($("#sprites").children("#".concat(object) + sortedList[i][1]).clone().attr("class","renderedSprite").attr("id",object + i));	
-				}
-
-				var xPosition = (sortedList[i][0].xco*$("#territorialMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialMap").offset().left - $("#background").offset().left
-				var yPosition = (sortedList[i][0].yco*$("#territorialMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#territorialMap").offset().top - $("#background").offset().top
-
-				$("#" + object + i).css("top",yPosition + "px").css("left",xPosition + "px")
-
-			}
-			if (levelInfo[0] == "continental") {
-
-				if (sortedList[i][1] != "sel" && sortedList[i][1] != "selpast") {
-
-					if (sortedList[i][0]["owner_id"] == <%= @user.id%>) {
-						$("#renderedSprites").append($("#sprites").children("#".concat(object + "Medium")).clone().attr("class","renderedSprite").attr("id",object + i));
-					}
-					else {
-						$("#renderedSprites").append($("#sprites").children("#foreign".concat(object + "Medium")).clone().attr("class","renderedSprite").attr("id",object + i));
-					}
-				}
-				else {
-					$("#renderedSprites").append($("#sprites").children("#".concat(object)+ sortedList[i][1] + "Medium" ).clone().attr("class","renderedSprite").attr("id",object + i));	
-				}
-
-				var xPosition = ((sortedList[i][0].xco + colors[sortedList[i][0].territory.replace("#","")][1][0] - color_key[$($("#continentalMap").children("g").children("path")[0]).attr("class")][1][0])*$("#continentalMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalMap").offset().left - $("#background").offset().left
-				var yPosition = ((sortedList[i][0].yco + colors[sortedList[i][0].territory.replace("#","")][1][1] - color_key[$($("#continentalMap").children("g").children("path")[0]).attr("class")][1][1])*$("#continentalMap").children("g").attr("transform").split("(")[1].split(")")[0]) + $("#continentalMap").offset().top - $("#background").offset().top
-				$("#" + object + i).css("top",yPosition + "px").css("left",xPosition + "px")
-
-			}
-			if (levelInfo[0] == "global") {
-				if (sortedList[i][1] != "sel" && sortedList[i][1] != "selpast") {
-					if (sortedList[i][0]["owner_id"] == <%= @user.id%>) {
-						$("#renderedSprites").append($("#sprites").children("#".concat(object + "Small")).clone().attr("class","renderedSprite").attr("id",object + i));
-					}
-					else {
-						$("#renderedSprites").append($("#sprites").children("#foreign".concat(object + "Small")).clone().attr("class","renderedSprite").attr("id",object + i));
-					}
-				}
-				else {
-					$("#renderedSprites").append($("#sprites").children("#".concat(object) + sortedList[i][1] + "Small").clone().attr("class","renderedSprite").attr("id",object + i));	
-				}
-
-
-				var xPosition = (sortedList[i][0].xco + colors[sortedList[i][0].territory.replace("#","")][1][0])*($("#globalMap").children("g").attr("transform").split("(")[1].split(")")[0])
-				var yPosition = (sortedList[i][0].yco + colors[sortedList[i][0].territory.replace("#","")][1][1] + parseFloat($("#globalMap").children("g").attr("transform").split("translate(")[1].split(" ")[1]))*($("#globalMap").children("g").attr("transform").split("(")[1].split(")")[0])
-				$("#" + object + i).css("top",yPosition + "px").css("left",xPosition + "px")
-
-			}
-
-			$("#renderedSprites").css("z-index","10")
-		}
-		if (object = "battle") {
-
-		}
-		if (trading == true && object =="encampment") {
-
-			if (levelInfo[0] == "global") {
-
-				for (i = 0; i < seapoints.length; i++) {
-
-					$("#renderedSprites").append($("#sprites").children("#seapoint" + seapoints[i][1]).clone().attr("class","renderedSprite").attr("id","seapoint" + i));
-					$("#" + "seapoint" + i).css("top",seapoints[i][0].yco+ "px").css("left",seapoints[i][0].xco  + "px")	
-
-				}
-			}
-
-		}
-	}
-
-	function levelChange(zoomLevel) {
-
-		renderObject("encampment",zoomLevel,true);
-		renderObject("fort",zoomLevel);
-
-		if (typeof activeBattleContext["oldObject"] !== "undefined" && typeof activeBattleContext["currentObject"] !== "undefined" ) {
-			renderBattle(activeBattleContext["oldObject"],activeBattleContext["currentObject"])
-		}
-		renderActiveTrade()
-		renderTrade(itinerary,"trade proposal",false)
-		if (zoomLevel[0] == "global") {
-
-		}
-		else if (zoomLevel[0] == "continental") {
-			$(".newObjectButton").css("display","none")
-		}
-		else if (zoomLevel[0] == "territorial") {
-			if (trading == false && mappingBattle == false) {
-				$(".newObjectButton").css("display","inline")
-			}
-		}
-
-	}
-
-//End of Contributing Zoom Funtions
 
 
 //Object Funtions
@@ -922,36 +691,6 @@ function renderObject(object,levelInfo,remove) {
 			return selPastIndex
 		}
 
-	}
-
-	function createObject(object) {
-
-		$(".newObjectButton").css("display", "none")
-		$(".fields").css("display","inline")
-
-		$(".fields").not("#" + object + "_fields").remove()
-		if ($(".fields").length > 1) { 
-
-			$($(".fields")[1]).remove()
-		}
-
-		$("#cancelCreation").css("display","inline")
-
-		if (object == "fort") {
-
-			placeObject(object)
-		}
-		else if (object == "encampment") {
-
-			placeObject(object)
-		}
-		else if (object == "trade") {
-
-			mapTrade(object)
-		}
-		else if (object == "battle") {
-			mapBattle()
-		}
 	}
 	
 	function changeSel(object,indexInList) {
@@ -2299,10 +2038,6 @@ function renderObject(object,levelInfo,remove) {
 
 
 	}
-	function filterCheck() {
-
-
-	}
 	function paintDemonstratedMovement(moveArray,piece) {
 
 		for (var i = 0; i < $("td").length; i++) {
@@ -3032,29 +2767,8 @@ function renderObject(object,levelInfo,remove) {
 				
 
 	}
-//End of Object Funtions
-
-
-//Calls of Initial Functions
-	var pathClicked;
+//New Stuff 
 	var zoomLevel = ["global","globe"];
-	levelChange(zoomLevel)
-	renderActiveTrade()
-//End of Initial Function Calls
-
-
-//Object Creation
-
-$(".newObjectButton").click( function() {
-
-	createObject($(this).attr("id").replace("create_",""))
-
-}); 
-
-//End of Object Creation
-
-
-//Zooming
 	function initDisplay() {
 
 		$("#sidePanel").css("height",$(window).height())
@@ -3075,19 +2789,7 @@ $(".newObjectButton").click( function() {
 				allTerritories.push(territoryPaths[continent][territory])
 			}
 		}
-
-		var sprites = {}
-		sprites.fort = map.image("<%=image_path("fort.png")%>", 0, 0, 32, 32).hide() 
-		sprites.fortSel = map.image("<%=image_path("fortsel.png")%>", 0, 0, 32, 32).hide() 
-		sprites.fortSelPast = map.image("<%=image_path("fortselpast.png")%>", 0, 0, 32, 32).hide() 
-		sprites.camp = map.image("<%=image_path("encampment.png")%>", 0, 0, 32, 32).hide() 
-		sprites.campSel = map.image("<%=image_path("encampmentsel.png")%>", 0, 0, 32, 32).hide() 
-		sprites.campSelPast = map.image("<%=image_path("encampmentselpast.png")%>", 0, 0, 32, 32).hide() 
-		sprites.seapointSel = map.image("<%=image_path("seapointsel.png")%>", 0, 0, 24, 24).hide()  
-		sprites.seapointSelPast = map.image("<%=image_path("seapointselpast.png")%>", 0, 0, 24, 24).hide() 
-		sprites.forCamp = map.image("<%=image_path("forencampment.png")%>", 0, 0, 32, 32).hide() 
-		sprites.forFort = map.image("<%=image_path("forfort.png")%>", 0, 0, 32, 32).hide() 
-		sprites.battleLocation = map.image("<%=image_path("battlelocation.png")%>", 0, 0, 32, 32).hide() 
+		var extremities = map.set(territoryPaths.north_america.non_contiguous_united_states.clone(),territoryPaths.south_america.coastal_south_america.clone(),territoryPaths.asia.russia.clone(),territoryPaths.north_america.greenland.clone())
 
 		var allTerritoriesBBox = allTerritories.getBBox(true)
 		var displayWidth = $("#display").width()
@@ -3110,6 +2812,21 @@ $(".newObjectButton").click( function() {
 				el.translate(-1*((allTerritoriesBBox.x + (allTerritoriesBBox.width/2))) + ((displayWidth/2)/(scaleFactor)),-1*((allTerritoriesBBox.y + (allTerritoriesBBox.height/2))) + ((displayHeight/2)/(scaleFactor)))
 			})
 		}
+
+		var sprites = {}
+		sprites.fort = map.image("<%=image_path("fort.png")%>", 0, 0, 32, 32).hide() 
+		sprites.fortSel = map.image("<%=image_path("fortsel.png")%>", 0, 0, 32, 32).hide() 
+		sprites.fortSelPast = map.image("<%=image_path("fortselpast.png")%>", 0, 0, 32, 32).hide() 
+		sprites.camp = map.image("<%=image_path("encampment.png")%>", 0, 0, 32, 32).hide() 
+		sprites.campSel = map.image("<%=image_path("encampmentsel.png")%>", 0, 0, 32, 32).hide() 
+		sprites.campSelPast = map.image("<%=image_path("encampmentselpast.png")%>", 0, 0, 32, 32).hide() 
+		sprites.seapointSel = map.image("<%=image_path("seapointsel.png")%>", 0, 0, 24, 24).hide()  
+		sprites.seapointSelPast = map.image("<%=image_path("seapointselpast.png")%>", 0, 0, 24, 24).hide() 
+		sprites.forCamp = map.image("<%=image_path("forencampment.png")%>", 0, 0, 32, 32).hide() 
+		sprites.forFort = map.image("<%=image_path("forfort.png")%>", 0, 0, 32, 32).hide() 
+		sprites.battleLocation = map.image("<%=image_path("battlelocation.png")%>", 0, 0, 32, 32).hide() 
+
+
 		for (i = 0; i < territoryColors.length; i++) {
 
 			var firstSeg = territoryColors[i][1][0].toString(16)
@@ -3129,9 +2846,10 @@ $(".newObjectButton").click( function() {
 		}
 		territories = map.set(continents.asia,continents.africa,continents.australia,continents.europe,continents.south_america,continents.north_america)
 
-		return {map:map, territoryPaths:territoryPaths, territories:territories, continents:continents, pathId:pathId,allTerritories:allTerritories,sprites:sprites,renderedSprites:map.set()}
+		return {map:map, territoryPaths:territoryPaths, territories:territories, continents:continents, pathId:pathId,allTerritories:allTerritories,sprites:sprites,renderedSprites:map.set(),extremities:extremities}
 	}
 	var mapContext = initDisplay()
+	renderLocation(zoomLevel,mapContext)
 	var filterOne = mapContext.map.rect(0,0,mapContext.map.width,mapContext.map.height).attr({fill:"#000"}).attr("fill-opacity","0.0").toBack()
 	var filterTwo = mapContext.map.rect(0,0,mapContext.map.width,mapContext.map.height).attr({fill:"#000"}).attr("fill-opacity","0.0").toBack()
 	filters = mapContext.map.set(filterOne,filterTwo)
@@ -3144,7 +2862,9 @@ $(".newObjectButton").click( function() {
 					filterOne.attr("fill-opacity","0.90").toFront()
 					continent.toFront()
 					continent.transform("")
-					var continentBBox = continent.getBBox(true)
+					var tempClone = continent.clone()
+					var continentBBox = tempClone.getBBox(true)
+					tempClone.remove()
 					var displayWidth = $("#display").width()
 					var displayHeight = $("#display").height()
 					var displayWidth = $("#display").width()
@@ -3168,7 +2888,7 @@ $(".newObjectButton").click( function() {
 							if (continentKey[key][i] == mapContext.pathId[this.id].toLowerCase()) {
 
 								zoomLevel = ["continental", key]
-								updateSideBar(zoomLevel[0])
+								updateZoom(zoomLevel,mapContext)
 							}
 						}
 					}
@@ -3188,17 +2908,16 @@ $(".newObjectButton").click( function() {
 								var territoryBBox = this.getBBox(true)
 								if (territoryBBox.width/$("#display").width() < territoryBBox.height/$("#display").height()) {
 
-
 									this.scale($("#display").height()/territoryBBox.height, $("#display").height()/territoryBBox.height,0,0) 
 									this.translate(-1*((territoryBBox.x + (territoryBBox.width/2))) + (($("#display").width()/2)/($("#display").height()/territoryBBox.height)),-1*((territoryBBox.y + (territoryBBox.height/2))) + (($("#display").height()/2)/($("#display").height()/territoryBBox.height)))
 								}
 								else {
 
 									this.scale($("#display").width()/territoryBBox.width, $("#display").width()/territoryBBox.width,0,0) 
-									this.translate(-1*((territoryBBox.x + (territoryBBox.width/2))) + (($("#display").width()/2)/($("#display").width()/territoryBBox.width)),-1*((territoryBBox.y + (territoryBBox.height/2))) + (($("#display").height()/2)/($("#display").width()/territoryBBox.width))) 
+								this.translate(-1*((territoryBBox.x + (territoryBBox.width/2))) + (($("#display").width()/2)/($("#display").width()/territoryBBox.width)),-1*((territoryBBox.y + (territoryBBox.height/2))) + (($("#display").height()/2)/($("#display").width()/territoryBBox.width))) 
 								}
 								zoomLevel = ["territorial",continentKey[zoomLevel[1]][i],zoomLevel[1],this]
-								updateSideBar(zoomLevel[0])
+								updateZoom(zoomLevel,mapContext)
 							}
 						}
 					}
@@ -3222,7 +2941,7 @@ $(".newObjectButton").click( function() {
 					}
 				}
 				zoomLevel = ["continental",zoomLevel[2]]
-				updateSideBar(zoomLevel[0])	
+				updateZoom(zoomLevel,mapContext)
 			}
 			else if (zoomLevel[0] == "continental") {
 
@@ -3237,7 +2956,7 @@ $(".newObjectButton").click( function() {
 					}
 				}
 				zoomLevel = ["global","globe"]
-				updateSideBar(zoomLevel[0])
+				updateZoom(zoomLevel,mapContext)
 			}
 		}
 	})
@@ -3267,6 +2986,34 @@ $(".newObjectButton").click( function() {
 //End of Zooming
 
 });
+	function renderLocation(zoomLevel,mapContext) {
+		if (typeof levelSprites !== "undefined") {
+			levelSprites.remove()
+		}
+		var visibleLocations = mapContext.map.set()
+		if (zoomLevel[0] == "territorial") {
+			for (var i = 0; i < Locations.length; i++) {
+				if (Locations[i].territory.replace("#","") == zoomLevel[1]) {
+					visibleLocations.push(mapContext.sprites[Locations[i].kind].clone().translate((Locations[i].xco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().x,(Locations[i].yco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().y).show())
+				}
+			}
+		}
+		else if (zoomLevel[0] == "continental") {
+			var scaleFactor
+			mapContext.continents[zoomLevel[1]].forEach( function(el) {scaleFactor = el.matrix.a; return false})
+			for (var i = 0; i < Locations.length; i++) {
+				if (continentFromTerritory(Locations[i].territory.replace("#","")) == zoomLevel[1]) {
+					visibleLocations.push(mapContext.sprites[Locations[i].kind].clone().scale(0.5,0.5,0,0).translate(2*((Locations[i].xco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x),2*((Locations[i].yco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)).show())
+				}
+			}
+		}
+		else if (zoomLevel[0] == "global") {
+			for (var i = 0; i < Locations.length; i++) {
+				visibleLocations.push(mapContext.sprites[Locations[i].kind].clone().scale(0.25,0.25,0,0).translate(((Locations[i].xco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x)*4,((Locations[i].yco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)*4).show().toFront())
+			}
+		}
+		levelSprites = visibleLocations
+	}
 	function buildFort(zoomLevel,mapContext) {
 		buildLocation("fort",zoomLevel,mapContext)
 	}
@@ -3301,13 +3048,24 @@ $(".newObjectButton").click( function() {
 				}	
 			})
 			$("#submit").click( function() {
-
+				var xco 
+				var yco
+				var scaleFactor = ((mapContext.extremities.getBBox().width/3498)*zoomLevel[3].matrix.a)/mapContext.map.bottom.matrix.a
+				if ($("#display").width() - zoomLevel[3].getBBox().width > $("#display").height() - zoomLevel[3].getBBox().height) {
+console.log(scaleFactor)
+					xco = Math.round((coordinates[0] - zoomLevel[3].getBBox().x)/scaleFactor)
+					yco = Math.round(coordinates[1]/scaleFactor)
+				}
+				else {
+console.log(scaleFactor)
+					xco = Math.round(coordinates[0]/scaleFactor)
+					yco = Math.round((coordinates[1] - zoomLevel[3].getBBox().y)/scaleFactor)
+				}
 				$("#create_location").click()
 				$("#user_locations_attributes_100000000000_name").val($("#" + locationType + "Name" ).val())
 				$("#user_locations_attributes_100000000000_kindType").val(locationType)
-
-				$("#user_locations_attributes_100000000000_xco").val((coordinates[0]/scaleFactor) - colors[zoomLevel[1]][1][0])
-				$("#user_locations_attributes_100000000000_yco").val((coordinates[1]/scaleFactor) - colors[zoomLevel[1]][1][1])
+				$("#user_locations_attributes_100000000000_xco").val(xco)
+				$("#user_locations_attributes_100000000000_yco").val(yco)
 				$("#user_locations_attributes_100000000000_territory").val("#" + zoomLevel[1])
 				$("#submitObject").click()
 
@@ -3331,6 +3089,20 @@ $(".newObjectButton").click( function() {
 			})
 		}
 	}
+	function continentFromTerritory(territory) {
+		for (continent in continentKey) {
+			for (var i = 0; i < continentKey[continent].length; i++) {
+				if (territory == continentKey[continent][i]) {
+					return continent
+				}
+			}
+		}
+	}
+	function updateZoom(zoomLevel,mapContext) {
+		updateSideBar(zoomLevel[0])
+		renderLocation(zoomLevel,mapContext)
+		
+	}
 	function updateSideBar(level) {
 		$(".sidebar").css("display","none")
 		$("." + level).css("display","inline")
@@ -3338,6 +3110,7 @@ $(".newObjectButton").click( function() {
 		$(".subfields").css("display","none")
 	}
 	var action = {status:false}
+	var levelSprites
 </script>
 
 <div id="container">

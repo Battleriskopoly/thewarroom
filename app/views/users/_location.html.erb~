@@ -1,1 +1,1 @@
-[{name:'<%= location.name %>', territory:'<%= location.territory %>', xco:<%= location.xco %>, yco:<%= location.yco %>, id:<%= location.id %>, owner_id:<%= location.user_id %>, kind:<%= location.kindType %>}],
+{name:'<%= location.name %>', territory:'<%= location.territory %>', xco:<%= location.xco %>, yco:<%= location.yco %>, id:<%= location.id %>, owner_id:<%= location.user_id %>, kind:"<%= location.kindType %>"}],

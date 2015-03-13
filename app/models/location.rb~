@@ -2,6 +2,8 @@ class Location < ActiveRecord::Base
 	belongs_to :game
 	belongs_to :user
 	has_many :trades
- 	validates :name, presence: true, length: { maximum: 50 }
- 	validates :territory, presence: true
-end
+  	validates :xco, presence: true
+	validates :yco, presence: true
+	validates :territory, presence: true
+	validates :name, presence: true
+end  	
