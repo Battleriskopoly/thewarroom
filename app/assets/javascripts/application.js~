@@ -11,10 +11,11 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
+//= require jquery.remotipart
 //= require turbolinks
 //= require faye
-//= require comments
 //= require_tree .
 function add_fields(link, association, content) {
 console.log($(link).parent())
@@ -26,12 +27,8 @@ function clickButton(button_id) {
   document.getElementById(button_id).click();
   }
 
-$(function() {
+window.client = new Faye.Client('/faye')
 
-  var faye = new Faye.Client('http://localhost:9292/faye');
-  faye.subscribe('/' + GameAttribute.id , function (data) {
-   eval(data)
-  });
-
-//});
-
+  client.subscribe('/' + GameAttribute.id , function(data) {
+	eval(data)
+  })

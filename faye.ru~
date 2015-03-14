@@ -3,8 +3,15 @@
 require 'faye'
 Faye::WebSocket.load_adapter('thin')
 
-bayeux = Faye::RackAdapter.new(:mount => '/faye', :timeout => 25)
+KEEPALIVE_TIME = 15 # in seconds
 
-run bayeux
+def call(env)
+  if Faye::WebSocket.websocket?(env)
+	ws = Faye::WebSocket.new(env, nil, {ping: KEEPALIVE_TIME })
+  else
+    @app.call(env)
+  end
+
+run ws
 
 

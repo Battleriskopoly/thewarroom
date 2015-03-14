@@ -4,6 +4,7 @@ ruby '2.0.0'
 
 gem 'rails', '4.0.8'
 gem 'bcrypt-ruby', '3.1.2'
+gem 'faye-rails', '~> 2.0'
 
 group :development do
   gem 'sqlite3', '1.3.8'
@@ -15,7 +16,7 @@ gem 'coffee-rails', '4.0.1'
 gem 'jquery-rails', '3.0.4'
 gem 'turbolinks', '1.1.1'
 gem 'jbuilder', '1.0.2'
-
+gem 'redis'
 gem 'best_in_place'
 
 gem 'faye-rails', '~> 2.0'
