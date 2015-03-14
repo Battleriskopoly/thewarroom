@@ -275,7 +275,7 @@ logger.info @currentLocation
 			@location.game_id = @user.game_id
 			@location.capital = false
 			valid = true
-logger.info params
+=begin
 			if @location.kindType == "fort"
 				if @user.game_attributes.find_by_game_id(@user.game_id).id.to_s != Game.find(@user.game_id)[@location.territory.gsub("#","") + "_owner_id"].to_s
 					valid = false
@@ -284,14 +284,19 @@ logger.info params
 					sponsorLocation = Location.find_by_id(@location.sponsor_location_id)
 					sponsorLocation.money = sponsorLocation.money - 1553000000
 					sponsorLocation.save
+				else
+					valid = false
 				end
 			elsif @location.kindType == "camp"
 				if Location.find_by_id(@location.sponsor_location_id).money >= 100000000
 					sponsorLocation = Location.find_by_id(@location.sponsor_location_id)
 					sponsorLocation.money = sponsorLocation.money - 100000000
 					sponsorLocation.save
-				en
+				else 
+					valid = false
+				end
 			end
+=end
 			respond_to do |format|
 				if valid == true
 					if @location.save

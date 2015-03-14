@@ -275,7 +275,7 @@ logger.info @currentLocation
 			@location.game_id = @user.game_id
 			@location.capital = false
 			valid = true
-logger.info params
+=begin
 			if @location.kindType == "fort"
 				if @user.game_attributes.find_by_game_id(@user.game_id).id.to_s != Game.find(@user.game_id)[@location.territory.gsub("#","") + "_owner_id"].to_s
 					valid = false
@@ -296,6 +296,7 @@ logger.info params
 					valid = false
 				end
 			end
+=end
 			respond_to do |format|
 				if valid == true
 					if @location.save
