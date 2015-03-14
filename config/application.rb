@@ -5,7 +5,7 @@ require 'net/http'
 
 Bundler.require(*Rails.groups)
 
-module Helpdesk
+module BR
   class Application < Rails::Application
     config.middleware.delete Rack::Lock
     config.middleware.use FayeRails::Middleware, mount: '/faye', :timeout => 25
