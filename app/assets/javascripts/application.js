@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require faye
+//= require comments
 //= require_tree .
 function add_fields(link, association, content) {
 console.log($(link).parent())
@@ -23,9 +25,9 @@ console.log($(link).parent())
 function clickButton(button_id) {
   document.getElementById(button_id).click();
   }
-
-window.client = new Faye.Client('/faye')
-
-  client.subscribe('/' + GameAttribute.id , function(data) {
-	eval(data)
-  })
+  window.client = new Faye.Client('/faye')
+$(function() {
+  client.subscribe('/' + GameAttribute.id, function (data) {
+    eval(data);
+  });
+});

@@ -12,8 +12,9 @@ module ApplicationHelper
 	end
 	end
   def broadcast(channel, &block)
+	logger.info capture(&block)
     message = {:channel => channel, :data => capture(&block)}
-    uri = URI.parse("https://quiet-atoll-5580.herokuapp.com/faye")
+    uri = URI.parse("http://localhost:9292/faye")
 	Net::HTTP.post_form(uri, :message => message.to_json)
    
   end

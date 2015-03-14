@@ -3229,7 +3229,7 @@ $( document ).ready(function() {
 
 	}
 	function parseResponseObject(type,object) {
-
+console.log(type,object)
 		if (type == "location") {
 			if (typeof object.money === "undefined" && object.owner_id != User.id) {
 				Locations.push(object)

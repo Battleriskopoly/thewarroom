@@ -1,10 +1,3 @@
-# config.ru
-
 require 'faye'
-Faye::WebSocket.load_adapter('thin')
-
-bayeux = Faye::RackAdapter.new(:mount => '/faye', :timeout => 25)
-
-run bayeux
-
-
+faye_server = Faye::RackAdapter.new(:mount => '/faye', :timeout => 45)
+run faye_server
