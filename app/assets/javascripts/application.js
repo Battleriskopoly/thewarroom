@@ -11,11 +11,8 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.turbolinks
 //= require jquery_ujs
-//= require jquery.remotipart
 //= require turbolinks
-//= require faye
 //= require_tree .
 function add_fields(link, association, content) {
 console.log($(link).parent())
