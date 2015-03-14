@@ -2882,7 +2882,7 @@ $( document ).ready(function() {
 			if (parseInt("0x" + thridSeg) < 16) {
 				thridSeg = "0" + thridSeg
 			}
-
+console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#",""))
 			territoryPaths[territoryColors[i][0].replace("#","")].attr({fill:"#" + swatches[territoryColors[i][0].replace("#","")][("L" + firstSeg + secondSeg + thridSeg).toUpperCase()]})
 		}
 		territories = map.set(continents.asia,continents.africa,continents.australia,continents.europe,continents.south_america,continents.north_america)
@@ -3001,14 +3001,16 @@ $( document ).ready(function() {
 		}
 	})
 	$(".mainbutton").click( function() {
+
 		if (action.status == false) {
-		if ($(this).parent().children("div").css("display") == "none") {
-			$(this).parent().children("div").css("display","inline")
+			if ($(this).parent().children("div").css("display") == "none") {
+				$(this).parent().children("div").css("display","inline")
+			}
+			else {
+				$(this).parent().children("div").css("display","none")
+			}
 		}
-		else {
-			$(this).parent().children("div").css("display","none")
-		}
-		}
+		$(".mainbutton").parent().children("div").not($(this).parent().children("div")).css("display","none")
 		if (level = "territorial") {
 			if (territoryOwners[zoomLevel[1].replace("eastern_africa","east_africa")].owner_id != User.id) {
 				$("#buildFort").css("display","none")
@@ -3229,7 +3231,6 @@ $( document ).ready(function() {
 
 	}
 	function parseResponseObject(type,object) {
-console.log(type,object)
 		if (type == "location") {
 			if (typeof object.money === "undefined" && object.owner_id != User.id) {
 				Locations.push(object)
@@ -3264,6 +3265,56 @@ console.log(type,object)
 				<%= image_tag("militant.png", :class => "selectionSprite", :id => "militant", :width => "32") %>
 
 			</div>
+
+	<div id="trade" class="territorial sidebar">
+            <button id="trade" class="apple mainbutton">Trade</button><br>
+            <div id="orange" class="dropdown">
+                <br>
+                <div class="sushi">Location</div>
+                <select class="grape">
+                    <option>F. Anchorage</option>
+                </select>
+                <div class="sushi">Item</div>
+                <select class="grape">
+                    <option>Money</option>
+                    <option>Food Unitss</option>
+                    <option>Energy Units</option>
+                    <option>General Population</option>
+                    <option>Militants</option>
+                </select>
+                <div class="sushi">Quantity</div>
+                <input class="avacado" type="number">
+                <button class="gala">Route</button>
+                <div class="sushi">
+                    Route confirmed<br>
+                    Cost: $##,###,###.##
+                </div>
+                <h1 id="sugar">Exchange</h1>
+                <div class="sushi">Location</div>
+                <select class="grape">
+                    <option>F. Anchorage</option>
+
+                </select>
+                <div class="sushi">Item</div>
+                <select class="grape">
+                    <option>Money</option>
+                    <option>Food Unitss</option>
+                    <option>Energy Units</option>
+                    <option>General Population</option>
+                    <option>Militants</option>
+                </select>
+                <div class="sushi">Quantity</div>
+                <input class="avacado" type="number">
+                <button class="gala">Route</button>
+                <div class="sushi">
+                    Route confirmed<br>
+                    Cost: $##,###,###.##
+                </div><br>
+                <div class="sushi">Notes</div>
+                <textarea id="ham"></textarea>
+            </div>
+	</div>
+
 			<div id="fortsCamps" class="territorial sidebar">
 			    <button id="fortsCamps" class="apple mainbutton">Forts/Camps</button><br>
 			    <div class="mineola dropdown">

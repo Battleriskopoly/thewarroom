@@ -134,11 +134,12 @@ class UsersController < ApplicationController
 				end
 			end
 			@territoryOwners = Array.new
-			@territoryColors = Array.new
+			@territoryColors = Hash.new
 
 			@game.attributes.each do |attr_name, attr_value|
 				if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "players"&& attr_name != "start_date" && attr_name != "start_status" && attr_name != "user_id" && attr_name != "private" && attr_name != "invitation" && attr_value.instance_of?(NilClass) != true
 					if GameAttribute.find(attr_value).color.instance_of?(NilClass) != true
+
 						@territoryColors << Array.new
 						colorUser = GameAttribute.find(attr_value)
 						@territoryOwners << Array.new
@@ -146,9 +147,10 @@ class UsersController < ApplicationController
 						@territoryOwners[@territoryOwners.length - 1] << User.find(colorUser.user_id).username
 						@territoryOwners[@territoryOwners.length - 1] << attr_name.gsub(/\_owner_id\b/, '')
 
-						@territoryColors[@territoryColors.length - 1] << colorUser.color[0,2].insert(0, "0x").hex
-						@territoryColors[@territoryColors.length - 1] << colorUser.color[2,2].insert(0, "0x").hex
-						@territoryColors[@territoryColors.length - 1] << colorUser.color[4,6].insert(0, "0x").hex
+						@territoryColors[attr_name.gsub("_owner_id","")] = Array.new
+						@territoryColors[attr_name.gsub("_owner_id","")] << colorUser.color[0,2].insert(0, "0x").hex
+						@territoryColors[attr_name.gsub("_owner_id","")] << colorUser.color[2,2].insert(0, "0x").hex
+						@territoryColors[attr_name.gsub("_owner_id","")] << colorUser.color[4,6].insert(0, "0x").hex
 					end
 				end
 			end
@@ -275,7 +277,7 @@ logger.info @currentLocation
 			@location.game_id = @user.game_id
 			@location.capital = false
 			valid = true
-=begin
+
 			if @location.kindType == "fort"
 				if @user.game_attributes.find_by_game_id(@user.game_id).id.to_s != Game.find(@user.game_id)[@location.territory.gsub("#","") + "_owner_id"].to_s
 					valid = false
@@ -296,7 +298,7 @@ logger.info @currentLocation
 					valid = false
 				end
 			end
-=end
+
 			respond_to do |format|
 				if valid == true
 					if @location.save
