@@ -164,7 +164,6 @@ class UsersController < ApplicationController
 	def edit
 		if signed_in?
 			@user = User.find(params[:id])
-
 			@currentGameAttributes = @user.game_attributes.where(status: "t")
 
 			@user.game_attributes.where(status: "f").each do |attribute|
@@ -172,6 +171,37 @@ class UsersController < ApplicationController
 					@currentGameAttributes << attribute
 					@startingGame = Game.find(attribute.game_id)
 					@startingGame.start_status = true
+=begin
+					@startingGame.locations.build(:name=> "Fort Rio de Janeiro",  :xco => "1208", :yco=> "1416", :territory => "#eastern_south_america", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Cairo",  :xco => "1936", :yco=> "832", :territory => "#egypt", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Nuuk",  :xco => "1152", :yco=> "464", :territory => "#greenland", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Reykjavik",  :xco => "1424", :yco=> "440", :territory => "#iceland", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Mumbai",  :xco => "2352", :yco=> "944", :territory => "#india", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Jakarta",  :xco => "2680", :yco=> "1224", :territory => "#indonesia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Antananarivo",  :xco => "2104", :yco=> "1368", :territory => "#madagascar", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Jerusalem",  :xco => "1984", :yco=> "792", :territory => "#middle_east", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Ulaanbaatar",  :xco => "2672", :yco=> "616", :territory => "#mongolia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Aukland",  :xco => "3352", :yco=> "1576", :territory => "#new_zealand", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Anchorage",  :xco => "160", :yco=> "464", :territory => "#non_contiguous_united_states", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort New York",  :xco => "928", :yco=> "696", :territory => "#northeastern_united_states", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Brisbane",  :xco => "3136", :yco=> "1472", :territory => "#northern_australia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Berlin",  :xco => "1768", :yco=> "560", :territory => "#northern_europe", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Seattle",  :xco => "432", :yco=> "608", :territory => "#northwestern_united_states", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Tokyo",  :xco => "3000", :yco=> "760", :territory => "#pacific_asia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort St. Petersburg",  :xco => "1920", :yco=> "480", :territory => "#russia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Tunis",  :xco => "1744", :yco=> "744", :territory => "#sahara", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Bangkok",  :xco => "2624", :yco=> "1008", :territory => "#southeastern_asia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Maimi",  :xco => "856", :yco=> "864", :territory => "#southeastern_united_states", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Johannesburg",  :xco => "1920", :yco=> "1448", :territory => "#southern_african_territory", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Melbourne",  :xco => "3056", :yco=> "1584", :territory => "#southern_australia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Rome",  :xco => "1760", :yco=> "688", :territory => "#southern_europe", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Los Angeles",  :xco => "488", :yco=> "776", :territory => "#southwestern_united_states", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Kiev",  :xco => "1936", :yco=> "584", :territory => "#ukraine", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort London",  :xco => "1640", :yco=> "584", :territory => "#united_kingdom", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Paris",  :xco => "1656", :yco=> "616", :territory => "#western_europe", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Vancouver",  :xco => "424", :yco=> "600", :territory => "#western_canada", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Lima",  :xco => "888", :yco=> "1296", :territory => "#western_south_america", :capital => true, :kindType => "fort").save
+=end
 					@startingGame.game_attributes.each do |attribute|
 						attribute.status = true
 						@territories = Array.new
@@ -180,29 +210,23 @@ class UsersController < ApplicationController
 									@territories << territory[0]
 								end
 						end
-						@energy_units = 0
-						@food_units = 0
-						@money = 0
-						@population = 0
-						@militants = 0
 						@territories.each do |territory|
-							logger.info territory
+logger.info territory.downcase + "_owner_id"
 							@startingGame[territory.downcase + "_owner_id"] = attribute.id
-							logger.info @startingGame[territory.downcase + "_owner_id"]
-							logger.info attribute.id
-							@energy_units = @energy_units + $territoryStats[territory][2]
-							@food_units = @food_units + $territoryStats[territory][1]
-							@money = @money + $territoryStats[territory][3]
-							@population = @population + $territoryStats[territory][4]
-							@militants = @militants + $territoryStats[territory][0]
+=begin
+							@currentLocation = Location.find_by_territory("#" + territory.downcase)
+logger.info @currentLocation
+							@currentLocation.energy_units = $territoryStats[territory][2]
+							@currentLocation.food_units = $territoryStats[territory][1]
+							@currentLocation.money = $territoryStats[territory][3]
+							@currentLocation.population = $territoryStats[territory][4]
+							@currentLocation.militants = $territoryStats[territory][0]
+							@currentLocation.user_id = attribute.user_id
+							@currentLocation.save
+=end
 
 
 						end
-						attribute.energy_units = @energy_units.to_s
-						attribute.food_units = @food_units.to_s
-						attribute.money = @money.to_s
-						attribute.population = @population.to_s
-						attribute.militants = @militants.to_s
 						attribute.save
 					end
 					@startingGame.save
@@ -244,20 +268,45 @@ class UsersController < ApplicationController
 
     @user = User.find(params[:id])
 
-	logger.info @user.errors.full_messages
-
 	if  user_params[:locations_attributes] != nil
 		if user_params[:locations_attributes][:"100000000000"] != nil
+			@game = Game.find(@user.game_id)
 			@location = @user.locations.build(user_params[:locations_attributes][:"100000000000"])
 			@location.game_id = @user.game_id
-
+			@location.capital = false
+			valid = true
+logger.info params
+			if @location.kindType == "fort"
+				if @user.game_attributes.find_by_game_id(@user.game_id).id.to_s != Game.find(@user.game_id)[@location.territory.gsub("#","") + "_owner_id"].to_s
+					valid = false
+				end
+				if Location.find_by_id(@location.sponsor_location_id).money >= 1553000000
+					sponsorLocation = Location.find_by_id(@location.sponsor_location_id)
+					sponsorLocation.money = sponsorLocation.money - 1553000000
+					sponsorLocation.save
+				else
+					valid = false
+				end
+			elsif @location.kindType == "camp"
+				if Location.find_by_id(@location.sponsor_location_id).money >= 100000000
+					sponsorLocation = Location.find_by_id(@location.sponsor_location_id)
+					sponsorLocation.money = sponsorLocation.money - 100000000
+					sponsorLocation.save
+				else 
+					valid = false
+				end
+			end
 			respond_to do |format|
-				if @location.save
-					format.html { redirect_to @user, notice: 'Fort was successfully created.' }
-					format.js   {}
-					format.json { render json: @location, status: :updated, location: @user }
-					else
-
+				if valid == true
+					if @location.save
+						format.html { redirect_to @user, notice: 'Fort was successfully created.' }
+						format.js   {}
+						format.json { render json: @location, status: :updated, location: @user }
+						else
+						format.html { render action: "show" }
+						format.json { render json: @user.errors, status: :unprocessable_entity }
+					end
+				else
 					format.html { render action: "show" }
 					format.json { render json: @user.errors, status: :unprocessable_entity }
 				end
@@ -296,9 +345,7 @@ class UsersController < ApplicationController
 			redirect_to edit_user_url(@user.id)
 
 	elsif GameAttribute.where(:game_id => user_params[:game_id], :user_id => @user.id).length < 1
-		logger.info "Called"
 		@game = Game.find(user_params[:game_id])
-
 		if @game.game_attributes.length < @game.players
 			valid = true
 			if @game.private == "T"
@@ -506,7 +553,7 @@ class UsersController < ApplicationController
 
     	def user_params
 
-        params.require(:user).permit(:name, :email, :username, :password, :password_confirmation, :game_id, :color, locations_attributes: [ :kindType, :name, :xco, :yco, :territory, :id, :active_date, :game_id], pieces_attributes: [ :coordinates, :id], battles_attributes:[:user_two_id, :location_two_id, :location_two_type, :location_one_type, :location_one_id, :battle_type, :type ],games_attributes: [:game_id, :name, :private, :players, :start_date, :invitation],trades_attributes: [:cost, :sending_user_id, :recipient_user_i, :game_id, :sending_fort_id, :what, :quantity, :recipient_fort_id, legs_attributes: [:location_id, :location_type, :trade_index], trade_proposal: [:what, :quantity, :location_id, :location_type, :durration]])
+        params.require(:user).permit(:name, :email, :username, :password, :password_confirmation, :game_id, :color, locations_attributes: [ :kindType, :name, :xco, :yco, :territory, :id, :active_date, :game_id, :sponsor_location_id], pieces_attributes: [ :coordinates, :id], battles_attributes:[:user_two_id, :location_two_id, :location_two_type, :location_one_type, :location_one_id, :battle_type, :type ],games_attributes: [:game_id, :name, :private, :players, :start_date, :invitation],trades_attributes: [:cost, :sending_user_id, :recipient_user_i, :game_id, :sending_fort_id, :what, :quantity, :recipient_fort_id, legs_attributes: [:location_id, :location_type, :trade_index], trade_proposal: [:what, :quantity, :location_id, :location_type, :durration]])
 
    		end
 

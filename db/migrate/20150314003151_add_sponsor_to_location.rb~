@@ -1,0 +1,5 @@
+class AddSponsorToLocation < ActiveRecord::Migration
+  def change
+	add_column, :locations, :sponsor_location_id, :integer
+  end
+end

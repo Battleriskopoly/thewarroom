@@ -1,7 +1,8 @@
 <script>
 var territoryColors = <%= render partial: "territory_colors", locals: {territoryColors: @territoryColors} %>;
 var territoryOwners = {<%= render partial: "territory_owners", locals: {territoryOwners: @territoryOwners} %>}
-var Locations = [<%= render partial: "location", collection: @locations %>];
+var Locations = [<%= render partial: "location", collection: @locations, locals: {user: @user} %>];
+var LocationsDirectory = {}
 var rendered_battles = []
 <%= render partial: "battle", collection: @battles %>
 var rendered_trades = []
@@ -21,9 +22,50 @@ var validLine = true;
 mappingBattle = false
 var activeBattleContext = {}
 <%= render partial: "chess_pieces"%>
+var User = {username:"<%= @user.username%>",id:<%= @user.id%>,name:"<%=@user.name%>"}
+var GameAttribute = {id:<%=@user.game_attributes.find_by_game_id(@user.game_id).id%>}
 var players = {<%= render partial: "user", collection: @users %>}
 
 var territoryPaths = <%= render partial: "images"%>
+
+var continentFromTerritoryList = {central_america:"north_america",
+central_asia:"asia",
+central_south_america:"south_america",
+china:"asia",
+coastal_africa:"africa",
+coastal_south_america:"south_america",
+congo:"africa",
+eastern_africa:"africa",
+eastern_canada:"north_america",
+eastern_south_america:"south_america",
+egypt:"africa",
+greenland:"north_america",
+iceland:"europe",
+india:"asia",
+indonesia:"australia",
+madagascar:"africa",
+middle_east:"asia",
+mongolia:"asia",
+new_zealand:"australia",
+non_contiguous_united_states:"north_america",
+northeastern_united_states:"north_america",
+northern_australia:"australia",
+northern_europe:"europe",
+northwestern_united_states:"north_america",
+pacific_asia:"asia",
+russia:"asia",
+sahara:"africa",
+southeastern_asia:"asia",
+southeastern_united_states:"north_america",
+southern_african_territory:"africa",
+southern_australia:"australia",
+southern_europe:"europe",
+southwestern_united_states:"north_america",
+ukraine:"europe",
+united_kingdom:"europe",
+western_europe:"europe",
+western_canada:"north_america",
+western_south_america:"south_america"}
 
 var colors = {central_america:[ [0xe5,0x42,0x42], [488,780] ,[0.311006362]],
 central_asia:[[0xf1,0x71,0x71], [2054,526] ,[0.284473688]],
@@ -2768,7 +2810,6 @@ $( document ).ready(function() {
 
 	}
 //New Stuff 
-	var zoomLevel = ["global","globe"];
 	function initDisplay() {
 
 		$("#sidePanel").css("height",$(window).height())
@@ -2845,10 +2886,9 @@ $( document ).ready(function() {
 			territoryPaths[territoryColors[i][0].replace("#","")].attr({fill:"#" + swatches[territoryColors[i][0].replace("#","")][("L" + firstSeg + secondSeg + thridSeg).toUpperCase()]})
 		}
 		territories = map.set(continents.asia,continents.africa,continents.australia,continents.europe,continents.south_america,continents.north_america)
-
 		return {map:map, territoryPaths:territoryPaths, territories:territories, continents:continents, pathId:pathId,allTerritories:allTerritories,sprites:sprites,renderedSprites:map.set(),extremities:extremities}
 	}
-	var mapContext = initDisplay()
+	mapContext = initDisplay()
 	renderLocation(zoomLevel,mapContext)
 	var filterOne = mapContext.map.rect(0,0,mapContext.map.width,mapContext.map.height).attr({fill:"#000"}).attr("fill-opacity","0.0").toBack()
 	var filterTwo = mapContext.map.rect(0,0,mapContext.map.width,mapContext.map.height).attr({fill:"#000"}).attr("fill-opacity","0.0").toBack()
@@ -2969,6 +3009,17 @@ $( document ).ready(function() {
 			$(this).parent().children("div").css("display","none")
 		}
 		}
+		if (level = "territorial") {
+			if (territoryOwners[zoomLevel[1].replace("eastern_africa","east_africa")].owner_id != User.id) {
+				$("#buildFort").css("display","none")
+				$("#leaveFort").css("display","none")
+			}
+			else {
+				$("#leaveFort").css("display","inline")
+				$("#buildFort").css("display","inline")
+			}
+		}
+
 	})
 
 
@@ -2978,6 +3029,7 @@ $( document ).ready(function() {
 			$(".action").css("display","block")
 			$(".subfields").css("display","none")
 			$("#" + this.id + "Fields").css("display","inline")
+
 			action.status = true
 		}
 	})
@@ -2994,7 +3046,17 @@ $( document ).ready(function() {
 		if (zoomLevel[0] == "territorial") {
 			for (var i = 0; i < Locations.length; i++) {
 				if (Locations[i].territory.replace("#","") == zoomLevel[1]) {
-					visibleLocations.push(mapContext.sprites[Locations[i].kind].clone().translate((Locations[i].xco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().x,(Locations[i].yco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().y).show())
+					var location
+					if (Locations[i].owner_id == User.id) {
+						location = mapContext.sprites[Locations[i].kind].clone()
+						visibleLocations.push(location.translate((Locations[i].xco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().x,(Locations[i].yco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().y).show())
+					}
+					else {
+						location = mapContext.sprites["for" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
+						visibleLocations.push(location.translate((Locations[i].xco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().x,(Locations[i].yco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().y).show())
+					}
+					LocationsDirectory[location.id] = Locations[i]
+
 				}
 			}
 		}
@@ -3003,13 +3065,32 @@ $( document ).ready(function() {
 			mapContext.continents[zoomLevel[1]].forEach( function(el) {scaleFactor = el.matrix.a; return false})
 			for (var i = 0; i < Locations.length; i++) {
 				if (continentFromTerritory(Locations[i].territory.replace("#","")) == zoomLevel[1]) {
-					visibleLocations.push(mapContext.sprites[Locations[i].kind].clone().scale(0.5,0.5,0,0).translate(1.3333333333*((Locations[i].xco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x),2*((Locations[i].yco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)).show())
+					var location
+					if (Locations[i].owner_id == User.id) {
+						location = mapContext.sprites[Locations[i].kind].clone()
+						visibleLocations.push(location.scale(0.5,0.5,0,0).translate(2*((Locations[i].xco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x),2*((Locations[i].yco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)).show())
+
+					}
+					else {
+						location = mapContext.sprites["for" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
+						visibleLocations.push(location.scale(0.5,0.5,0,0).translate(2*((Locations[i].xco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x),2*((Locations[i].yco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)).show())
+					}
+					LocationsDirectory[location.id] = Locations[i]
 				}
 			}
 		}
 		else if (zoomLevel[0] == "global") {
 			for (var i = 0; i < Locations.length; i++) {
-				visibleLocations.push(mapContext.sprites[Locations[i].kind].clone().scale(0.25,0.25,0,0).translate(((Locations[i].xco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x)*4,((Locations[i].yco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)*4).show().toFront())
+				var location
+				if (Locations[i].owner_id == User.id) {
+					location = mapContext.sprites[Locations[i].kind].clone()
+					visibleLocations.push(location.scale(0.25,0.25,0,0).translate(((Locations[i].xco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x)*4,((Locations[i].yco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)*4).show().toFront())
+				}
+				else {
+					location = mapContext.sprites["for" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
+					visibleLocations.push(location.scale(0.25,0.25,0,0).translate(((Locations[i].xco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x)*4,((Locations[i].yco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)*4).show().toFront())
+				}
+				LocationsDirectory[location.id] = Locations[i]
 			}
 		}
 		levelSprites = visibleLocations
@@ -3047,17 +3128,45 @@ $( document ).ready(function() {
 					})
 				}	
 			})
+			$("#sponsorLocation").click( function() {
+				$("#sponsorLocation").addClass("hover")
+				levelSprites.click( function(location) {
+					var object = LocationsDirectory[this.id]
+					var cost
+					if (locationType == "fort") {
+						cost = 1553000000
+					}
+					else {
+						cost = 100000000
+					} 
+					if (object.owner_id == User.id) {
+						if (object.money >= cost) {
+							$("#user_locations_attributes_100000000000_sponsor_location_id").val(locationType)
+							$("#sponsorLocation").text(object.name)
+							levelSprites.unclick()
+							$("#sponsorLocation").removeClass("hover")
+						}
+						else {
+							promptAlert("Insufficient Funds",["Okay"])
+							$(document).on('click', '#Okay', function(){ 
+								$("#alertBox").css("display","none")
+								$("#Okay").off("click")
+							})
+						}
+					}
+				})
+			})
 			$("#submit").click( function() {
+				$("#location_fields").remove()
+				$(".edit_user")[0].reset()
 				var xco 
 				var yco
 				var scaleFactor = ((mapContext.extremities.getBBox().width/3498)*zoomLevel[3].matrix.a)/mapContext.map.bottom.matrix.a
 				if ($("#display").width() - zoomLevel[3].getBBox().width > $("#display").height() - zoomLevel[3].getBBox().height) {
-console.log(scaleFactor)
 					xco = Math.round((coordinates[0] - zoomLevel[3].getBBox().x)/scaleFactor)
 					yco = Math.round(coordinates[1]/scaleFactor)
 				}
 				else {
-console.log(scaleFactor)
 					xco = Math.round(coordinates[0]/scaleFactor)
 					yco = Math.round((coordinates[1] - zoomLevel[3].getBBox().y)/scaleFactor)
 				}
@@ -3068,14 +3177,15 @@ console.log(scaleFactor)
 				$("#user_locations_attributes_100000000000_yco").val(yco)
 				$("#user_locations_attributes_100000000000_territory").val("#" + zoomLevel[1])
 				$("#submitObject").click()
-
+				$("#sponsorLocation").removeClass("hover")
 				zoomLevel[3].unmousemove()
 				location.unclick()
 				mapContext.renderedSprites.exclude(location)
 				location.remove()
 				$("#cancel,#submit").off("click")
-				updateSideBar(zoomLevel[0]) 
+				updateSideBar(zoomLevel) 
 				action.status = false
+				$("#sponsorLocation").text("Select Sponsor")
 			})
 			$("#cancel").click( function() {
 				zoomLevel[3].unmousemove()
@@ -3083,39 +3193,65 @@ console.log(scaleFactor)
 				mapContext.renderedSprites.exclude(location)
 				location.remove()
 				$("#cancel,#submit").off("click")
-				updateSideBar(zoomLevel[0]) 
+				updateSideBar(zoomLevel) 
 				action.status = false
+				$("#sponsorLocation").text("Select Sponsor")
+				$("#sponsorLocation").removeClass("hover")
 
 			})
 		}
 	}
-	function continentFromTerritory(territory) {
-		for (continent in continentKey) {
-			for (var i = 0; i < continentKey[continent].length; i++) {
-				if (territory == continentKey[continent][i]) {
-					return continent
-				}
-			}
+	function promptAlert(message,buttons) {
+		$("#alertBox").css("display","inline")
+		$("#alertBox").children().remove()
+		$("#alertBox").append("<p>" + message + "</p><BR>")
+		for (var i = 0; i < buttons.length; i++) {
+			$("#alertBox").append("<button class='gala alertButton' id='" + buttons[i] + "' >" + buttons[i] + "</button><BR>")
 		}
+		$("#alertBox").css("margin-top",($("#display").height() - $("#alertBox").height()/2)/2)
+	}
+	function continentFromTerritory(territory) {
+		return continentFromTerritoryList[territory]
 	}
 	function updateZoom(zoomLevel,mapContext) {
-		updateSideBar(zoomLevel[0])
+		updateSideBar(zoomLevel)
 		renderLocation(zoomLevel,mapContext)
 		
 	}
-	function updateSideBar(level) {
+	function updateSideBar(zoomlevel) {
+
 		$(".sidebar").css("display","none")
-		$("." + level).css("display","inline")
+		$("." + zoomlevel[0]).css("display","inline")
 		$(".action").css("display","none")
 		$(".subfields").css("display","none")
+		$(".dropdown").css("display","none")
+
+	}
+	function parseResponseObject(type,object) {
+
+		if (type == "location") {
+			if (typeof object.money === "undefined" && object.owner_id != User.id) {
+				Locations.push(object)
+				renderLocation(zoomLevel,mapContext)
+			}
+			else if (typeof object.money !== "undefined" && object.owner_id == User.id) {
+				Locations.push(object)
+				renderLocation(zoomLevel,mapContext)
+			}
+		}
 	}
 	var action = {status:false}
 	var levelSprites
+	var zoomLevel = ["global","globe"];
+	var mapContext
 </script>
 
 <div id="container">
 <%=link_to "Log out", logout_path, method: :delete, :id=> "logout"%>
+	<div id="alertBox">
+	</div>
 	<div id="display">
+
 	</div>
 	<div id="sidePanel" class="box">
 		<div id="forms">
@@ -3134,10 +3270,12 @@ console.log(scaleFactor)
 				<button class="gala actionButton" id="buildFort">Build Fort</button>
 				<div id="buildFortFields" class="subfields">
 					<input type="text" id="fortName" class="grape" value="Fort Name"></input>
+					<button type="text" id="sponsorLocation" class="gala freeHeight">Select Sponsor</button>
 				</div>
 				<button class="gala actionButton"  id="buildCamp">Build Camp</button>
 				<div id="buildCampFields" class="subfields">
 					<input type="text" id="campName" class="grape" value="Camp Name"></input>
+					<button type="text" id="sponsorLocation" class="gala freeHeight">Select Sponsor</button>
 				</div>
 				<button class="gala actionButton" id="leaveFort">Leave Fort</button>
 				<button class="gala actionButton" id="leaveCamp">Leave Camp</button>

@@ -1,11 +1,25 @@
-<% if @piece != nil%>
+//<% if @piece != nil%>
 
-<% broadcast "/game/" << @game.id.to_s do %>
-var empty = []
-<% @empty.each do |coordinates|%>
-empty.push(<%=coordinates%>)
-<%end%>
-		appendMove({id:<%= @piece.id%>, piece_type:"<%= @piece.piece_type%>", owner_id:<%= @piece.user_id%>, battle_id:<%= @piece.battle_id%>, coordinates:"<%= @oldmove%>"}, <%= @move%>,empty,<%=@battle.turn%>)
+//<% broadcast "/game/" + @game.id.to_s do %>
+//var empty = []
+//<% @empty.each do |coordinates|%>
+//empty.push(<%=coordinates%>)
 
-<% end %>
+//<%end%>
+//	parseResponseObject({id:<%= @piece.id%>, piece_type:"<%= @piece.piece_type%>", owner_id:<%= @piece.user_id%>, battle_id:<%= @piece.battle_id%>, coordinates:"<%= @oldmove%>"}, <%= @move%>,empty,<%=@battle.turn%>)
+
+//<% end %>
+//<%end%>
+
+<%if @location != nil%>
+
+	parseResponseObject("location",{name:'<%= @location.name %>', territory:'<%= @location.territory %>', xco:<%= @location.xco %>, yco:<%= @location.yco %>, id:<%= @location.id %>, owner_id:<%= @location.user_id %>, kind:"<%= @location.kindType %>", capital:"<%= @location.capital %>", money:"<%= @location.money %>", food_units:"<%= @location.food_units %>", energy_units:"<%= @location.energy_units %>", population:"<%= @location.population %>", militants:"<%= @location.militants %>"})
+
+	<%@game.game_attributes.each do |attribute|%>
+
+		<% broadcast "/" + attribute.id.to_s do %>
+
+			parseResponseObject("location",{name:'<%= @location.name %>', territory:'<%= @location.territory %>', xco:<%= @location.xco %>, yco:<%= @location.yco %>, id:<%= @location.id %>, owner_id:<%= @location.user_id %>, kind:"<%= @location.kindType %>", capital:"<%= @location.capital %>"})
+		<%end%>
+	<% end %>
 <%end%>

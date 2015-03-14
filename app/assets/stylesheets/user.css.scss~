@@ -68,12 +68,17 @@ input[type=submit]:hover, input[type=button]:hover, button:hover {
 .selectionSprite {
 	display:none;
 }
-
+.freeHeight {
+	height:auto !important;
+}
 #sidePanel {
 	width:15%;
-	margin-left:84%;
+	margin-left:85%;
 	background-color:#1cbcbb;
 	position:absolute;
+}
+.alertButton {
+	margin-left:0px !important;
 }
 #container {
 	width:100%;
@@ -91,8 +96,19 @@ html {
 position:absolute;
 }
 
-
-
+#alertBox {
+	border-style: solid;
+	border-width: 2px;
+	width:21.25%;
+	position:absolute;
+	z-index:100;
+	margin-left:31.875%;
+	margin-top:20%;
+	background-color:#1cbccb;
+	padding:15px;
+	display:none;
+	text-align:center;
+}
 
 /*CLASSES*/
 
@@ -116,7 +132,9 @@ position:absolute;
 .apple:hover {
     color:#1cbccb;
 }
-
+.hover {
+    color:#1cbccb;
+}
 .gala {
     height:30px;
     width:80%;
@@ -164,6 +182,7 @@ position:absolute;
 }
 
 .grape {
+    margin-top:10px;
     height:20px;
     width:70%;
     font-family:monospace;
@@ -171,7 +190,6 @@ position:absolute;
     background-color:#000000;
     border:#1cbccb;
     margin-left:15%;
-    margin-bottom:10px;
 }
 
 

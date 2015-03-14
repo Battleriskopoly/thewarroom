@@ -6,4 +6,5 @@ class Location < ActiveRecord::Base
 	validates :yco, presence: true, numericality: { only_integer: true }
 	validates :territory, presence: true
 	validates :name, presence: true
+	validates :sponsor_location_id, presence: true
 end  	
