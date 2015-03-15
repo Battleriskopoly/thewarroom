@@ -1,9 +1,12 @@
 <script>
 var gameId = -1
+var GameAttribute = {id:-1}
 	$( document ).ready(function() {
 		$(".edit_user")[0].reset()
 			$("#game_id").val("")
+			$("#game_id").val("new")
 		$(".swatchButton").click( function() {
+console.log()
 			$("#placement").children().remove()
 			console.log(".swatchImage#" + this.id)
 			$("#placement").html($(".swatchImage#" + this.id).clone().css("display","inline"))
@@ -49,7 +52,7 @@ body {
 <%= form_for(@user) do |f| %>
       <%= render 'shared/error_messages' %>
 
-	<%= f.hidden_field :game_id, :id => "game_id" %>
+	<%= f.hidden_field :game_id, :id => "game_id", :value=> "new" %>
 	<%= f.hidden_field :color, :id => "color" %>
 	<%= f.fields_for :games_attributes do |builder| %>
 	   	<%= builder.label :name, "Name:"%>

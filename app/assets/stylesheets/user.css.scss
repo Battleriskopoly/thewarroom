@@ -77,6 +77,11 @@ input[type=submit]:hover, input[type=button]:hover, button:hover {
 	background-color:#1cbcbb;
 	position:absolute;
 }
+#bottomPanel {
+	width:85%;
+	background-color:#1cbcbb;
+	position:absolute;
+}
 .alertButton {
 	margin-left:0px !important;
 }
@@ -237,7 +242,7 @@ position:absolute;
 	bottom:10px;
 	position:absolute;
 }
-#ham {
+.ham {
     font-family:monospace;
     background-color:#000000;
     color:#ffffff;

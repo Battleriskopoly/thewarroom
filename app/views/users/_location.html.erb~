@@ -1,5 +1,5 @@
-<%if location.user_id == @user.id%>
-{name:'<%= location.name %>', territory:'<%= location.territory %>', xco:<%= location.xco %>, yco:<%= location.yco %>, id:<%= location.id %>, owner_id:<%= location.user_id %>, kind:"<%= location.kindType %>", capital:"<%= location.capital %>", capital:"<%= location.money %>", capital:"<%= location.food_units %>", capital:"<%= location.energy_units %>", capital:"<%= location.population %>", capital:"<%= location.militants %>"},
+<%if location.user_id == user.id%>
+{name:'<%= location.name %>', territory:'<%= location.territory %>', xco:<%= location.xco %>, yco:<%= location.yco %>, id:<%= location.id %>, owner_id:<%= location.user_id %>, kind:"<%= location.kindType %>", capital:"<%= location.capital %>", money:"<%= location.money %>", capital:"<%= food_units.food_units %>", capital:"<%= energy_units.energy_units %>", population:"<%= location.population %>", militants:"<%= location.militants %>"},
 <%else%>
 {name:'<%= location.name %>', territory:'<%= location.territory %>', xco:<%= location.xco %>, yco:<%= location.yco %>, id:<%= location.id %>, owner_id:<%= location.user_id %>, kind:"<%= location.kindType %>", capital:"<%= location.capital %>"},
 <%end%>

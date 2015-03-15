@@ -18,7 +18,7 @@
 
 	<%@game.game_attributes.each do |attribute|%>
 console.log('/<%=attribute.id%>')
-		publisher = client.publish('/<%=attribute.id%>', 'parseResponseObject("location",{name:"<%= @location.name %>", territory:"<%= @location.territory %>", xco:<%= @location.xco %>, yco:<%= @location.yco %>, id:<%= @location.id %>, owner_id:<%= @location.user_id %>, kind:"<%= @location.kindType %>", capital:"<%= @location.capital %>"})'
+		publisher = client.publish('/<%=attribute.id%>', 'parseResponseObject("location",{name:"<%= @location.name %>", territory:"<%= @location.territory %>", xco:<%= @location.xco %>, yco:<%= @location.yco %>, id:<%= @location.id %>, owner_id:<%= @location.user_id %>, kind:"<%= @location.kindType %>", capital:"<%= @location.capital %>"})')
 console.log(publisher)
 	<% end %>
 <%end%>

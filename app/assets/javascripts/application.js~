@@ -27,7 +27,7 @@ function clickButton(button_id) {
   }
   window.client = new Faye.Client('/faye')
 $(function() {
-  client.subscribe('/' + GameAttribute.id, function (data) {
-    eval(data);
-  });
+ // client.subscribe('/' + GameAttribute.id, function (data) {
+   // eval(data);
+  //});
 });

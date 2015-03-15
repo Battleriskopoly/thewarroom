@@ -1,0 +1,4 @@
+class AddNotesToTrades < ActiveRecord::Migration
+  def change
+  end
+end

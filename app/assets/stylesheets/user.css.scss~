@@ -77,6 +77,11 @@ input[type=submit]:hover, input[type=button]:hover, button:hover {
 	background-color:#1cbcbb;
 	position:absolute;
 }
+#bottomPanel {
+	width:85%;
+	background-color:#1cbcbb;
+	position:absolute;
+}
 .alertButton {
 	margin-left:0px !important;
 }
@@ -133,7 +138,7 @@ position:absolute;
     color:#1cbccb;
 }
 .hover {
-    color:#1cbccb;
+    color:#1cbccb !important;
 }
 .gala {
     height:30px;

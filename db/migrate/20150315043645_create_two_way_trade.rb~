@@ -1,0 +1,6 @@
+class CreateTwoWayTrade < ActiveRecord::Migration
+  def change
+    create_table :two_way_trades do |t|
+    end
+  end
+end

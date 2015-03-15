@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150314060050) do
+ActiveRecord::Schema.define(version: 20150315055745) do
 
 # Could not dump table "battles" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
@@ -118,6 +118,16 @@ ActiveRecord::Schema.define(version: 20150314060050) do
     t.datetime "updated_at"
   end
 
+  create_table "notifications", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "game_id"
+    t.string   "message"
+    t.boolean  "accept_status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "action"
+  end
+
 # Could not dump table "pieces" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
 
@@ -132,6 +142,11 @@ ActiveRecord::Schema.define(version: 20150314060050) do
     t.integer  "sending_location_id"
     t.integer  "recipient_location_id"
     t.float    "cost"
+    t.string   "forwhat"
+    t.integer  "forquantity"
+    t.text     "notes"
+    t.datetime "completion_date"
+    t.boolean  "accepted_status"
   end
 
   create_table "users", force: true do |t|

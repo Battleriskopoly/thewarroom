@@ -11,6 +11,8 @@ var swatches = <%= render partial: "swatch_list"%>
 var userId = <%=@user.id%>
 var trading = false;
 var selected;
+var globalItinerary
+var globalSelectedIndex
 var stop = false
 var possibleMoves 
 var movingObject = -1
@@ -35,7 +37,7 @@ china:"asia",
 coastal_africa:"africa",
 coastal_south_america:"south_america",
 congo:"africa",
-eastern_africa:"africa",
+east_africa:"africa",
 eastern_canada:"north_america",
 eastern_south_america:"south_america",
 egypt:"africa",
@@ -67,44 +69,44 @@ western_europe:"europe",
 western_canada:"north_america",
 western_south_america:"south_america"}
 
-var colors = {central_america:[ [0xe5,0x42,0x42], [488,780] ,[0.311006362]],
-central_asia:[[0xf1,0x71,0x71], [2054,526] ,[0.284473688]],
- central_south_america:[[0xfb,0x07,0x07], [822,1020],[0.402101331]], 
-china:[[0xfb,0x07,0xca], [2342,542] ,[0.073106002]], 
-coastal_africa:[[0xd0,0x2e,0xb0], [1436,959] ,[0.653478724]], 
-coastal_south_america:[[0xc4,0x56,0xae], [908,1340] ,[1.025283875]],
- congo:[[0x87,0x13,0x70], [1720,1015] ,[4.093718719]], 
-eastern_africa:[[0x96,0x0e,0xbd], [1844,887] ,[3.45647866]], 
-eastern_canada:[[0xc1,0x52,0xe1], [394,206] ,[0.338781336]], 
-eastern_south_america:[[0xc6,0x00,0xff], [904,1088] ,[1.078443444]], 
-egypt:[[0x5d,0x1e,0x6f], [1724,774] ,[0.143233025]], 
-greenland:[[0x48,0x0e,0xcb], [918,204] ,[1]],
- iceland:[[0x84,0x55,0xef], [1393,399] ,[0.566702988]],
- india:[[0x32,0x3a,0xde], [2278,786] ,[0.023725458]], 
-indonesia:[[0x5f,0x65,0xd0], [2558,1084] ,[0.177003406]], 
-madagascar:[[0x5f,0xa4,0xd0], [2052,1280] ,[2.751700999]],
- middle_east:[[0x0f,0x97,0xed], [1868,664] ,[0.218084511]], 
-mongolia:[[0x33,0x79,0xa6], [2480,568] ,[8.573449039]], 
-new_zealand:[[0x06,0xb5,0x6d], [3010,1163] ,[0.292389938]],
-non_contiguous_united_states:[[0x7e,0xc2,0xed], [0,340] ,[1.555525194]],
- northeastern_united_states:[[0x30,0xcf,0xd5], [704,596] ,[0.02432892]], 
-northern_australia:[[0x6b,0xf6,0xfb], [2872,1260] ,[1.060924816]], 
-northern_europe:[[0x22,0x7f,0x82], [1647,500] ,[0.03048697]],
+var colors = {central_america:[ [0xe5,0x42,0x42], [496,571] ,[0.311006362]],
+central_asia:[[0xf1,0x71,0x71], [2072,317] ,[0.284473688]],
+ central_south_america:[[0xfb,0x07,0x07], [849,803],[0.402101331]], 
+china:[[0xfb,0x07,0xca], [2360,324] ,[0.073106002]], 
+coastal_africa:[[0xd0,0x2e,0xb0], [1468,752] ,[0.653478724]], 
+coastal_south_america:[[0xc4,0x56,0xae], [921,1134] ,[1.025283875]],
+ congo:[[0x87,0x13,0x70], [1746,817],[4.093718719]], 
+east_africa:[[0x96,0x0e,0xbd], [1853,678] ,[3.45647866]], 
+eastern_canada:[[0xc1,0x52,0xe1], [385,10] ,[0.338781336]], 
+eastern_south_america:[[0xc6,0x00,0xff], [918,879] ,[1.078443444]], 
+egypt:[[0x5d,0x1e,0x6f], [1730,567] ,[0.143233025]], 
+greenland:[[0x48,0x0e,0xcb], [917,0] ,[1]],
+ iceland:[[0x84,0x55,0xef], [1399,193] ,[0.566702988]],
+ india:[[0x32,0x3a,0xde], [2305,580] ,[0.023725458]], 
+indonesia:[[0x5f,0x65,0xd0], [2569,872] ,[0.177003406]], 
+madagascar:[[0x5f,0xa4,0xd0], [2062,1141] ,[2.751700999]],
+ middle_east:[[0x0f,0x97,0xed], [1893,450] ,[0.218084511]], 
+mongolia:[[0x33,0x79,0xa6], [2499,355] ,[8.573449039]], 
+new_zealand:[[0x06,0xb5,0x6d], [3013,953] ,[0.292389938]],
+non_contiguous_united_states:[[0x7e,0xc2,0xed], [0,137] ,[1.555525194]],
+ northeastern_united_states:[[0x30,0xcf,0xd5], [703,379] ,[0.02432892]], 
+northern_australia:[[0x6b,0xf6,0xfb], [2880,1062] ,[1.060924816]], 
+northern_europe:[[0x22,0x7f,0x82], [422,385] ,[0.03048697]],
  northwestern_united_states:[[0x67,0x91,0x93], [414,598] ,[0.145380297]], 
-pacific_asia:[[0x73,0xe1,0xb4], [2834,526] ,[0.014887273]], 
- russia:[[0x23,0xab,0x73], [1902,206] ,[0.484910872]],
- sahara:[[0x23,0xab,0x33], [1454,730] ,[1.277875253]], 
-southeastern_asia:[[0x7b,0xe1,0x87], [2406,800] ,[0.123679885]], 
-southeastern_united_states:[[0x00,0xff,0x1e], [718,734] ,[0.03018645]], 
-southern_african_territory:[[0x19,0x77,0x24], [1732,1242] ,[0.986084614]],
- southern_australia:[[0x50,0x7E,0x55], [2714,1296] ,[0.442689699]], 
-southern_europe:[[0x8f,0xc6,0x40], [1688,602] ,[0.035175045]], 
-southwestern_united_states:[[0x51,0x8a,0x00], [406,660] ,[0.059710917]],
- ukraine:[[0x97,0xde,0x32], [1660,340] ,[0.076732312]], 
-united_kingdom:[ [0x19,0xaf,0xe0], [1522,490] ,[0.01625007]],
- western_europe:[[0x8a,0xa6,0x33], [1520,578] ,[0.018317252]],
- western_canada:[ [0xff,0xea,0x3d], [250,349] ,[1.358437809]], 
-western_south_america:[[0xea,0xdb,0x35], [834,1143] ,[2.043553816]]};
+pacific_asia:[[0x73,0xe1,0xb4], [2854,331] ,[0.014887273]], 
+ russia:[[0x23,0xab,0x73], [1909,26] ,[0.484910872]],
+ sahara:[[0x23,0xab,0x33], [1472,512] ,[1.277875253]], 
+southeastern_asia:[[0x7b,0xe1,0x87], [2421,597] ,[0.123679885]], 
+southeastern_united_states:[[0x00,0xff,0x1e], [728,522] ,[0.03018645]], 
+southern_african_territory:[[0x19,0x77,0x24], [1754,1031] ,[0.986084614]],
+ southern_australia:[[0x50,0x7E,0x55], [2746,1092] ,[0.442689699]], 
+southern_europe:[[0x8f,0xc6,0x40], [1702,395] ,[0.035175045]], 
+southwestern_united_states:[[0x51,0x8a,0x00], [423,452] ,[0.059710917]],
+ ukraine:[[0x97,0xde,0x32], [1659,122] ,[0.076732312]], 
+united_kingdom:[ [0x19,0xaf,0xe0], [1537,277] ,[0.01625007]],
+ western_europe:[[0x8a,0xa6,0x33], [1546,367] ,[0.018317252]],
+ western_canada:[ [0xff,0xea,0x3d], [263,131] ,[1.358437809]], 
+western_south_america:[[0xea,0xdb,0x35], [846,938] ,[2.043553816]]};
 
 var color_key = {asia:[ [0x32,0x7c,0x00], [1844,226], [1662,1018],[1601.740805811558,902.0121478109274]], australia:[ [0x00,0x7c,0x78], [2546,1080], [868,640],[813.8564664278806,587.0005811784008]], africa:[ [0x2f,0x44,0x5a], [1444,724], [722,842],[673.9313422648022,807.502404949169]], europe:[ [0x5a,0x4c,0x2f], [1390,332], [654,442],[629.4471658304692,391.7846088201245]], north_america:[ [0x43,0x5a,0x2f], [0,178], [1532,912],[454.36824505888626,853.0609332048721]], south_america:[ [0x53,0x2f,0x5a], [798,1008], [528,786],[454.36824505888626,751.2988526644504]]};
 
@@ -112,7 +114,7 @@ var color_key = {asia:[ [0x32,0x7c,0x00], [1844,226], [1662,1018],[1601.74080581
 
 var continentKey ={ asia:["central_asia","china","southeastern_asia","russia","mongolia","pacific_asia","india","middle_east"],
 australia:["northern_australia","southern_australia","new_zealand","indonesia"],
-africa:["sahara","egypt","congo","eastern_africa","southern_african_territory","madagascar","coastal_africa"],
+africa:["sahara","egypt","congo","east_africa","southern_african_territory","madagascar","coastal_africa"],
 europe:["northern_europe","southern_europe","western_europe","ukraine","united_kingdom","iceland"],
 north_america:["northeastern_united_states","northwestern_united_states","southeastern_united_states","southwestern_united_states","eastern_canada","western_canada","greenland","central_america","non_contiguous_united_states"],
 south_america:["coastal_south_america","eastern_south_america","western_south_america","central_south_america"]};
@@ -2813,7 +2815,9 @@ $( document ).ready(function() {
 	function initDisplay() {
 
 		$("#sidePanel").css("height",$(window).height())
-		var map = Raphael($("#display")[0],"100%",$(window).height())
+		$("#bottomPanel").css("height",$(window).height()*0.1)
+		$("#bottomPanel").css("margin-top",$(window).height()*0.9)
+		var map = Raphael($("#display")[0],"100%",$(window).height()*0.9)
 		continents = {africa:map.set(),asia:map.set(),europe:map.set(),australia:map.set(),north_america:map.set(),south_america:map.set()}
 		var allTerritories = map.set()
 		var pathId = {}
@@ -2882,7 +2886,6 @@ $( document ).ready(function() {
 			if (parseInt("0x" + thridSeg) < 16) {
 				thridSeg = "0" + thridSeg
 			}
-console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#",""))
 			territoryPaths[territoryColors[i][0].replace("#","")].attr({fill:"#" + swatches[territoryColors[i][0].replace("#","")][("L" + firstSeg + secondSeg + thridSeg).toUpperCase()]})
 		}
 		territories = map.set(continents.asia,continents.africa,continents.australia,continents.europe,continents.south_america,continents.north_america)
@@ -2890,13 +2893,13 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 	}
 	mapContext = initDisplay()
 	renderLocation(zoomLevel,mapContext)
-	var filterOne = mapContext.map.rect(0,0,mapContext.map.width,mapContext.map.height).attr({fill:"#000"}).attr("fill-opacity","0.0").toBack()
-	var filterTwo = mapContext.map.rect(0,0,mapContext.map.width,mapContext.map.height).attr({fill:"#000"}).attr("fill-opacity","0.0").toBack()
+	filterOne = mapContext.map.rect(0,0,mapContext.map.width,mapContext.map.height).attr({fill:"#000"}).attr("fill-opacity","0.0").toBack()
+	filterTwo = mapContext.map.rect(0,0,mapContext.map.width,mapContext.map.height).attr({fill:"#000"}).attr("fill-opacity","0.0").toBack()
 	filters = mapContext.map.set(filterOne,filterTwo)
 	mapContext.territories.forEach( function(continent) {
 
 		continent.click( function() {
-			if (action.status == false) {
+			if (action.status == false || (action.status == true && action.type == "trade")) {
 				if (zoomLevel[0] == "global") {
 
 					filterOne.attr("fill-opacity","0.90").toFront()
@@ -2956,8 +2959,12 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 									this.scale($("#display").width()/territoryBBox.width, $("#display").width()/territoryBBox.width,0,0) 
 								this.translate(-1*((territoryBBox.x + (territoryBBox.width/2))) + (($("#display").width()/2)/($("#display").width()/territoryBBox.width)),-1*((territoryBBox.y + (territoryBBox.height/2))) + (($("#display").height()/2)/($("#display").width()/territoryBBox.width))) 
 								}
+
 								zoomLevel = ["territorial",continentKey[zoomLevel[1]][i],zoomLevel[1],this]
 								updateZoom(zoomLevel,mapContext)
+								if (action.type == "trade") {
+									$("#routeTrade").click()
+								}
 							}
 						}
 					}
@@ -2967,7 +2974,7 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 	})
 
 	filters.click( function() {
-		if (action.status == false) {
+		if (action.status == false || (action.status == true && action.type == "trade")) {
 			if (zoomLevel[0] == "territorial") {
 
 				filterOne.attr("fill-opacity","0.90")
@@ -3002,7 +3009,7 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 	})
 	$(".mainbutton").click( function() {
 
-		if (action.status == false) {
+		if (action.status == false || (action.status == true && action.type == "trade")) {
 			if ($(this).parent().children("div").css("display") == "none") {
 				$(this).parent().children("div").css("display","inline")
 			}
@@ -3012,7 +3019,7 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 		}
 		$(".mainbutton").parent().children("div").not($(this).parent().children("div")).css("display","none")
 		if (level = "territorial") {
-			if (territoryOwners[zoomLevel[1].replace("eastern_africa","east_africa")].owner_id != User.id) {
+			if (territoryOwners[zoomLevel[1].replace("east_africa","east_africa")].owner_id != User.id) {
 				$("#buildFort").css("display","none")
 				$("#leaveFort").css("display","none")
 			}
@@ -3031,8 +3038,8 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 			$(".action").css("display","block")
 			$(".subfields").css("display","none")
 			$("#" + this.id + "Fields").css("display","inline")
-
 			action.status = true
+			action.type = this.id
 		}
 	})
 
@@ -3041,6 +3048,7 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 
 });
 	function renderLocation(zoomLevel,mapContext) {
+
 		if (typeof levelSprites !== "undefined") {
 			levelSprites.remove()
 		}
@@ -3055,10 +3063,23 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 					}
 					else {
 						location = mapContext.sprites["for" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
+
 						visibleLocations.push(location.translate((Locations[i].xco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().x,(Locations[i].yco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().y).show())
 					}
 					LocationsDirectory[location.id] = Locations[i]
-
+					LocationsDirectory["object" + Locations[i].id] = location
+					if (action.type == "trade") {
+						for (var y = 0; y < globalItinerary.length; y++) {
+							if (globalItinerary[y].id == Locations[i].id) {
+								if (y == globalSelectedIndex || (y == globalSelectedIndex - 1 && globalSelectedIndex == globalItinerary.length)) {
+									location.attr({src:mapContext.sprites[Locations[i].kind + "Sel"].attr("src")})
+								}
+								else {
+									location.attr({src:mapContext.sprites[Locations[i].kind + "SelPast"].attr("src")})
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -3078,6 +3099,19 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 						visibleLocations.push(location.scale(0.5,0.5,0,0).translate(2*((Locations[i].xco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x),2*((Locations[i].yco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)).show())
 					}
 					LocationsDirectory[location.id] = Locations[i]
+					LocationsDirectory["object" + Locations[i].id] = location
+					if (action.type == "trade") {
+						for (var y = 0; y < globalItinerary.length; y++) {
+							if (globalItinerary[y].id == Locations[i].id) {
+								if (y == globalSelectedIndex || (y == globalSelectedIndex - 1 && globalSelectedIndex == globalItinerary.length)) {
+									location.attr({src:mapContext.sprites[Locations[i].kind + "Sel"].attr("src")})
+								}
+								else {
+									location.attr({src:mapContext.sprites[Locations[i].kind + "SelPast"].attr("src")})
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -3089,10 +3123,24 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 					visibleLocations.push(location.scale(0.25,0.25,0,0).translate(((Locations[i].xco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x)*4,((Locations[i].yco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)*4).show().toFront())
 				}
 				else {
+console.log(Locations[i].territory.replace("#",""))
 					location = mapContext.sprites["for" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
 					visibleLocations.push(location.scale(0.25,0.25,0,0).translate(((Locations[i].xco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x)*4,((Locations[i].yco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)*4).show().toFront())
 				}
 				LocationsDirectory[location.id] = Locations[i]
+				LocationsDirectory["object" + Locations[i].id] = location
+				if (action.type == "trade") {
+					for (var y = 0; y < globalItinerary.length; y++) {
+						if (globalItinerary[y].id == Locations[i].id) {
+							if (y == globalSelectedIndex || (y == globalSelectedIndex - 1 && globalSelectedIndex == globalItinerary.length)) {
+								location.attr({src:mapContext.sprites[Locations[i].kind + "Sel"].attr("src")})
+							}
+							else {
+								location.attr({src:mapContext.sprites[Locations[i].kind + "SelPast"].attr("src")})
+							}
+						}
+					}
+				}
 			}
 		}
 		levelSprites = visibleLocations
@@ -3102,6 +3150,473 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 	}
 	function buildCamp(zoomLevel,mapContext) {
 		buildLocation("camp",zoomLevel,mapContext)
+	}
+	function deselect(itinerary) {
+		for (var i = 0; i < itinerary.length; i++) {
+			LocationsDirectory["object" + itinerary[i].id].attr({src:mapContext.sprites[itinerary[i].kind + "SelPast"].attr("src")})
+		}
+	}
+	function select(location) {
+
+		location.attr({src:mapContext.sprites[LocationsDirectory[location.id].kind + "Sel"].attr("src")})
+	}
+	function trade(empty,forarchitchture) {
+		var itinerary = []
+		globalItinerary = itinerary
+		var tradeLines = mapContext.map.set()
+		var cost
+		var seapoints = mapContext.map.set()
+		var selectedIndex = 0
+		globalSelectedIndex = selectedIndex
+		$("#quantity").change( function() {
+			var quantity = 0
+			if ($.isNumeric($("#quantity").val()) == true) {
+console.log(cost,"true")
+				quantity = parseInt($("#quantity").val())
+			}
+			$("#routeTrade").text(addCommas((cost*quantity).toString()))
+		})
+		$("#routeTrade").click( function() {
+			$("#routeTrade").addClass("hover")
+			levelSprites.click( function() {
+
+				if (this.attr("src") == mapContext.sprites.fort.attr("src") || this.attr("src") == mapContext.sprites.camp.attr("src")) {
+					var valid = true
+					if (selectedIndex == 0) {
+						if (LocationsDirectory[this.id].owner_id != User.id) {
+							valid = false
+							promptAlert("You must start a trade from one of your own locations." ["Okay"])
+							$("#Okay").click( function() {
+								$("#Okay").off("click")
+								$("#alertBox").css("display","none")
+							})
+						}
+					}
+					var fakeItinerary = itinerary.slice()
+					fakeItinerary[selectedIndex] = LocationsDirectory[this.id]
+					if (validateTradeRoute(fakeItinerary) == false) {
+						valid = false
+					}
+					if (valid == true) {
+						if (typeof itinerary[selectedIndex] !== "undefined") {
+							LocationsDirectory["object" + itinerary[selectedIndex].id].attr({src:mapContext.sprites[itinerary[selectedIndex].kind].attr("src")})
+						}
+
+						itinerary[selectedIndex] = LocationsDirectory[this.id]
+						if (selectedIndex == itinerary.length - 1) {
+							selectedIndex++
+						}
+						globalItinerary = itinerary
+						globalSelectedIndex = selectedIndex
+						selectedLocation = LocationsDirectory[this.id]
+						if (typeof tradeLines !== "undefined") {
+							tradeLines.remove()
+						}
+						deselect(itinerary)
+						this.attr({src:mapContext.sprites[LocationsDirectory[this.id].kind + "Sel"].attr("src")})
+		 				tradeLines = renderTrade(zoomLevel,mapContext,itinerary)
+						var quantity = 0
+						if ($.isNumeric($("#quantity").val()) == true) {
+							quantity = parseInt($("#quantity").val())
+						}
+						cost = Math.round(calculateTradeCost(mapContext,itinerary))
+console.log(cost)
+						$("#routeTrade").text(addCommas((cost*quantity).toString()))
+					}
+				}
+				else if (this.attr("src") == mapContext.sprites.fortSel.attr("src") || this.attr("src") == mapContext.sprites.campSel.attr("src")) {
+					deselect(itinerary)
+					select(LocationsDirectory["object" + itinerary[itinerary.length - 1].id])
+
+					selectedIndex = itinerary.length
+					globalSelectedIndex = selectedIndex
+					}
+				else if (this.attr("src") == mapContext.sprites.fortSelPast.attr("src") || this.attr("src") == mapContext.sprites.campSelPast.attr("src")) {
+					deselect(itinerary)
+					select(this)
+					for (var i = 0; i < itinerary.length; i++) {
+						if (itinerary[i].id == LocationsDirectory[this.id].id) {
+							selectedIndex = i
+						}
+					}
+					globalSelectedIndex = selectedIndex
+				}
+			})
+			seapoints.click( function() {
+				if (this.attr("src") == mapContext.sprites.seapointSel.attr("src")) {
+					deselect(itinerary)
+					select(LocationsDirectory["object" + itinerary[itinerary.length - 1]])
+					selectedIndex = itinerary.length
+					globalSelectedIndex = selectedIndex
+				}
+				else if (this.attr("src") == mapContext.sprites.seapointSelPast.attr("src")) {
+					deselect(itinerary)
+					select(this)
+					for (var i = 0; i < itinerary.length; i++) {
+						if (itinerary[i].id == LocationsDirectory[this].id) {
+							selectedIndex = i
+						}
+					}
+					globalSelectedIndex = selectedIndex
+				}
+			})
+			$(mapContext.map.canvas).click( function(e) {
+				if (zoomLevel[0] == "global") {
+					if (itinerary.length != 0) {
+
+						if ( mapContext.map.getElementByPoint(e.pageX,e.pageY).id == filterTwo.id ||  mapContext.map.getElementByPoint(e.pageX,e.pageY).id == filterOne.id) {
+							var fakeItinerary = itinerary.slice()
+							var extremitiesBBox = mapContext.extremities.getBBox()
+							var xco 
+							var yco
+							if (extremitiesBBox.width/$("#display").width() > extremitiesBBox.height/$("#display").height()) {
+								xco = e.pageX/(mapContext.map.bottom.matrix.a)
+								yco = (e.pageY/(mapContext.map.bottom.matrix.a)) + extremitiesBBox.y
+							}
+							else {
+								yco = e.pageY/(mapContext.map.bottom.matrix.a)
+								xco = (e.pageX/(mapContext.map.bottom.matrix.a)) + extremitiesBBox.x
+							}
+							fakeItinerary[selectedIndex] = {kind:"seapoint",yco:yco,xco:xco,id:Math.random()}
+							if (validateTradeRoute(fakeItinerary) == true) {
+								promptAlert("Would you like to place a seapoint?", ["Yes","No"])
+								$("#No").click( function() {
+									$("#alertBox").css("display","none")
+									$("#Yes,#No").off("click")
+								})
+								$("#Yes").click( function() {
+									$("#alertBox").css("display","none")
+									$("#Yes,#No").off("click")
+									var extremitiesBBox = mapContext.extremities.getBBox()
+									var xco 
+									var yco
+									if (extremitiesBBox.width/$("#display").width() > extremitiesBBox.height/$("#display").height()) {
+										xco = e.pageX/(mapContext.map.bottom.matrix.a)
+										yco = (e.pageY/(mapContext.map.bottom.matrix.a)) + extremitiesBBox.y
+									}
+									else {
+										yco = e.pageY/(mapContext.map.bottom.matrix.a)
+										xco = (e.pageX/(mapContext.map.bottom.matrix.a)) + extremitiesBBox.x
+									}
+									var seapointObject = {kind:"seapoint",yco:yco,xco:xco,id:Math.random()}
+									var seapoint = mapContext.seapointSel.clone().show().translate(e.pageX,e.pageY)
+									LocationsDirectory["object" + seapointObject.id] = seapoint
+									LocationsDirectory[seapoint.id] = seapointObject
+									itinerary[selectedIndex] = seapointObject
+									globalItinerary = itinerary
+									if (selectedIndex == itinerary.length - 1) {
+										selectedIndex++
+										globalSelectedIndex = selectedIndex
+									}
+									selectedLocation = seapointObject
+									seapoints.push(seapoint)
+									if (typeof tradeLines !== "undefined") {
+										tradeLines.remove()
+									}
+									
+					 				tradeLines = renderTrade(zoomLevel,mapContext,itinerary)
+									var quantity = 0
+									if ($.isNumeric($("#quantity").val()) == true) {
+										quantity = parseInt($("#quantity").val())
+									}
+									cost = Math.round(calculateTradeCost(mapContext,itinerary))
+									$("#routeTrade").text(addCommas((cost*quantity).toString()))
+								})
+							}
+							else {
+								promptAlert("You must stop at a location in every foreign territory you pass through.", ["Okay"])
+								$("#Okay").click( function() {
+									$("#Okay").off("click")
+									$("#alertBox").css("display","none")
+								})
+							}
+						}
+					}
+				}
+			})			
+		})
+		$("#submit").click( function() {
+			if (itinerary[0][$("#what").val()] > $("#quantity").val() && itinerary[0].money > cost) {
+				$("#trade_fields").remove()
+				$("#leg_fields").remove()
+				$(".edit_user")[0].reset()
+				$("#create_trade").click()
+				$("#user_trades_attributes_100000000000_what").val($("#what").val())
+				$("#user_trades_attributes_100000000000_quantity").val($("#quantity").val())
+				$("#user_trades_attributes_100000000000_forwhat").val($("#forwhat").val())
+				$("#user_trades_attributes_100000000000_forquantity").val($("#forquantity").val())
+				$("#user_trades_attributes_100000000000_cost").val(cost)
+				$("#user_trades_attributes_100000000000_notes").val($("#notes").val())
+				for (var i = 0; i < itinerary.length; i++) {
+					$("#create_leg").click()
+					$("#user_trades_attributes_100000000000_legs_attributes_" + 99999999999 + i + 1 + "_location_id").val(itinerary[i].id)
+					$("#user_trades_attributes_100000000000_legs_attributes_" + 99999999999 + i + 1 + "_trade_index").val(i)
+				}
+				$("#submitObject").click()
+				levelSprites.unclick()
+				$("#routeTrade").off("click")
+				updateSideBar(zoomLevel) 
+				action.status = false
+				$("#routeTrade").text("Route")
+				$("#routeTrade").removeClass("hover")
+			}
+			else {
+				promptAlert("Insufficient Resources",["Okay"])
+				$("#Okay").click( function() {
+					$("#Okay").off("click")
+					$("#alertBox").css("display","none")
+				})
+			}
+		})
+		$("#cancel").click( function() {
+			levelSprites.unclick()
+			$("#routeTrade").off("click")
+			updateSideBar(zoomLevel) 
+			action.status = false
+			$("#routeTrade").text("Route")
+			$("#routeTrade").removeClass("hover")
+
+		})
+	}
+	function renderTrade(zoomLevel,mapContext,itinerary) {
+console.log(itinerary,zoomLevel,mapContext)
+		var tradeLines = mapContext.map.set()
+		for (var i = 0; i < itinerary.length; i++) {
+			if (i != itinerary.length - 1) {
+				if (typeof LocationsDirectory["object" + itinerary[i].id] !== undefined) {
+					var firstLocationBBox
+					var secondLocationBBox
+					var midxco
+					var midyco
+					if (typeof LocationsDirectory["object" + itinerary[i + 1].id] !== undefined) {
+						if (itinerary[i + 1].kind != "seapoint" && itinerary[i].kind != "seapoint") {
+								firstLocationBBox = LocationsDirectory["object" + itinerary[i].id].getBBox()
+								secondLocationBBox = LocationsDirectory["object" + itinerary[i + 1].id].getBBox()
+								midxco = (firstLocationBBox.x + secondLocationBBox.x)/2
+								midyco = (firstLocationBBox.y + secondLocationBBox.y)/2 - (firstLocationBBox.x + secondLocationBBox.x)*0.05
+						}
+						else if (itinerary[i].kind != "seapoint"  && itinerary[i + 1].kind == "seapoint") {
+							if (zoomLevel[0] != "global") {
+								firstLocationBBox = LocationsDirectory["object" + itinerary[i].id].getBBox()
+								secondLocationBBox = {x:firstLocationBBox.x - (itinerary[i].xco + colors[itinerary[i].territory.replace("#","")][1][0]) - (itinerary[i + 1].xco),y:firstLocationBBox.y - (itinerary[i].yco + colors[itinerary[i].territory.replace("#","")][1][1]) - (itinerary[i + 1].yco)}
+								midxco = (firstLocationBBox.x + secondLocationBBox.x)/2
+								midyco = (firstLocationBBox.y + secondLocationBBox.y)/((1/3) + 1)
+							}
+							else {
+								firstLocationBBox = LocationsDirectory["object" + itinerary[i].id].getBBox()
+								secondLocationBBox = LocationsDirectory["object" + itinerary[i + 1].id].getBBox()
+								midxco = (firstLocationBBox.x + secondLocationBBox.x)/2
+								midyco = (firstLocationBBox.y + secondLocationBBox.y)/((1/3) + 1)
+							}
+						}
+						else if (itinerary[i].kind == "seapoint"  && itinerary[i + 1].kind != "seapoint") {
+							if (zoomLevel[0] != "global") {
+								secondLocationBBox = LocationsDirectory["object" + itinerary[i].id].getBBox()
+								firstLocationBBox = {x:secondLocationBBox.x - (itinerary[i].xco + colors[itinerary[i].territory.replace("#","")][1][0]) - (itinerary[i + 1].xco),y:secondLocationBBox.y - (itinerary[i].yco + colors[itinerary[i].territory.replace("#","")][1][1]) - (itinerary[i + 1].yco)}
+								midxco = (firstLocationBBox.x + secondLocationBBox.x)/2
+								midyco = (firstLocationBBox.y + secondLocationBBox.y)/((1/3) + 1)
+							}
+							else {
+								firstLocationBBox = LocationsDirectory["object" + itinerary[i].id].getBBox()
+								secondLocationBBox = LocationsDirectory["object" + itinerary[i + 1].id].getBBox()
+								midxco = (firstLocationBBox.x + secondLocationBBox.x)/2
+								midyco = (firstLocationBBox.y + secondLocationBBox.y)/((1/3) + 1)
+							}
+						}
+						else {
+							if (zoomLevel[0] == "global") {
+								firstLocationBBox = LocationsDirectory["object" + itinerary[i].id].getBBox()
+								secondLocationBBox = LocationsDirectory["object" + itinerary[i + 1].id].getBBox()
+								midxco = (firstLocationBBox.x + secondLocationBBox.x)/2
+								midyco = (firstLocationBBox.y + secondLocationBBox.y)/((1/3) + 1)
+							}
+						}
+					}
+					else {
+						if (itinerary[i].kind != "seapoint") {
+							firstLocationBBox = LocationsDirectory["object" + itinerary[i].id].getBBox()
+							secondLocationBBox = {x:firstLocationBBox.x - (itinerary[i].xco + colors[itinerary[i].territory.replace("#","")][1][0]) - (itinerary[i + 1].xco + colors[itinerary[i + 1].territory.replace("#","")][1][0]),y:firstLocationBBox.y - (itinerary[i].yco + colors[itinerary[i].territory.replace("#","")][1][1]) - (itinerary[i + 1].yco + colors[itinerary[i + 1].territory.replace("#","")][1][1])}
+							midxco = (firstLocationBBox.x + secondLocationBBox.x)/2
+							midyco = (firstLocationBBox.y + secondLocationBBox.y)/((1/3) + 1)	
+						}
+					}
+					tradeLines.push(mapContext.map.path("M" + firstLocationBBox.x + "," + firstLocationBBox.y + "Q" + midxco + "," + midyco + "," + secondLocationBBox.x + "," + secondLocationBBox.y).attr({stroke:"#000000"}).attr("stroke-width","4px"),mapContext.map.path("M" + firstLocationBBox.x + 1 + "," + firstLocationBBox.y + 1 + "Q" + midxco + 1 + "," + midyco + 1 + "," + secondLocationBBox.x + 1 + "," + secondLocationBBox.y + 1).attr({stroke:"#FFFFFF"}).attr("stroke-width","2px"),mapContext.map.path("M" + firstLocationBBox.x - 1 + "," + firstLocationBBox.y - 1 + "Q" + midxco - 1 + "," + midyco - 1 + "," + secondLocationBBox.x - 1 + "," + secondLocationBBox.y - 1).attr({stroke:"#FFFFFF"}).attr("stroke-width","2px"))
+				}
+				else if (typeof LocationsDirectory["object" + itinerary[i].id] !== undefined && typeof LocationsDirectory["object" + itinerary[i + 1].id] === undefined) {
+					var firstLocationBBox
+					var secondLocationBBox
+					var midxco
+					var midyco
+					if (typeof LocationsDirectory["object" + itinerary[i + 1].id] !== undefined && itinerary[i + 1].kind != "seapoint") {
+						secondLocationBBox = LocationsDirectory["object" + itinerary[i].id].getBBox()
+						firstLocationBBox = {x:secondLocationBBox.x - (itinerary[i].xco + colors[itinerary[i].territory.replace("#","")][1][0]) - (itinerary[i + 1].xco + colors[itinerary[i + 1].territory.replace("#","")][1][0]),y:secondLocationBBox.y - (itinerary[i].yco + colors[itinerary[i].territory.replace("#","")][1][1]) - (itinerary[i + 1].yco + colors[itinerary[i + 1].territory.replace("#","")][1][1])}
+						midxco = (firstLocationBBox.x + secondLocationBBox.x)/2
+						midyco = (firstLocationBBox.y + secondLocationBBox.y)/((1/3) + 1)
+					}
+					tradeLines.push(mapContext.map.path("M" + firstLocationBBox.x + "," + firstLocationBBox.y + "Q" + midxco + "," + midyco + "," + secondLocationBBox.x + "," + secondLocationBBox.y).attr({stroke:"#000000"}).attr("stroke-width","4px"),mapContext.map.path("M" + firstLocationBBox.x + 1 + "," + firstLocationBBox.y + 1 + "Q" + midxco + 1 + "," + midyco + 1 + "," + secondLocationBBox.x + 1 + "," + secondLocationBBox.y + 1).attr({stroke:"#FFFFFF"}).attr("stroke-width","2px"),mapContext.map.path("M" + firstLocationBBox.x - 1 + "," + firstLocationBBox.y - 1 + "Q" + midxco - 1 + "," + midyco - 1 + "," + secondLocationBBox.x - 1 + "," + secondLocationBBox.y - 1).attr({stroke:"#FFFFFF"}).attr("stroke-width","2px"))
+				}
+			}
+			else if (typeof LocationsDirectory["object" + itinerary[i].id] !== undefined && typeof LocationsDirectory["object" + itinerary[i - 1].id] === undefined) {
+				if (itinerary[i].kind != "seapoint") {
+					secondLocationBBox = LocationsDirectory["object" + itinerary[i].id].getBBox()
+					firstLocationBBox = {x:secondLocationBBox.x - (itinerary[i].xco + colors[itinerary[i].territory.replace("#","")][1][0]) - (itinerary[i + 1].xco + colors[itinerary[i + 1].territory.replace("#","")][1][0]),y:secondLocationBBox.y - (itinerary[i].yco + colors[itinerary[i].territory.replace("#","")][1][1]) - (itinerary[i + 1].yco + colors[itinerary[i + 1].territory.replace("#","")][1][1])}
+					midxco = (firstLocationBBox.x + secondLocationBBox.x)/2
+					midyco = (firstLocationBBox.y + secondLocationBBox.y)/((1/3) + 1)
+					tradeLines.push(mapContext.map.path("M" + firstLocationBBox.x + "," + firstLocationBBox.y + "Q" + midxco + "," + midyco + "," + secondLocationBBox.x + "," + secondLocationBBox.y).attr({stroke:"#000000"}).attr("stroke-width","4px"),mapContext.map.path("M" + firstLocationBBox.x + 1 + "," + firstLocationBBox.y + 1 + "Q" + midxco + 1 + "," + midyco + 1 + "," + secondLocationBBox.x + 1 + "," + secondLocationBBox.y + 1).attr({stroke:"#FFFFFF"}).attr("stroke-width","2px"),mapContext.map.path("M" + firstLocationBBox.x - 1 + "," + firstLocationBBox.y - 1 + "Q" + midxco - 1 + "," + midyco - 1 + "," + secondLocationBBox.x - 1 + "," + secondLocationBBox.y - 1).attr({stroke:"#FFFFFF"}).attr("stroke-width","2px"))
+				}
+			}
+		}
+		mapContext.tradeLines = tradeLines
+		return tradeLines
+	}
+	function validateTradeRoute(itinerary) {
+		var validTrade = true
+		for (var i = 0; i < itinerary.length; i++) {
+			if (i != itinerary.length - 1) {
+				var validLine = true
+
+				var oldObject = itinerary[i]
+				var currentObject = itinerary[i + 1]
+
+				var activeCanvas = document.getElementById('activeCanvas')
+				var activeContext = activeCanvas.getContext("2d");
+				var activeImage = document.getElementById('activeImage')
+				activeContext.drawImage(activeImage,0,0);
+				var activePixelData = activeContext.getImageData(0,0,$("#activeCanvas").width(),$("#activeCanvas").height())["data"];
+
+
+				var oldxco
+				var oldyco
+				var xco
+				var yco
+				var color
+				var oldColor
+
+				if (currentObject.kind != "seapoint") {
+
+					xco = (currentObject["xco"] + colors[currentObject["territory"].replace("#","")][1][0])*0.1251425314
+					yco = (currentObject["yco"] + colors[currentObject["territory"].replace("#","")][1][1])*0.1251425314
+
+					color = [colors[currentObject["territory"].replace("#","")][0][0],colors[currentObject["territory"].replace("#","")][0][1],colors[currentObject["territory"].replace("#","")][0][2]]		
+				}
+				else {
+
+					xco = (currentObject["xco"])*0.1251425314
+					yco = (currentObject["xco"])*0.1251425314
+
+					color = [73,73,73]	
+				}
+
+				if (oldObject.kind != "seapoint") {
+
+					oldxco = (oldObject["xco"] + colors[oldObject["territory"].replace("#","")][1][0])*0.1251425314
+					oldyco = (oldObject["yco"] + colors[oldObject["territory"].replace("#","")][1][1])*0.1251425314
+
+					oldColor = [colors[oldObject["territory"].replace("#","")][0][0],colors[oldObject["territory"].replace("#","")][0][1],colors[oldObject["territory"].replace("#","")][0][2]]		
+				}
+				else {
+
+					oldxco = (oldObject["xco"])*0.1251425314
+					oldyco = (oldObject["xco"])*0.1251425314
+
+					oldColor = [73,73,73]	
+				}
+
+				var xdistance = xco - oldxco
+				var ydistance = yco - oldyco
+				var slope = xdistance/ydistance
+
+				for (var y = 0; y < Math.abs(ydistance); y++) {
+
+					var xindex = Math.round(y*slope)
+
+					var pixel = [activePixelData[((Math.round(oldyco + y)*439) + Math.round(oldxco + xindex))*4],activePixelData[((Math.round(oldyco + y)*439) + Math.round(oldxco + xindex))*4 +1],activePixelData[((Math.round(oldyco + y)*439) + Math.round(oldxco + xindex))*4 + 2],activePixelData[((Math.round(oldyco + y)*439) + Math.round(oldxco + xindex))*4 + 3]]
+
+					if ((pixel[0] == 73 && pixel[1] == 73 && pixel[2] == 73) || (pixel[0] == color[0] && pixel[1] == color[1] && pixel[2] == color[2]) || (pixel[0] == oldColor[0] && pixel[1] == oldColor[1] && pixel[2] == oldColor[2])) {
+
+					}
+					else {
+						validLine = false
+					}
+				}
+			}
+			if (validLine == false) {
+				validTrade = false
+			}
+		}
+		return validTrade
+	}
+	function calculateTradeCost(mapContext,itinerary) {
+
+		var activeCanvas = document.getElementById('activeCanvas')
+		var activeContext = activeCanvas.getContext("2d");
+		var activeImage = document.getElementById('activeImage')
+		activeContext.drawImage(activeImage,0,0);
+		var activePixelData = activeContext.getImageData(0,0,$("#activeCanvas").width(),$("#activeCanvas").height())["data"];
+
+		var oldxco
+		var oldyco
+		var oldObject
+
+		var totalCost = 0;
+
+		for (i = 0; i < itinerary.length; i++) {
+console.log(i,activePixelData)
+			var xco
+			var yco
+			var currentObject
+
+			if (itinerary[i].kind != "seapoint") {
+
+					xco = (itinerary[i]["xco"] + colors[itinerary[i]["territory"].replace("#","")][1][0])*0.1251425314
+					yco = (itinerary[i]["yco"] + colors[itinerary[i]["territory"].replace("#","")][1][1])*0.1251425314
+			}
+			else {
+
+				xco = itinerary[i]["xco"]*0.1251425314
+				xco = itinerary[i]["yco"]*0.1251425314
+				currentObject = itinerary[i]
+			}
+			if (i != 0) {
+
+				var xdistance = xco - oldxco
+				var ydistance = yco - oldyco
+				var slope = xdistance/ydistance
+
+				for (var y = 0; y < Math.abs(ydistance); y++) {
+
+					var xindex = Math.round(y*slope)
+
+					var pixel = [activePixelData[((Math.round(yco + y)*439) + Math.round(xco + xindex))*4],activePixelData[((Math.round(yco + y)*439) + Math.round(xco + xindex))*4 +1],activePixelData[((Math.round(yco + y)*439) + Math.round(xco + xindex))*4 + 2],activePixelData[((Math.round(yco + y)*439) + Math.round(xco + xindex))*4 + 3]]
+
+					for (key in colors) {
+
+						if (colors[key][0][0] == pixel[0] && colors[key][0][1] == pixel[1] && colors[key][0][2] == pixel[2]) {
+
+							var cost = Math.sqrt(1 + slope*slope)
+							var avrgDistFromMiddle = Math.abs((yco + oldyco)/2 - 122.5)
+							var mercaterDistFactor = -0.0003*avrgDistFromMiddle*avrgDistFromMiddle + 0.0281*avrgDistFromMiddle + 1.1574
+
+							if (colors[key][0][0] == 73 && colors[key][0][1] == 73 && colors[key][0][2] == 73 ) {
+
+								cost = cost*mercaterDistFactor*0.00003316794574
+							}
+							else {
+
+								cost = (cost*mercaterDistFactor*0.002)*(1/colors[key][2][0])
+							}
+
+							totalCost = totalCost + cost
+						}
+					}
+				}
+			}
+			oldxco = xco
+			oldyco = yco
+			oldObject = currentObject	
+		}
+
+		return costToShip
 	}
 	function buildLocation(locationType,zoomLevel,mapContext) {
 
@@ -3217,18 +3732,28 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 		return continentFromTerritoryList[territory]
 	}
 	function updateZoom(zoomLevel,mapContext) {
-		updateSideBar(zoomLevel)
 		renderLocation(zoomLevel,mapContext)
+		if (action.type == "trade") {
+			if (typeof mapContext.tradeLines !== "undefined") {
+				mapContext.tradeLines.forEach( function(el) {
+					el.remove()
+				})
+			}
+			renderTrade(zoomLevel,mapContext,globalItinerary)
+			
+		}
+		updateSideBar(zoomLevel)
+
 		
 	}
 	function updateSideBar(zoomlevel) {
-
-		$(".sidebar").css("display","none")
-		$("." + zoomlevel[0]).css("display","inline")
-		$(".action").css("display","none")
-		$(".subfields").css("display","none")
-		$(".dropdown").css("display","none")
-
+		if (action.type != "trade") {
+			$(".sidebar").css("display","none")
+			$("." + zoomlevel[0]).css("display","inline")
+			$(".action").css("display","none")
+			$(".subfields").css("display","none")
+			$(".dropdown").css("display","none")
+		}
 	}
 	function parseResponseObject(type,object) {
 		if (type == "location") {
@@ -3242,10 +3767,25 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 			}
 		}
 	}
-	var action = {status:false}
+	function addCommas(nStr)
+	{
+	    nStr += '';
+	    x = nStr.split('.');
+	    x1 = x[0];
+	    x2 = x.length > 1 ? '.' + x[1] : '';
+	    var rgx = /(\d+)(\d{3})/;
+	    while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	    }
+	    return x1 + x2;
+	}
+	var action = {status:false,type:-1}
 	var levelSprites
 	var zoomLevel = ["global","globe"];
 	var mapContext
+	var filters
+	var filterOne
+	var filterTwo
 </script>
 
 <div id="container">
@@ -3254,6 +3794,8 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 	</div>
 	<div id="display">
 
+	</div>
+	<div id="bottomPanel">
 	</div>
 	<div id="sidePanel" class="box">
 		<div id="forms">
@@ -3267,51 +3809,33 @@ console.log(firstSeg + secondSeg + thridSeg, territoryColors[i][0].replace("#","
 			</div>
 
 	<div id="trade" class="territorial sidebar">
-            <button id="trade" class="apple mainbutton">Trade</button><br>
+            <button id="trade" class="apple mainbutton actionButton">Trade</button><br>
             <div id="orange" class="dropdown">
-                <br>
-                <div class="sushi">Location</div>
-                <select class="grape">
-                    <option>F. Anchorage</option>
-                </select>
-                <div class="sushi">Item</div>
-                <select class="grape">
-                    <option>Money</option>
-                    <option>Food Unitss</option>
-                    <option>Energy Units</option>
-                    <option>General Population</option>
-                    <option>Militants</option>
-                </select>
-                <div class="sushi">Quantity</div>
-                <input class="avacado" type="number">
-                <button class="gala">Route</button>
-                <div class="sushi">
-                    Route confirmed<br>
-                    Cost: $##,###,###.##
-                </div>
                 <h1 id="sugar">Exchange</h1>
-                <div class="sushi">Location</div>
-                <select class="grape">
-                    <option>F. Anchorage</option>
-
-                </select>
                 <div class="sushi">Item</div>
-                <select class="grape">
-                    <option>Money</option>
-                    <option>Food Unitss</option>
-                    <option>Energy Units</option>
-                    <option>General Population</option>
-                    <option>Militants</option>
+                <select id="what" class="grape">
+                    <option  value="money" >Money</option>
+                    <option  value="food_units" >Food Unitss</option>
+                    <option  value="energy_units" >Energy Units</option>
+                    <option  value="population" >General Population</option>
+                    <option  value="militants" >Militants</option>
+                </select>
+                <div   class="sushi">Quantity</div>
+                <input id="quantity" class="avacado" type="number">
+                <h1 id="sugar">For</h1>
+                <div class="sushi">Item</div>
+                <select id="forwhat" class="grape">
+                    <option  value="money" >Money</option>
+                    <option  value="food_units" >Food Unitss</option>
+                    <option  value="energy_units" >Energy Units</option>
+                    <option  value="population" >General Population</option>
+                    <option  value="militants" >Militants</option>
                 </select>
                 <div class="sushi">Quantity</div>
-                <input class="avacado" type="number">
-                <button class="gala">Route</button>
-                <div class="sushi">
-                    Route confirmed<br>
-                    Cost: $##,###,###.##
-                </div><br>
+                <input  id="forquantity"  class="avacado" type="number"><br>
+                <button class="gala" id="routeTrade">Route</button><br>
                 <div class="sushi">Notes</div>
-                <textarea id="ham"></textarea>
+                <textarea id="notes" class="ham"></textarea>
             </div>
 	</div>
 
