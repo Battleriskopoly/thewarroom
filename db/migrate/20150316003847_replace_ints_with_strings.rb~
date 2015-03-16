@@ -1,0 +1,4 @@
+class ReplaceIntsWithStrings < ActiveRecord::Migration
+  def change
+  end
+end
