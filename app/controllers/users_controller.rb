@@ -223,11 +223,11 @@ logger.info territory.downcase + "_owner_id"
 							@startingGame[territory.downcase + "_owner_id"] = attribute.id
 							@currentLocation = @startingGame.locations.find_by_territory("#" + territory.downcase)
 logger.info @currentLocation
-							@currentLocation.energy_units = $territoryStats[territory][2]
-							@currentLocation.food_units = $territoryStats[territory][1]
-							@currentLocation.money = $territoryStats[territory][3]
-							@currentLocation.population = $territoryStats[territory][4]
-							@currentLocation.militants = $territoryStats[territory][0]
+							@currentLocation.energy_units = $territoryStats[territory][2].to_s
+							@currentLocation.food_units = $territoryStats[territory][1].to_s
+							@currentLocation.money = $territoryStats[territory][3].to_s
+							@currentLocation.population = $territoryStats[territory][4].to_s
+							@currentLocation.militants = $territoryStats[territory][0].to_s
 							@currentLocation.user_id = attribute.user_id
 							@currentLocation.save
 

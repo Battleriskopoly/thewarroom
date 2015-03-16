@@ -618,7 +618,7 @@ def calculateTradeCost(itinerary)
 	["coastal_africa",[0xd0,0x2e,0xb0], [1436,959] ,[0.653478724]], 
 	["coastal_south_america",[0xc4,0x56,0xae], [908,1340] ,[1.025283875]],
 	[" congo",[0x87,0x13,0x70], [1720,1015] ,[4.093718719]], 
-	["eastern_africa",[0x96,0x0e,0xbd], [1844,887] ,[3.45647866]], 
+	["east_africa",[0x96,0x0e,0xbd], [1844,887] ,[3.45647866]], 
 	["eastern_canada",[0xc1,0x52,0xe1], [394,206] ,[0.338781336]], 
 	["eastern_south_america",[0xc6,0x00,0xff], [904,1088] ,[1.078443444]], 
 	["egypt",[0x5d,0x1e,0x6f], [1724,774] ,[0.143233025]], 
