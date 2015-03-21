@@ -3224,7 +3224,7 @@ console.log(location)
 			$("#routeTrade").addClass("hover")
 			levelSprites.click( function() {
 console.log(this)
-console.log(this.attr("src"))
+console.log(mapContext.sprites)
 				if (this.attr("src") == mapContext.sprites.fort.attr("src") || this.attr("src") == mapContext.sprites.camp.attr("src")) {
 					var valid = true
 					if (selectedIndex == 0) {
@@ -3753,7 +3753,7 @@ console.log("seapoint",promptSeapoint)
 					} 
 					if (object.owner_id == User.id) {
 						if (object.money >= cost) {
-							$("#user_locations_attributes_100000000000_sponsor_location_id").val(locationType)
+							$("#user_locations_attributes_100000000000_sponsor_location_id").val(object.id)
 							$("#sponsorLocation").text(object.name)
 							levelSprites.unclick()
 							$("#sponsorLocation").removeClass("hover")

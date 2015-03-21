@@ -3753,7 +3753,7 @@ console.log("seapoint",promptSeapoint)
 					} 
 					if (object.owner_id == User.id) {
 						if (object.money >= cost) {
-							$("#user_locations_attributes_100000000000_sponsor_location_id").val(locationType)
+							$("#user_locations_attributes_100000000000_sponsor_location_id").val(object.id)
 							$("#sponsorLocation").text(object.name)
 							levelSprites.unclick()
 							$("#sponsorLocation").removeClass("hover")
