@@ -301,23 +301,24 @@ logger.info @currentLocation
 				end
 				if Location.find_by_id(@location.sponsor_location_id).money.to_i >= 1553000000
 					sponsorLocation = Location.find_by_id(@location.sponsor_location_id)
-					sponsorLocation.money = sponsorLocation.money - 1553000000
+					sponsorLocation.money = (sponsorLocation.money.to_i - 1553000000).to_s
 					sponsorLocation.save
 				else
 					valid = false
 				end
-			@location.active_date = 60.days.from_now
+				@location.active_date = 60.days.from_now
 			elsif @location.kindType == "camp"
 				if Location.find_by_id(@location.sponsor_location_id).money.to_i >= 100000000
 					sponsorLocation = Location.find_by_id(@location.sponsor_location_id)
-					sponsorLocation.money = sponsorLocation.money - 100000000
+					sponsorLocation.money = (sponsorLocation.money.to_i - 100000000).to_s
 					sponsorLocation.save
 				else 
 					valid = false
 				end
-			@location.active_date = 1.days.from_now
+				@location.active_date = 1.days.from_now
 			end
 
+			@location.active = false
 			respond_to do |format|
 				if valid == true
 					if @location.save

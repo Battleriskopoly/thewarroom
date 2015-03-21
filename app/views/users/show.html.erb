@@ -2877,6 +2877,8 @@ $( document ).ready(function() {
 		sprites.seapointSelPast = map.image("<%=image_path("seapointselpast.png")%>", 0, 0, 24, 24).hide() 
 		sprites.forCamp = map.image("<%=image_path("forencampment.png")%>", 0, 0, 32, 32).hide() 
 		sprites.forFort = map.image("<%=image_path("forfort.png")%>", 0, 0, 32, 32).hide() 
+		sprites.inactiveCamp = map.image("<%=image_path("campinactive.png")%>", 0, 0, 32, 32).hide() 
+		sprites.inactiveFort = map.image("<%=image_path("fortinactive.png")%>", 0, 0, 32, 32).hide() 
 		sprites.battleLocation = map.image("<%=image_path("battlelocation.png")%>", 0, 0, 32, 32).hide() 
 
 
@@ -3065,13 +3067,16 @@ $( document ).ready(function() {
 			for (var i = 0; i < Locations.length; i++) {
 				if (Locations[i].territory.replace("#","") == zoomLevel[1]) {
 					var location
-					if (Locations[i].owner_id == User.id) {
+					if (Locations[i].owner_id == User.id && Locations[i].active == "t") {
 						location = mapContext.sprites[Locations[i].kind].clone()
 						visibleLocations.push(location.translate((Locations[i].xco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().x,(Locations[i].yco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().y).show())
 					}
-					else {
+					else if (Locations[i].owner_id != User.id && Locations[i].active == "t") {
 						location = mapContext.sprites["for" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
-
+						visibleLocations.push(location.translate((Locations[i].xco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().x,(Locations[i].yco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().y).show())
+					}
+					else if (Locations[i].active != "t") {
+						location = mapContext.sprites["inactive" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
 						visibleLocations.push(location.translate((Locations[i].xco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().x,(Locations[i].yco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().y).show())
 					}
 					LocationsDirectory[location.id] = Locations[i]
@@ -3097,13 +3102,17 @@ $( document ).ready(function() {
 			for (var i = 0; i < Locations.length; i++) {
 				if (continentFromTerritory(Locations[i].territory.replace("#","")) == zoomLevel[1]) {
 					var location
-					if (Locations[i].owner_id == User.id) {
+					if (Locations[i].owner_id == User.id && Locations[i].active == "t") {
 						location = mapContext.sprites[Locations[i].kind].clone()
 						visibleLocations.push(location.scale(0.5,0.5,0,0).translate(2*((Locations[i].xco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x),2*((Locations[i].yco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)).show())
 
 					}
-					else {
+					else if (Locations[i].owner_id != User.id && Locations[i].active == "t") {
 						location = mapContext.sprites["for" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
+						visibleLocations.push(location.scale(0.5,0.5,0,0).translate(2*((Locations[i].xco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x),2*((Locations[i].yco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)).show())
+					}
+					else if (Locations[i].active != "t") {
+						location = mapContext.sprites["inactive" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
 						visibleLocations.push(location.scale(0.5,0.5,0,0).translate(2*((Locations[i].xco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x),2*((Locations[i].yco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)).show())
 					}
 					LocationsDirectory[location.id] = Locations[i]
@@ -3126,12 +3135,16 @@ $( document ).ready(function() {
 		else if (zoomLevel[0] == "global") {
 			for (var i = 0; i < Locations.length; i++) {
 				var location
-				if (Locations[i].owner_id == User.id) {
+				if (Locations[i].owner_id == User.id && Locations[i].active == "t") {
 					location = mapContext.sprites[Locations[i].kind].clone()
 					visibleLocations.push(location.scale(0.25,0.25,0,0).translate(((Locations[i].xco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x)*4,((Locations[i].yco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)*4).show().toFront())
 				}
-				else {
+				else if (Locations[i].owner_id != User.id && Locations[i].active == "t") {
 					location = mapContext.sprites["for" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
+					visibleLocations.push(location.scale(0.25,0.25,0,0).translate(((Locations[i].xco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x)*4,((Locations[i].yco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)*4).show().toFront())
+				}
+				else if (Locations[i].active != "t") {
+					location = mapContext.sprites["inactive" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
 					visibleLocations.push(location.scale(0.25,0.25,0,0).translate(((Locations[i].xco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x)*4,((Locations[i].yco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)*4).show().toFront())
 				}
 				LocationsDirectory[location.id] = Locations[i]
