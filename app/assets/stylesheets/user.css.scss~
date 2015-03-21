@@ -15,7 +15,6 @@ input[type=submit], input[type=button], button {
     background-color:#000000;
     font-family:monospace;
     color:#d4d4d4;
-    width:100px;
     height:30px;
     line-height:30px;
     font-size:20px;
@@ -77,14 +76,6 @@ input[type=submit]:hover, input[type=button]:hover, button:hover {
 	background-color:#1cbcbb;
 	position:absolute;
 }
-#bottomPanel {
-	width:85%;
-	background-color:#1cbcbb;
-	position:absolute;
-}
-.alertButton {
-	margin-left:0px !important;
-}
 #container {
 	width:100%;
 }
@@ -102,18 +93,12 @@ position:absolute;
 }
 
 #alertBox {
-	border-style: solid;
-	border-width: 2px;
-	width:21.25%;
+	width:25%;
 	position:absolute;
 	z-index:100;
-	margin-left:31.875%;
-	margin-top:20%;
-	background-color:#1cbccb;
-	padding:15px;
-	display:none;
-	text-align:center;
+	margin-left:37.5%;
 }
+
 
 /*CLASSES*/
 
@@ -137,9 +122,7 @@ position:absolute;
 .apple:hover {
     color:#1cbccb;
 }
-.hover {
-    color:#1cbccb !important;
-}
+
 .gala {
     height:30px;
     width:80%;
@@ -431,7 +414,8 @@ th {
         float:left;
         overflow-y:scroll;}
 
-.swatchButton {margin-top:5px;
+.swatchButton {
+        margin-top:5px;
         margin-bottom:5px;
         margin-left:5%;
         height:30px;
@@ -447,47 +431,47 @@ th {
 	display:none;
 }
 							
-button#FF0000  {margin-top:10px;
-    background-color:#FF0000;}
-#LFF6600  {background-color:#FF6600;}
-#LFFE440  {background-color:#FFE440;}
-#L00FF0C  {background-color:#00FF0C;}
-#L00FFFF  {background-color:#00FFFF;}
-#L000EFF  {background-color:#000EFF;}
-#LD100FF  {background-color:#D100FF;}
-#LFF2F00  {background-color:#FF2F00;}
-#LFFBF00  {background-color:#FFBF00;}
-#LA2FF00 {background-color:#A2FF00;}
-#L00FFA6  {background-color:#00FFA6;}
-#L0099FF  {background-color:#0099FF;}
-#L6F00FF  {background-color:#6F00FF;}
-#LFF00AE  {background-color:#FF00AE;}
-#LFF1900  {background-color:#FF1900;}
-#LFFA200  {background-color:#FFA200;}
-#LD9FF00  {background-color:#D9FF00;}
-#L00FF77  {background-color:#00FF77;}
-#L00C8FF  {background-color:#00C8FF;}
-#L4800FF  {background-color:#4800FF;}
-#LBB00FF  {background-color:#BB00FF;}
-#LFF00B3  {background-color:#FF00B3;}
-#LFF003C  {background-color:#FF003C;}
-#L00FF3C  {background-color:#00FF3C;}
-#LFF4000  {background-color:#FF4000;}
-#L00BFFF  {background-color:#00BFFF;}
-#LFFAE00 {background-color:#FFAE00;}
-#L0051FF {background-color:#0051FF;}
-#LEAFF00 {background-color:#EAFF00;}
-#L1500FF {background-color:#1500FF;}
-#L51FF00 {background-color:#51FF00;}
-#LAE00FF {background-color:#AE00FF;}
-#L00FF6E {background-color:#00FF6E;}
-#LFF0091 {background-color:#FF0091;}
-#L7BFF00 {background-color:#7BFF00;}
-#L8400FF {background-color:#8400FF;}
-#L008CFF {background-color:#008CFF;}
-#LFF7300 {background-color:#FF7300;}
-button#LB700FF {margin-bottom:10px;
-    background-color:#B700FF;}
+#zFF0000    {background-color:#FF0000;}
+#zFF1900    {background-color:#FF1900;}
+#zFF2F00    {background-color:#FF2F00;}
+#zFF4000    {background-color:#FF4000;}
+#zFF6600    {background-color:#FF6600;}
+#zFF7300    {background-color:#FF7300;}
+#zFFA200    {background-color:#FFA200;}
+#zFFAE00    {background-color:#FFAE00;}
+#zFFBF00    {background-color:#FFBF00;}
+#zFFE440    {background-color:#FFE440;}
+#zEAFF00    {background-color:#EAFF00;}
+#zD9FF00    {background-color:#D9FF00;}
+#zA2FF00    {background-color:#A2FF00;}
+#z7BFF00    {background-color:#7BFF00;}
+#z51FF00    {background-color:#51FF00;}
+#z00FF3C    {background-color:#00FF3C;}
+#z00FF0C    {background-color:#00FF0C;}
+#z00FF77    {background-color:#00FF77;}
+#z00FF6E    {background-color:#00FF6E;}
+#z00FFA6    {background-color:#00FFA6;}
+#z00FFFF    {background-color:#00FFFF;}
+#z00C8FF    {background-color:#00C8FF;}
+#z00BFFF    {background-color:#00BFFF;}
+#z0099FF    {background-color:#0099FF;}
+#z008CFF    {background-color:#008CFF;}
+#z0051FF    {background-color:#0051FF;}
+#z000EFF    {background-color:#000EFF;}
+#z1500FF    {background-color:#1500FF;}
+#z4800FF    {background-color:#4800FF;}
+#z6F00FF    {background-color:#6F00FF;}
+#z8400FF    {background-color:#8400FF;}
+#zAE00FF    {background-color:#AE00FF;}
+#zBB00FF    {background-color:#BB00FF;}
+#zB700FF    {background-color:#B700FF;}
+#zD100FF    {background-color:#D100FF;}
+#zFF00B3    {background-color:#FF00B3;}
+#zFF00AE    {background-color:#FF00AE;}
+#zFF0091    {background-color:#FF003C;}
+
+
+
 
 #right  {height:500px;
         width:75%;

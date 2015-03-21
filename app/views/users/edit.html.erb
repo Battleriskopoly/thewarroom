@@ -25,8 +25,7 @@ console.log()
 <h1>Continue to a Game</h1>
 <% @currentGames.each_with_index do |i,index|%>
 	<div id="current<%=index%>" class="game">
-	<p class="gameName">Game: <%= i.name %></p>
-	<button class="join_button" id="<%=i.id%>">Join</button>
+	<button class="join_button" id="<%=i.id%>"><%= i.name %></button>
 	</div>
 <% end %>
 

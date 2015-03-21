@@ -1,10 +1,12 @@
 <script>
 var gameId = -1
+var GameAttribute = {id:-1}
 	$( document ).ready(function() {
 		$(".edit_user")[0].reset()
 			$("#game_id").val("")
 			$("#game_id").val("new")
 		$(".swatchButton").click( function() {
+console.log()
 			$("#placement").children().remove()
 			console.log(".swatchImage#" + this.id)
 			$("#placement").html($(".swatchImage#" + this.id).clone().css("display","inline"))
@@ -23,8 +25,8 @@ var gameId = -1
 <h1>Continue to a Game</h1>
 <% @currentGames.each_with_index do |i,index|%>
 	<div id="current<%=index%>" class="game">
-	<p class="gameName">Game: <%= i.name %></p>
-	<button class="join_button" id="<%=i.id%>">Join</button>
+	<p class="gameName"><%= i.name %></p>
+	<button class="join_button" id="<%=i.id%>"><%= i.name %></button>
 	</div>
 <% end %>
 

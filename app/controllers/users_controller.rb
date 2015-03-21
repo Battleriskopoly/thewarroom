@@ -104,54 +104,57 @@ class UsersController < ApplicationController
 	def show
 		if signed_in?
 			@user = User.find(params[:id])
+			if Game.find_by_id(@user.game_id).nil? != true
+				@gameAttribute = GameAttribute.where(game_id: @user.game_id)
 
-			@gameAttribute = GameAttribute.where(game_id: @user.game_id)
+				@game = Game.find(@user.game_id)
 
-			@game = Game.find(@user.game_id)
-
-			@battles = Array.new
+				@battles = Array.new
 		
-			@game.battles.each do |battle|
-			if battle.user_one_id == @gameAttribute.id || battle.user_two_id == @gameAttribute.id
-					@battles << battle
-				end
-			end
-
-			@battles.each_with_index do |battle, index|
-				@battles[index] = [@battles[index],createBoardArray(battle)]
-			end
-
-			@locations = @game.locations.where(:kindType => "fort")#.where("active_date > ?", Date.today)
-			@locations = @locations + @game.locations.where(:kindType => "camp",:user_id => @user.id)#.where("active_date > ?", Date.today)
-
-			@clientItinerary = Array.new
-			@game.trades.each do |i|
-				if i.recipient_user_id == @user.id || i.sending_user_id == @user.id
-					@clientItinerary << [i.what,i.quantity,Array.new]
-					i.legs.each do |y|
-						@clientItinerary[@clientItinerary.length - 1][2] << [y.location_id,y.location_type]
+				@game.battles.each do |battle|
+				if battle.user_one_id == @gameAttribute.id || battle.user_two_id == @gameAttribute.id
+						@battles << battle
 					end
 				end
-			end
-			@territoryOwners = Array.new
-			@territoryColors = Hash.new
 
-			@game.attributes.each do |attr_name, attr_value|
-				if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "players"&& attr_name != "start_date" && attr_name != "start_status" && attr_name != "user_id" && attr_name != "private" && attr_name != "invitation" && attr_value.instance_of?(NilClass) != true
-					if GameAttribute.find(attr_value).color.instance_of?(NilClass) != true
+				@battles.each_with_index do |battle, index|
+					@battles[index] = [@battles[index],createBoardArray(battle)]
+				end
 
-						colorUser = GameAttribute.find(attr_value)
-						@territoryOwners << Array.new
-						@territoryOwners[@territoryOwners.length - 1] << colorUser.user_id
-						@territoryOwners[@territoryOwners.length - 1] << User.find(colorUser.user_id).username
-						@territoryOwners[@territoryOwners.length - 1] << attr_name.gsub(/\_owner_id\b/, '')
+				@locations = @game.locations.where(:kindType => "fort")#.where("active_date > ?", Date.today)
+				@locations = @locations + @game.locations.where(:kindType => "camp",:user_id => @user.id)#.where("active_date > ?", Date.today)
 
-						@territoryColors[attr_name.gsub("_owner_id","")] = Array.new
-						@territoryColors[attr_name.gsub("_owner_id","")] << colorUser.color[0,2].insert(0, "0x").hex
-						@territoryColors[attr_name.gsub("_owner_id","")] << colorUser.color[2,2].insert(0, "0x").hex
-						@territoryColors[attr_name.gsub("_owner_id","")] << colorUser.color[4,6].insert(0, "0x").hex
+				@clientItinerary = Array.new
+				@game.trades.each do |i|
+					if i.recipient_user_id == @user.id || i.sending_user_id == @user.id
+						@clientItinerary << [i.what,i.quantity,Array.new]
+						i.legs.each do |y|
+							@clientItinerary[@clientItinerary.length - 1][2] << [y.location_id,y.location_type]
+						end
 					end
 				end
+				@territoryOwners = Array.new
+				@territoryColors = Hash.new
+
+				@game.attributes.each do |attr_name, attr_value|
+					if attr_name != "id" && attr_name != "created_at" && attr_name != "updated_at" && attr_name != "name" && attr_name != "players"&& attr_name != "start_date" && attr_name != "start_status" && attr_name != "user_id" && attr_name != "private" && attr_name != "invitation" && attr_value.instance_of?(NilClass) != true
+						if GameAttribute.find(attr_value).color.instance_of?(NilClass) != true
+
+							colorUser = GameAttribute.find(attr_value)
+							@territoryOwners << Array.new
+							@territoryOwners[@territoryOwners.length - 1] << colorUser.user_id
+							@territoryOwners[@territoryOwners.length - 1] << User.find(colorUser.user_id).username
+							@territoryOwners[@territoryOwners.length - 1] << attr_name.gsub(/\_owner_id\b/, '')
+
+							@territoryColors[attr_name.gsub("_owner_id","")] = Array.new
+							@territoryColors[attr_name.gsub("_owner_id","")] << colorUser.color[1,2].insert(0, "0x").hex
+							@territoryColors[attr_name.gsub("_owner_id","")] << colorUser.color[3,2].insert(0, "0x").hex
+							@territoryColors[attr_name.gsub("_owner_id","")] << colorUser.color[5,2].insert(0, "0x").hex
+						end
+					end
+				end
+			else
+				redirect_to edit_user_url(@user.id)
 			end
 		else
 			redirect_to root_path
@@ -172,46 +175,56 @@ class UsersController < ApplicationController
 					@currentGameAttributes << attribute
 					@startingGame = Game.find(attribute.game_id)
 					@startingGame.start_status = true
-					@startingGame.locations.build(:name=> "Fort Mexico City",  :xco => 175,  :yco => 163, :territory =>"#central_america", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Tehran",  :xco => 39,  :yco => 193, :territory =>"#central_asia", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Bogota",  :xco => 54,  :yco => 67, :territory =>"#central_south_america", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Shanghai",  :xco => 471,  :yco => 274, :territory =>"#china", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Yamoussoukro",  :xco => 131,  :yco => 102, :territory =>"#coastal_africa", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Beunos Aires",  :xco => 158,  :yco => 200, :territory =>"#coastal_south_america", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Kinshasa",  :xco => 45,  :yco => 157, :territory =>"#congo", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Nairobi",  :xco => 130,  :yco => 256, :territory =>"#east_africa", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Tornoto",  :xco => 478,  :yco => 436, :territory =>"#eastern_canada", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Rio de Janeiro",  :xco => 289,  :yco => 319, :territory =>"#eastern_south_america", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Cairo",  :xco => 205,  :yco => 47, :territory =>"#egypt", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Nuuk",  :xco => 234,  :yco => 246, :territory =>"#greenland", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Reykjavik",  :xco => 24,  :yco => 29, :territory =>"#iceland", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Mumbai",  :xco => 46,  :yco => 146, :territory =>"#india", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Jakarta",  :xco => 110,  :yco => 134, :territory =>"#indonesia", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Antananarivo",  :xco => 41,  :yco => 9, :territory =>"#madagascar", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Jerusalem",  :xco => 90,  :yco => 124, :territory =>"#middle_east", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Ulaanbaatar",  :xco => 172,  :yco => 43, :territory =>"#mongolia", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Auckland",  :xco => 338,  :yco => 405, :territory =>"#new_zealand", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Anchorage",  :xco => 159,  :yco => 109, :territory =>"#non_contiguous_united_states", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort New York",  :xco => 224,  :yco => 99, :territory =>"#northeastern_united_states", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Brisbane",  :xco => 255,  :yco => 192, :territory =>"#northern_australia", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Berlin",  :xco => 105,  :yco => 53, :territory =>"#northern_europe", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Seattle",  :xco => 9,  :yco => 5, :territory =>"#northwestern_united_states", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Tokyo",  :xco => 145,  :yco => 211, :territory =>"#pacific_asia", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort St. Petersburg",  :xco => 10,  :yco => 236, :territory =>"#russia", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Tunis",  :xco => 271,  :yco => 14, :territory =>"#sahara", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Bangkok",  :xco => 202,  :yco => 193, :territory =>"#southeastern_asia", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Miami",  :xco => 127,  :yco => 124, :territory =>"#southeastern_united_states", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Johannesburg",  :xco => 165,  :yco => 199, :territory =>"#southern_african_territory", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Melbourne",  :xco => 309,  :yco => 274, :territory =>"#southern_australia", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Rome",  :xco => 57,  :yco => 75, :territory =>"#southern_europe", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Los Angeles",  :xco => 64,  :yco => 106, :territory =>"#southwestern_united_states", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Kiev",  :xco => 276,  :yco => 244, :territory =>"#ukraine", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort London",  :xco => 102,  :yco => 89, :territory =>"#united_kingdom", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Paris",  :xco => 109,  :yco => 31, :territory =>"#western_europe", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Vancouver",  :xco => 160,  :yco => 251, :territory =>"#western_canada", :capital => true, :kindType => "fort").save
-					@startingGame.locations.build(:name=> "Fort Lima",  :xco => 41,  :yco => 140, :territory =>"#western_south_america", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Mexico City",  :xco => "177", :yco=> "128", :territory => "#central_america", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Tehran",  :xco => "88", :yco=> "227", :territory => "#central_asia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Bogota",  :xco => "75", :yco=> "82", :territory => "#central_south_america", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Shanghai",  :xco => "471", :yco=> "254", :territory => "#china", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Yamoussoukro",  :xco => "125", :yco=> "115", :territory => "#coastal_africa", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Buenos Aires",  :xco => "153", :yco=> "187", :territory => "#coastal_south_america", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Kinshasa",  :xco => "51", :yco=> "197", :territory => "#congo", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Nairobi",  :xco => "142", :yco=> "288", :territory => "#east_africa", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Toronto",  :xco => "466", :yco=> "442", :territory => "#eastern_canada", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Rio de Janeiro",  :xco => "302", :yco=> "317", :territory => "#eastern_south_america", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Cairo",  :xco => "206", :yco=> "45", :territory => "#egypt", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Nuuk",  :xco => "218", :yco=> "224", :territory => "#greenland", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Reykjavik",  :xco => "24", :yco=> "24", :territory => "#iceland", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Mumbai",  :xco => "46", :yco=> "140", :territory => "#india", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Jakarta",  :xco => "114", :yco=> "131", :territory => "#indonesia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Antananarivo",  :xco => "45", :yco=> "73", :territory => "#madagascar", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Jerusalem",  :xco => "90", :yco=> "129", :territory => "#middle_east", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Ulaanbaatar",  :xco => "186", :yco=> "42", :territory => "#mongolia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Aukland",  :xco => "339", :yco=> "400", :territory => "#new_zealand", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Anchorage",  :xco => "174", :yco=> "115", :territory => "#non_contiguous_united_states", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort New York",  :xco => "209", :yco=> "86", :territory => "#northeastern_united_states", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Brisbane",  :xco => "260", :yco=> "203", :territory => "#northern_australia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Berlin",  :xco => "76", :yco=> "-128", :territory => "#northern_europe", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Seattle",  :xco => "1009", :yco=> "9", :territory => "#northwestern_united_states", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Tokyo",  :xco => "138", :yco=> "90", :territory => "#pacific_asia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort St. Petersburg",  :xco => "12", :yco=> "241", :territory => "#russia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Tunis",  :xco => "270", :yco=> "1", :territory => "#sahara", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Bangkok",  :xco => "198", :yco=> "191", :territory => "#southeastern_asia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Maimi",  :xco => "130", :yco=> "132", :territory => "#southeastern_united_states", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Johannesburg",  :xco => "165", :yco=> "193", :territory => "#southern_african_territory", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Melbourne",  :xco => "370", :yco=> "230", :territory => "#southern_australia", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Rome",  :xco => "52", :yco=> "73", :territory => "#southern_europe", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Los Angeles",  :xco => "64", :yco=> "107", :territory => "#southwestern_united_states", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Kiev",  :xco => "278", :yco=> "250", :territory => "#ukraine", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort London",  :xco => "101", :yco=> "86", :territory => "#united_kingdom", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Paris",  :xco => "116", :yco=> "29", :territory => "#western_europe", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Vancouver",  :xco => "166", :yco=> "243", :territory => "#western_canada", :capital => true, :kindType => "fort").save
+					@startingGame.locations.build(:name=> "Fort Lima",  :xco => "47", :yco=> "147", :territory => "#western_south_america", :capital => true, :kindType => "fort").save
 					@startingGame.game_attributes.each do |attribute|
 						attribute.status = true
+						array = [*1..@startingGame.game_attributes.length]
+						takenarray = Array.new
+
+						@startingGame.game_attributes.each do |attribute|
+
+							takenarray << attribute.place
+						end
+						array = array - takenarray
+						attribute.place = array[(rand*(array.length - 1)).round]
+
 						@territories = Array.new
 						$empireDistribution.each do |territory|
 								if territory[1][@startingGame.game_attributes.length - 2] == attribute.place
@@ -379,17 +392,8 @@ logger.info @currentLocation
 			@game.invitation =  @invitedUsers.to_s.gsub("[","").gsub("]","").gsub(" ","")
 
 			@game.start_status = false
-			array = [*1..@game.players]
-			takenarray = Array.new
 
-			@game.game_attributes.each do |attribute|
-
-				takenarray << attribute.place
-			end
-			array = array - takenarray
-			place = array[(rand*(array.length - 1)).round]
-
-			@gameAttribute = @game.game_attributes.build(:color => user_params[:color],:status => false,:place => place)
+			@gameAttribute = @game.game_attributes.build(:color => user_params[:color],:status => false)
 			@user.game_attributes << @gameAttribute
 
 			@game.save
@@ -408,19 +412,10 @@ logger.info @currentLocation
 					end
 				end
 			end
+
 			if valid == true
 
-				array = [*1..@game.players]
-				takenarray = Array.new
-
-				@game.game_attributes.each do |attribute|
-
-					takenarray << attribute.place
-				end
-				array = array - takenarray
-				place = array[(rand*(array.length - 1)).round]
-
-				@gameAttribute = @game.game_attributes.build(:color => user_params[:color],:status => false,:place => place)
+				@gameAttribute = @game.game_attributes.build(:color => user_params[:color],:status => false)
 				@user.game_attributes << @gameAttribute
 				@gameAttribute.save
 			end

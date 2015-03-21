@@ -1,4 +1,4 @@
-<%= form_for(@user, remote: true) do |f| %>
+<%= form_for(@user, remote: true, autocomplete: "off") do |f| %>
 	<p><%= link_to_add_fields "Location", f, :locations, "create_location", -1 %>
 	<%= f.fields_for :encampments do |builder| %>
   <% end %>
