@@ -3714,12 +3714,12 @@ console.log("seapoint",promptSeapoint)
 		return totalCost
 	}
 	function buildLocation(locationType,zoomLevel,mapContext) {
-
 		if (zoomLevel[0] == "territorial") {
 			var location = mapContext.sprites[locationType].clone().show().toFront().transform("").scale(1,1,0,0)
 			mapContext.renderedSprites.push(location)
 			var coordinates = [0,0]
 			var moving = true
+			var object 
 			zoomLevel[3].mousemove( function(event) {
 				location.transform("T" + event.clientX + "," + event.clientY)
 				coordinates = [event.pageX,event.pageY]
@@ -3740,10 +3740,12 @@ console.log("seapoint",promptSeapoint)
 					})
 				}	
 			})
-			$("#sponsorLocation").click( function() {
-				$("#sponsorLocation").addClass("hover")
+console.log("#sponsorLocation" + locationType)
+			$("#sponsorLocation" + locationType).on("click", function() {
+console.log("called")
+				$("#sponsorLocation" + locationType).addClass("hover")
 				levelSprites.click( function(location) {
-					var object = LocationsDirectory[this.id]
+					object = LocationsDirectory[this.id]
 					var cost
 					if (locationType == "fort") {
 						cost = 1553000000
@@ -3753,10 +3755,10 @@ console.log("seapoint",promptSeapoint)
 					} 
 					if (object.owner_id == User.id) {
 						if (object.money >= cost) {
-							$("#user_locations_attributes_100000000000_sponsor_location_id").val(object.id)
-							$("#sponsorLocation").text(object.name)
+console.log("called")
+							$("#sponsorLocation" + locationType).text(object.name)
 							levelSprites.unclick()
-							$("#sponsorLocation").removeClass("hover")
+							$("#sponsorLocation" + locationType).removeClass("hover")
 						}
 						else {
 							promptAlert("Insufficient Funds",["Okay"])
@@ -3787,10 +3789,11 @@ console.log("seapoint",promptSeapoint)
 				$("#user_locations_attributes_100000000000_kindType").val(locationType)
 				$("#user_locations_attributes_100000000000_xco").val(xco)
 				$("#user_locations_attributes_100000000000_yco").val(yco)
+				$("#user_locations_attributes_100000000000_sponsor_location_id").val(object.id)
 				$("#user_locations_attributes_100000000000_territory").val("#" + zoomLevel[1])
 				$("#submitObject").click()
 
-				$("#sponsorLocation").removeClass("hover")
+				$("#sponsorLocation" + locationType).removeClass("hover")
 				zoomLevel[3].unmousemove()
 				location.unclick()
 				mapContext.renderedSprites.exclude(location)
@@ -3798,7 +3801,7 @@ console.log("seapoint",promptSeapoint)
 				$("#cancel,#submit").off("click")
 				updateSideBar(zoomLevel) 
 				action.status = false
-				$("#sponsorLocation").text("Select Sponsor")
+				$("#sponsorLocation" + locationType).text("Select Sponsor")
 			})
 			$("#cancel").click( function() {
 				zoomLevel[3].unmousemove()
@@ -3808,8 +3811,8 @@ console.log("seapoint",promptSeapoint)
 				$("#cancel,#submit").off("click")
 				updateSideBar(zoomLevel) 
 				action.status = false
-				$("#sponsorLocation").text("Select Sponsor")
-				$("#sponsorLocation").removeClass("hover")
+				$("#sponsorLocation" + locationType).text("Select Sponsor")
+				$("#sponsorLocation" + locationType).removeClass("hover")
 
 			})
 		}
@@ -3915,6 +3918,7 @@ console.log("seapoint",promptSeapoint)
 	}
 	function parseResponseObject(type,object) {
 		if (type == "location") {
+console.log("calledonce")
 			if (typeof object.money === "undefined" && object.owner_id != User.id) {
 				Locations.push(object)
 				renderLocation(zoomLevel,mapContext)
@@ -4019,12 +4023,12 @@ console.log("seapoint",promptSeapoint)
 				<button class="gala actionButton" id="buildFort">Build Fort</button>
 				<div id="buildFortFields" class="subfields">
 					<input type="text" id="fortName" class="grape" value="Fort Name"></input>
-					<button type="text" id="sponsorLocation" class="gala freeHeight">Select Sponsor</button>
+					<button type="text" id="sponsorLocationfort" class="gala freeHeight">Select Sponsor</button>
 				</div>
 				<button class="gala actionButton"  id="buildCamp">Build Camp</button>
 				<div id="buildCampFields" class="subfields">
 					<input type="text" id="campName" class="grape" value="Camp Name"></input>
-					<button type="text" id="sponsorLocation" class="gala freeHeight">Select Sponsor</button>
+					<button type="text" id="sponsorLocationcamp" class="gala freeHeight">Select Sponsor</button>
 				</div>
 				<button class="gala actionButton" id="leaveFort">Leave Fort</button>
 				<button class="gala actionButton" id="leaveCamp">Leave Camp</button>

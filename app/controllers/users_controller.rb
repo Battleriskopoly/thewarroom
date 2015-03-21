@@ -299,18 +299,18 @@ logger.info @currentLocation
 				if @user.game_attributes.find_by_game_id(@user.game_id).id.to_s != Game.find(@user.game_id)[@location.territory.gsub("#","") + "_owner_id"].to_s
 					valid = false
 				end
-				if Location.find_by_id(@location.sponsor_location_id).money >= 1553000000
+				if Location.find_by_id(@location.sponsor_location_id).money.to_i >= 1553000000
 					sponsorLocation = Location.find_by_id(@location.sponsor_location_id)
-					sponsorLocation.money = sponsorLocation.money - 1553000000
+					sponsorLocation.money = (sponsorLocation.money.to_i - 1553000000).to_s
 					sponsorLocation.save
 				else
 					valid = false
 				end
 			@location.active_date = 60.days.from_now
 			elsif @location.kindType == "camp"
-				if Location.find_by_id(@location.sponsor_location_id).money >= 100000000
+				if Location.find_by_id(@location.sponsor_location_id).money.to_i >= 100000000
 					sponsorLocation = Location.find_by_id(@location.sponsor_location_id)
-					sponsorLocation.money = sponsorLocation.money - 100000000
+					sponsorLocation.money = (sponsorLocation.money.to_i - 100000000).to_s
 					sponsorLocation.save
 				else 
 					valid = false
