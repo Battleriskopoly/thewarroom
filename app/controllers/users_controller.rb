@@ -103,6 +103,8 @@ class UsersController < ApplicationController
 
 	def show
 		if signed_in?
+
+			User.update_stats
 			@user = User.find(params[:id])
 			if Game.find_by_id(@user.game_id).nil? != true
 				@gameAttribute = GameAttribute.where(game_id: @user.game_id)

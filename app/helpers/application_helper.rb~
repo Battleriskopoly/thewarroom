@@ -11,10 +11,10 @@ module ApplicationHelper
 	  button_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", class: "newObjectButton", id: id)
 	end
 	end
-  def broadcast(channel, &block)
-    message = {:channel => channel, :data => capture(&block)}
-    uri = URI.parse("http://localhost:9292/faye")
-	Net::HTTP.post_form(uri, :message => message.to_json)
+  def broadcast(channel, data)
+    client = Faye::Client.new(request.domain + '/faye')
+    publication = client.publish('/' + channel, 'text' => data)
+
    
   end
   def current_user

@@ -1,0 +1,1132 @@
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_oneshot_timer': eventmachine not initialized: evma_install_oneshot_timer (RuntimeError)
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:323:in `add_timer'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:116:in `send_envelope'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/dispatcher.rb:100:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:294:in `block in send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/extensible.rb:23:in `pipe_through_extensions'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:291:in `send_message'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:75:in `handshake'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:114:in `connect'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/faye-1.1.1/lib/faye/protocol/client.rb:263:in `publish'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:103:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:99:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:87:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:86:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `load': /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting ')' (SyntaxError)
+...ht",{name:"' +  location.name +'", territory:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tory:"' +  location.territory +'", xco:' location.xco ', yco...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected tIDENTIFIER, expecting keyword_end
+...n.territory +'", xco:' location.xco ', yco:' location.yco ',...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected tIDENTIFIER, expecting keyword_end
+... location.xco ', yco:' location.yco ', id:' location.id ', o...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected tIDENTIFIER, expecting keyword_end
+...' location.yco ', id:' location.id ', owner_id:' location.us...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected tIDENTIFIER, expecting keyword_end
+...ation.id ', owner_id:' location.user_id ', kind:"' +  locati...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+... kind:"' +  location.kindType +'", capital:"' +  location.ca...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...apital:"' +  location.capital +'", money:"' +  location.mone...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...", money:"' +  location.money +'", capital:"' +  location.fo...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tal:"' +  location.food_units +'", capital:"' +  location.en...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...l:"' +  location.energy_units +'", population:"' +  location...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ion:"' +  location.population +'", militants:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ants:"' +  location.militants +'",active:"' +  location.acti...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...,active:"' +  location.active +'"})')
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected ')', expecting keyword_end
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:122: syntax error, unexpected end-of-input, expecting keyword_end
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `block in load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:616:in `new_constants_in'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:423:in `load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:324:in `require_or_load'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:463:in `load_missing_constant'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:184:in `const_missing'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `load': /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting ')' (SyntaxError)
+...ht",{name:"' +  location.name +'", territory:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tory:"' +  location.territory +'", xco:' + location.xco + ',...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+... kind:"' +  location.kindType +'", capital:"' +  location.ca...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...apital:"' +  location.capital +'", money:"' +  location.mone...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...", money:"' +  location.money +'", capital:"' +  location.fo...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tal:"' +  location.food_units +'", capital:"' +  location.en...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...l:"' +  location.energy_units +'", population:"' +  location...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ion:"' +  location.population +'", militants:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ants:"' +  location.militants +'",active:"' +  location.acti...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...,active:"' +  location.active +'"})')
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected ')', expecting keyword_end
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:122: syntax error, unexpected end-of-input, expecting keyword_end
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `block in load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:616:in `new_constants_in'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:423:in `load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:324:in `require_or_load'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:463:in `load_missing_constant'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:184:in `const_missing'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `load': /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting ')' (SyntaxError)
+...ht",{name:"' +  location.name +'", territory:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tory:"' +  location.territory +'", xco:' + location.xco + ',...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+... kind:"' +  location.kindType +'", capital:"' +  location.ca...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...apital:"' +  location.capital +'", money:"' +  location.mone...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...", money:"' +  location.money +'", capital:"' +  location.fo...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tal:"' +  location.food_units +'", capital:"' +  location.en...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...l:"' +  location.energy_units +'", population:"' +  location...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ion:"' +  location.population +'", militants:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ants:"' +  location.militants +'",active:"' +  location.acti...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...,active:"' +  location.active +'"})')
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected ')', expecting keyword_end
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:122: syntax error, unexpected end-of-input, expecting keyword_end
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `block in load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:616:in `new_constants_in'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:423:in `load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:324:in `require_or_load'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:463:in `load_missing_constant'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:184:in `const_missing'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `load': /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting ')' (SyntaxError)
+...ht",{name:"' +  location.name +'", territory:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tory:"' +  location.territory +'", xco:' + location.xco + ',...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+... kind:"' +  location.kindType +'", capital:"' +  location.ca...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...apital:"' +  location.capital +'", money:"' +  location.mone...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...", money:"' +  location.money +'", capital:"' +  location.fo...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tal:"' +  location.food_units +'", capital:"' +  location.en...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...l:"' +  location.energy_units +'", population:"' +  location...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ion:"' +  location.population +'", militants:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ants:"' +  location.militants +'",active:"' +  location.acti...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...,active:"' +  location.active +'"})')
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected ')', expecting keyword_end
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:122: syntax error, unexpected end-of-input, expecting keyword_end
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `block in load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:616:in `new_constants_in'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:423:in `load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:324:in `require_or_load'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:463:in `load_missing_constant'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:184:in `const_missing'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `load': /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting ')' (SyntaxError)
+...ht",{name:"' +  location.name +'", territory:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tory:"' +  location.territory +'", xco:' + location.xco + ',...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+... kind:"' +  location.kindType +'", capital:"' +  location.ca...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...apital:"' +  location.capital +'", money:"' +  location.mone...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...", money:"' +  location.money +'", capital:"' +  location.fo...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tal:"' +  location.food_units +'", capital:"' +  location.en...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...l:"' +  location.energy_units +'", population:"' +  location...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ion:"' +  location.population +'", militants:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ants:"' +  location.militants +'",active:"' +  location.acti...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...,active:"' +  location.active +'"})')
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected ')', expecting keyword_end
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:122: syntax error, unexpected end-of-input, expecting keyword_end
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `block in load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:616:in `new_constants_in'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:423:in `load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:324:in `require_or_load'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:463:in `load_missing_constant'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:184:in `const_missing'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `load': /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting ')' (SyntaxError)
+...ht",{name:"' +  location.name +'", territory:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tory:"' +  location.territory +'", xco:' + location.xco + ',...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+... kind:"' +  location.kindType +'", capital:"' +  location.ca...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...apital:"' +  location.capital +'", money:"' +  location.mone...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...", money:"' +  location.money +'", capital:"' +  location.fo...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tal:"' +  location.food_units +'", capital:"' +  location.en...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...l:"' +  location.energy_units +'", population:"' +  location...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ion:"' +  location.population +'", militants:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ants:"' +  location.militants +'",active:"' +  location.acti...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...,active:"' +  location.active +'"})')
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected ')', expecting keyword_end
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:122: syntax error, unexpected end-of-input, expecting keyword_end
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `block in load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:616:in `new_constants_in'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:423:in `load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:324:in `require_or_load'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:463:in `load_missing_constant'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:184:in `const_missing'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `load': /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting ')' (SyntaxError)
+...ht",{name:"' +  location.name +'", territory:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tory:"' +  location.territory +'", xco:' + location.xco + ',...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+... kind:"' +  location.kindType +'", capital:"' +  location.ca...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...apital:"' +  location.capital +'", money:"' +  location.mone...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...", money:"' +  location.money +'", capital:"' +  location.fo...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tal:"' +  location.food_units +'", capital:"' +  location.en...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...l:"' +  location.energy_units +'", population:"' +  location...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ion:"' +  location.population +'", militants:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ants:"' +  location.militants +'",active:"' +  location.acti...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...,active:"' +  location.active +'"})')
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected ')', expecting keyword_end
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:122: syntax error, unexpected end-of-input, expecting keyword_end
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `block in load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:616:in `new_constants_in'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:423:in `load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:324:in `require_or_load'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:463:in `load_missing_constant'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:184:in `const_missing'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `load': /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end (SyntaxError)
+...fo '{name:"' +  location.name +'", territory:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tory:"' +  location.territory +'", xco:' + location.xco + ',...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+... kind:"' +  location.kindType +'", capital:"' +  location.ca...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...apital:"' +  location.capital +'", money:"' +  location.mone...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...", money:"' +  location.money +'", food_units:"' +  location...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...its:"' +  location.food_units +'", energy_units:"' +  locati...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...s:"' +  location.energy_units +'", population:"' +  location...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ion:"' +  location.population +'", militants:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ants:"' +  location.militants +'",active:"' +  location.acti...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...,active:"' +  location.active +'"}'
+...                               ^
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `block in load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:616:in `new_constants_in'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:423:in `load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:324:in `require_or_load'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:463:in `load_missing_constant'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:184:in `const_missing'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `load': /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end (SyntaxError)
+...fo '{name:"' +  location.name +'", territory:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...tory:"' +  location.territory +'", xco:' + location.xco + ',...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+... kind:"' +  location.kindType +'", capital:"' +  location.ca...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...apital:"' +  location.capital +'", money:"' +  location.mone...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...", money:"' +  location.money +'", food_units:"' +  location...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...its:"' +  location.food_units +'", energy_units:"' +  locati...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...s:"' +  location.energy_units +'", population:"' +  location...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ion:"' +  location.population +'", militants:"' +  location....
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...ants:"' +  location.militants +'",active:"' +  location.acti...
+...                               ^
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102: syntax error, unexpected unary+, expecting keyword_end
+...,active:"' +  location.active +'"}'
+...                               ^
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:424:in `block in load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:616:in `new_constants_in'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:423:in `load_file'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:324:in `require_or_load'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:463:in `load_missing_constant'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activesupport-4.0.8/lib/active_support/dependencies.rb:184:in `const_missing'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+/home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102:in `+': no implicit conversion of Fixnum into String (TypeError)
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:102:in `block (3 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:89:in `block (2 levels) in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/activerecord-4.0.8/lib/active_record/relation/delegation.rb:13:in `each'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:88:in `block in update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:187:in `call'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:187:in `run_machine'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/eventmachine-1.0.7/lib/eventmachine.rb:187:in `run'
+	from /home/karen/Dropbox/Current_Build/BR/app/models/user.rb:85:in `update_stats'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `eval'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands/runner.rb:53:in `<top (required)>'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `require'
+	from /home/karen/Dropbox/Current_Build/BR/vendor/bundle/ruby/2.0.0/gems/railties-4.0.8/lib/rails/commands.rb:84:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'

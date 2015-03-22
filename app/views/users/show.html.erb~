@@ -3067,18 +3067,17 @@ $( document ).ready(function() {
 			for (var i = 0; i < Locations.length; i++) {
 				if (Locations[i].territory.replace("#","") == zoomLevel[1]) {
 					var location
-					if (Locations[i].owner_id == User.id && Locations[i].active == "t") {
+					if (Locations[i].owner_id == User.id && Locations[i].active == "true") {
 						location = mapContext.sprites[Locations[i].kind].clone()
 						visibleLocations.push(location.translate((Locations[i].xco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().x,(Locations[i].yco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().y).show())
 					}
-					else if (Locations[i].owner_id != User.id && Locations[i].active == "t") {
+					else if (Locations[i].owner_id != User.id && Locations[i].active == "true") {
 						location = mapContext.sprites["for" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
 						visibleLocations.push(location.translate((Locations[i].xco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().x,(Locations[i].yco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().y).show())
 					}
 					else if (Locations[i].active != "t") {
 						location = mapContext.sprites["inactive" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
 						visibleLocations.push(location.translate((Locations[i].xco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().x,(Locations[i].yco*zoomLevel[3].matrix.a) + zoomLevel[3].getBBox().y).show())
-					}
 					}
 					LocationsDirectory[location.id] = Locations[i]
 					LocationsDirectory["object" + Locations[i].id] = location
@@ -3103,12 +3102,12 @@ $( document ).ready(function() {
 			for (var i = 0; i < Locations.length; i++) {
 				if (continentFromTerritory(Locations[i].territory.replace("#","")) == zoomLevel[1]) {
 					var location
-					if (Locations[i].owner_id == User.id && Locations[i].active == "t") {
+					if (Locations[i].owner_id == User.id && Locations[i].active == "true") {
 						location = mapContext.sprites[Locations[i].kind].clone()
 						visibleLocations.push(location.scale(0.5,0.5,0,0).translate(2*((Locations[i].xco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x),2*((Locations[i].yco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)).show())
 
 					}
-					else if (Locations[i].owner_id != User.id && Locations[i].active == "t") {
+					else if (Locations[i].owner_id != User.id && Locations[i].active == "true") {
 						location = mapContext.sprites["for" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
 						visibleLocations.push(location.scale(0.5,0.5,0,0).translate(2*((Locations[i].xco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x),2*((Locations[i].yco*scaleFactor) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)).show())
 					}
@@ -3136,11 +3135,11 @@ $( document ).ready(function() {
 		else if (zoomLevel[0] == "global") {
 			for (var i = 0; i < Locations.length; i++) {
 				var location
-				if (Locations[i].owner_id == User.id && Locations[i].active == "t") {
+				if (Locations[i].owner_id == User.id && Locations[i].active == "true") {
 					location = mapContext.sprites[Locations[i].kind].clone()
 					visibleLocations.push(location.scale(0.25,0.25,0,0).translate(((Locations[i].xco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x)*4,((Locations[i].yco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)*4).show().toFront())
 				}
-				else if (Locations[i].owner_id != User.id && Locations[i].active == "t") {
+				else if (Locations[i].owner_id != User.id && Locations[i].active == "true") {
 					location = mapContext.sprites["for" + Locations[i].kind.charAt(0).toUpperCase() + Locations[i].kind.slice(1)].clone()
 					visibleLocations.push(location.scale(0.25,0.25,0,0).translate(((Locations[i].xco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().x)*4,((Locations[i].yco*mapContext.map.getById(1).matrix.a) + mapContext.territoryPaths[Locations[i].territory.replace("#","")].getBBox().y)*4).show().toFront())
 				}
@@ -3185,7 +3184,6 @@ $( document ).ready(function() {
 		}
 	}
 	function select(location) {
-console.log(location)
 		location.attr({src:mapContext.sprites[LocationsDirectory[location.id].kind + "Sel"].attr("src")})
 	}
 	function trade(empty,forarchitchture) {
@@ -3237,8 +3235,6 @@ console.log(location)
 		$("#routeTrade").click( function() {
 			$("#routeTrade").addClass("hover")
 			levelSprites.click( function() {
-console.log(this)
-console.log(mapContext.sprites)
 				if (this.attr("src") == mapContext.sprites.fort.attr("src") || this.attr("src") == mapContext.sprites.camp.attr("src")) {
 					var valid = true
 					if (selectedIndex == 0) {
@@ -3286,14 +3282,12 @@ console.log(mapContext.sprites)
 				}
 				else if (this.attr("src") == mapContext.sprites.fortSel.attr("src") || this.attr("src") == mapContext.sprites.campSel.attr("src")) {
 					deselect(itinerary)
-console.log(LocationsDirectory["object" + itinerary[itinerary.length - 1].id])
 					select(LocationsDirectory["object" + itinerary[itinerary.length - 1].id])
 					selectedIndex = itinerary.length
 					globalSelectedIndex = selectedIndex
 					}
 				else if (this.attr("src") == mapContext.sprites.fortSelPast.attr("src") || this.attr("src") == mapContext.sprites.campSelPast.attr("src")) {
 					deselect(itinerary)
-console.log(this)
 					select(this)
 					for (var i = 0; i < itinerary.length; i++) {
 						if (itinerary[i].id == LocationsDirectory[this.id].id) {
@@ -3324,7 +3318,6 @@ console.log(this)
 			})
 			$(mapContext.map.canvas).click( function(e) {
 				if (zoomLevel[0] == "global") {
-console.log("seapoint",promptSeapoint)
 					if (promptSeapoint == true) {
 						if (itinerary.length != 0) {
 
@@ -3386,26 +3379,6 @@ console.log("seapoint",promptSeapoint)
 										}
 										selectedLocation = seapointObject
 										seapoints.push(seapoint)
-										seapoints.unclick()
-										seapoints.click( function() {
-
-											if (this.attr("src") == mapContext.sprites.seapointSel.attr("src")) {
-												deselect(itinerary)
-												select(LocationsDirectory["object" + itinerary[itinerary.length - 1].id])
-												selectedIndex = itinerary.length
-												globalSelectedIndex = selectedIndex
-											}
-											else if (this.attr("src") == mapContext.sprites.seapointSelPast.attr("src")) {
-												deselect(itinerary)
-												select(this)
-												for (var i = 0; i < itinerary.length; i++) {
-													if (itinerary[i].id == LocationsDirectory[this.id].id) {
-														selectedIndex = i
-													}
-												}
-												globalSelectedIndex = selectedIndex
-											}
-										})
 										//if (typeof tradeLines !== "undefined") {
 										//	tradeLines.remove()
 										//}
@@ -3460,6 +3433,11 @@ console.log("seapoint",promptSeapoint)
 				$("#routeTrade").text("Route")
 				$("#routeTrade").removeClass("hover")
 				itinerary = []
+				$("#what").val("")
+				$("#quantity").val("")
+				$("#forwhat").val("")
+				$("#forquantity").val("")
+				$("#notes").val("")
 				tradeLines.remove()
 				promptSeapoint = false
 			}
@@ -3486,6 +3464,11 @@ console.log("seapoint",promptSeapoint)
 			itinerary = []
 			promptSeapoint = false
 			tradeLines.remove()
+			$("#what").val("")
+			$("#quantity").val("")
+			$("#forwhat").val("")
+			$("#forquantity").val("")
+			$("#notes").val("")
 
 		})
 	}
@@ -3754,9 +3737,7 @@ console.log("seapoint",promptSeapoint)
 					})
 				}	
 			})
-console.log("#sponsorLocation" + locationType)
 			$("#sponsorLocation" + locationType).on("click", function() {
-console.log("called")
 				$("#sponsorLocation" + locationType).addClass("hover")
 				levelSprites.click( function(location) {
 					object = LocationsDirectory[this.id]
@@ -3769,7 +3750,6 @@ console.log("called")
 					} 
 					if (object.owner_id == User.id) {
 						if (object.money >= cost) {
-console.log("called")
 							$("#sponsorLocation" + locationType).text(object.name)
 							levelSprites.unclick()
 							$("#sponsorLocation" + locationType).removeClass("hover")
@@ -3854,68 +3834,6 @@ console.log("called")
 			//	tradeLines.remove()
 			//}
 			//tradeLines = renderTrade(zoomLevel,mapContext,itinerary)
-			levelSprites.unclick()
-			levelSprites.click( function() {
-				if (this.attr("src") == mapContext.sprites.fort.attr("src") || this.attr("src") == mapContext.sprites.camp.attr("src")) {
-					var valid = true
-					if (selectedIndex == 0) {
-						if (LocationsDirectory[this.id].owner_id != User.id) {
-							valid = false
-							promptAlert("You must start a trade from one of your own locations." ["Okay"])
-							$("#Okay").click( function() {
-								$("#Okay").off("click")
-								$("#alertBox").css("display","none")
-							})
-						}
-					}
-					var fakeItinerary = itinerary.slice()
-					fakeItinerary[selectedIndex] = LocationsDirectory[this.id]
-					if (validateTradeRoute(fakeItinerary) == false) {
-						valid = false
-					}
-					if (valid == true) {
-						if (typeof itinerary[selectedIndex] !== "undefined") {
-							LocationsDirectory["object" + itinerary[selectedIndex].id].attr({src:mapContext.sprites[itinerary[selectedIndex].kind].attr("src")})
-						}
-
-						itinerary[selectedIndex] = LocationsDirectory[this.id]
-						if (selectedIndex == itinerary.length - 1) {
-							selectedIndex++
-						}
-						globalItinerary = itinerary
-						globalSelectedIndex = selectedIndex
-						selectedLocation = LocationsDirectory[this.id]
-						if (typeof tradeLines !== "undefined") {
-							tradeLines.remove()
-						}
-						deselect(itinerary)
-						this.attr({src:mapContext.sprites[LocationsDirectory[this.id].kind + "Sel"].attr("src")})
-		 				//tradeLines = renderTrade(zoomLevel,mapContext,itinerary)
-						cost = calculateTradeCost(mapContext,itinerary)
-						$("#routeTrade").text(addCommas((Math.round(cost*quantity)).toString()))
-					}
-				}
-				else if (this.attr("src") == mapContext.sprites.fortSel.attr("src") || this.attr("src") == mapContext.sprites.campSel.attr("src")) {
-					deselect(itinerary)
-					select(LocationsDirectory["object" + itinerary[itinerary.length - 1].id])
-
-					selectedIndex = itinerary.length
-					globalSelectedIndex = selectedIndex
-					}
-				else if (this.attr("src") == mapContext.sprites.fortSelPast.attr("src") || this.attr("src") == mapContext.sprites.campSelPast.attr("src")) {
-					deselect(itinerary)
-
-					select(this)
-					for (var i = 0; i < itinerary.length; i++) {
-						if (itinerary[i].id == LocationsDirectory[this.id].id) {
-							selectedIndex = i
-						}
-					}
-					globalSelectedIndex = selectedIndex
-				}
-			})
-
-
 		}
 		updateSideBar(zoomLevel)
 
@@ -3931,8 +3849,8 @@ console.log("called")
 		}
 	}
 	function parseResponseObject(type,object) {
+console.log(type)
 		if (type == "location") {
-console.log("calledonce")
 			if (typeof object.money === "undefined" && object.owner_id != User.id) {
 				Locations.push(object)
 				renderLocation(zoomLevel,mapContext)
@@ -3942,11 +3860,17 @@ console.log("calledonce")
 				renderLocation(zoomLevel,mapContext)
 			}
 		}
+		if (type == "midnight") {
+			for (var i = 0; i < Locations.length; i++) {
+				if (Locations[i].id == object.id) {
+					Locations[i] = object.id
+				}
+			}
+		}
 	}
 	function removeClicks(set) {
 
 		set.forEach( function(el){
-		console.log(el)
 			if ( typeof el.events !== "undefined") {
 
 				for (var i = 0; i < el.events.length; i++) {

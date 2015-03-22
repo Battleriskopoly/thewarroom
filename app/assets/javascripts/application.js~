@@ -25,9 +25,15 @@ console.log($(link).parent())
 function clickButton(button_id) {
   document.getElementById(button_id).click();
   }
- // window.client = new Faye.Client('/faye')
-//$(function() {
-  //client.subscribe('/' + GameAttribute.id, function (data) {
-    //eval(data);
-  //});
-//});
+window.client = new Faye.Client('/faye')
+$(function() {
+  client.subscribe('/' + GameAttribute.id, function (data) {
+console.log(data)
+    if (typeof data.text !== "undefined") {
+    	eval(data.text);
+    }
+    else {
+
+    }
+  });
+});
